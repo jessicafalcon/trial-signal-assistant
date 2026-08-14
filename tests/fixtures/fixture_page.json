@@ -612,1437 +612,6 @@
     {
       "protocolSection": {
         "identificationModule": {
-          "nctId": "NCT02289989",
-          "orgStudyIdInfo": {
-            "id": "Pro2012002449"
-          },
-          "organization": {
-            "fullName": "Rutgers, The State University of New Jersey",
-            "class": "OTHER"
-          },
-          "briefTitle": "Oregano Ointment vs. Standard Treatment for Pediatric Atopic Dermatitis",
-          "officialTitle": "Investigator-Initiated, Randomized, Investigator-Blind, Half-Side Comparison of Topical Oregano Extract Ointment vs .Hydrocortisone 1% for the Treatment of Atopic Dermatitis in Pediatric Patients"
-        },
-        "statusModule": {
-          "statusVerifiedDate": "2017-01",
-          "overallStatus": "TERMINATED",
-          "whyStopped": "Lack of response to recruitment",
-          "expandedAccessInfo": {
-            "hasExpandedAccess": false
-          },
-          "startDateStruct": {
-            "date": "2014-11"
-          },
-          "primaryCompletionDateStruct": {
-            "date": "2017-01",
-            "type": "ACTUAL"
-          },
-          "completionDateStruct": {
-            "date": "2017-01",
-            "type": "ACTUAL"
-          },
-          "studyFirstSubmitDate": "2014-11-10",
-          "studyFirstSubmitQcDate": "2014-11-10",
-          "studyFirstPostDateStruct": {
-            "date": "2014-11-13",
-            "type": "ESTIMATED"
-          },
-          "resultsFirstSubmitDate": "2017-02-06",
-          "resultsFirstSubmitQcDate": "2017-03-29",
-          "resultsFirstPostDateStruct": {
-            "date": "2017-05-10",
-            "type": "ACTUAL"
-          },
-          "lastUpdateSubmitDate": "2017-03-29",
-          "lastUpdatePostDateStruct": {
-            "date": "2017-05-10",
-            "type": "ACTUAL"
-          }
-        },
-        "sponsorCollaboratorsModule": {
-          "responsibleParty": {
-            "type": "SPONSOR"
-          },
-          "leadSponsor": {
-            "name": "Rutgers, The State University of New Jersey",
-            "class": "OTHER"
-          }
-        },
-        "oversightModule": {
-          "oversightHasDmc": false
-        },
-        "descriptionModule": {
-          "briefSummary": "This study is designed to evaluate and compare the efficacy of 3% oregano extract ointment prepared in aqueous solution versus 1% hydrocortisone ointment, a standard treatment, in decreasing the inflammation associated with mild to moderate atopic dermatitis. We plan to recruit 40 patients on the ages comprised between 2 and 17 years old and the study duration for each of the patient is 1 month.",
-          "detailedDescription": "A single-center, investigator initiated, randomized controlled, double-blind trial will be conducted to determine the effects of an oregano extract in aqueous solution versus 1% hydrocortisone in the treatment of acute-subacute pediatric atopic dermatitis (AD). We suspect that topical oregano will serve as an effective, non-steroidal AD therapy, simultaneously offering extra benefits to pediatric patients as oregano is a natural product with antimicrobial, anti-inflammatory, and antiseptic properties that lacks reports of adverse effects associated with steroids, which children have been noted to be more susceptible to."
-        },
-        "conditionsModule": {
-          "conditions": [
-            "Atopic Dermatitis"
-          ],
-          "keywords": [
-            "Atopic dermatitis",
-            "Oregano",
-            "Atopic Dermatitis Quick (ADQ) score",
-            "Eczema Area and Severity Index score",
-            "Reflectance confocal microscopy"
-          ]
-        },
-        "designModule": {
-          "studyType": "INTERVENTIONAL",
-          "phases": [
-            "NA"
-          ],
-          "designInfo": {
-            "allocation": "RANDOMIZED",
-            "interventionModel": "SINGLE_GROUP",
-            "primaryPurpose": "TREATMENT",
-            "maskingInfo": {
-              "masking": "QUADRUPLE",
-              "whoMasked": [
-                "PARTICIPANT",
-                "CARE_PROVIDER",
-                "INVESTIGATOR",
-                "OUTCOMES_ASSESSOR"
-              ]
-            }
-          },
-          "enrollmentInfo": {
-            "count": 1,
-            "type": "ACTUAL"
-          }
-        },
-        "armsInterventionsModule": {
-          "armGroups": [
-            {
-              "label": "Standard: Hydrocortisone 1% ointment",
-              "type": "ACTIVE_COMPARATOR",
-              "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm",
-              "interventionNames": [
-                "Drug: Hydrocortisone"
-              ]
-            },
-            {
-              "label": "Experimental: oregano extract cream",
-              "type": "EXPERIMENTAL",
-              "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm",
-              "interventionNames": [
-                "Drug: Oregano extract cream"
-              ]
-            }
-          ],
-          "interventions": [
-            {
-              "type": "DRUG",
-              "name": "Oregano extract cream",
-              "description": "An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
-              "armGroupLabels": [
-                "Experimental: oregano extract cream"
-              ],
-              "otherNames": [
-                "experimental treatment"
-              ]
-            },
-            {
-              "type": "DRUG",
-              "name": "Hydrocortisone",
-              "description": "An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
-              "armGroupLabels": [
-                "Standard: Hydrocortisone 1% ointment"
-              ],
-              "otherNames": [
-                "active control"
-              ]
-            }
-          ]
-        },
-        "outcomesModule": {
-          "primaryOutcomes": [
-            {
-              "measure": "The Clinical Efficacy Rated by the Patient or Caregiver on Days 0 and 25",
-              "description": "This was measured with two questions. The first one referred to the description of the lesion and it included six characteristics: clear, dry, scaly, redness, cracks/opening and oozing. The second questions asked to grade how itchy was the patient.\n\nAll characteristics were measured on a scale from 0 to 5 (0 none, 5 extremely bothered/losing sleep).",
-              "timeFrame": "From baseline to day 25"
-            },
-            {
-              "measure": "Change of the Clinical Efficacy Rated by a Study Physician",
-              "description": "Physician was asked to grade four characteristics: erythema, infiltration/papulation, excoriation and lichenification. The grade was none (0), mild (1), moderate (2) and severe (3).",
-              "timeFrame": "Baseline to day 28"
-            },
-            {
-              "measure": "Histological Improvement Measured by Confocal Microscopy",
-              "description": "Confocal microscopy was done to the patient on day 0, day 14 and day 28. Due to technical difficulties, this outcome measure was not collected.",
-              "timeFrame": "Baseline to day 28"
-            }
-          ],
-          "secondaryOutcomes": [
-            {
-              "measure": "Measure Presence of S. Aureus Colonization on Affected Skin",
-              "description": "Bacterial culture of the affected area was done on day 0 and day 14.",
-              "timeFrame": "Baseline to day 14"
-            },
-            {
-              "measure": "Rate Cosmetic Acceptability of Topical Agents",
-              "description": "The patient or caregiver rated how the product felt on their skin after applying the product, measuring the cosmetic acceptability on day 7 and 14. The scale was excellent, good, moderate and poor.",
-              "timeFrame": "On day 7 and 14"
-            },
-            {
-              "measure": "Rate Skin Tolerance of Topical Agents",
-              "description": "The patient or caregiver rated how well the patient tolerated the product after applying it on day 7 and 14. The scale was excellent, good, moderate and poor.",
-              "timeFrame": "On day 7 and 14"
-            }
-          ]
-        },
-        "eligibilityModule": {
-          "eligibilityCriteria": "Inclusion Criteria:\n\n* Male or non-pregnant female subjects aged 2-17 years of age.\n* Individuals must be diagnosed with acute-subacute AD regardless of the study.\n* Written informed consent must be obtained from all patients or caregivers.\n* Women of childbearing potential (WOCBP) must be willing to practice effective contraception for the duration of study treatment.\n* Subjects must be willing and able to comply with study conditions, properly apply or have caregivers apply topical medications to the selected body sites, as well as return to the clinic for required visits.\n* Subject caregivers must be willing and able to perform ADQ assessment test.\n\nExclusion Criteria:\n\n* Individuals who are immune-compromised or suffering from infectious disease, malignant disease, are known to be HIV+ or present with a general reduced level of health.\n* Individuals diagnosed with underlying dermatological conditions in addition to AD.\n* Individuals with a chronic pre-existing disease such as diabetes mellitus or others that in the opinion of the investigator would preclude their participation in the study.\n* Individuals who are pregnant, nursing mothers, or subjects planning a pregnancy during the course of the study.\n* Subjects/caregivers who are unable to communicate or comply with study conditions due to language disability, poor mental development, or impaired cerebral function.\n* Individuals who are simultaneously enrolled in another clinical drug or device research study.\n* Individuals with a history of chronic steroid use.\n* Individuals needing to concurrently use topical agents, medicinal products containing corticosteroids, or immunosuppressants.\n* Individuals who have received systemically administered corticosteroids and/or antihistamines 2 weeks prior to the start of study.\n* Individuals undergoing light therapy.\n* Individuals who have been treated with another investigation device or drug within 30 days prior to study enrollment.\n* Individuals with a known allergy to oregano.",
-          "healthyVolunteers": false,
-          "sex": "ALL",
-          "minimumAge": "2 Years",
-          "maximumAge": "17 Years",
-          "stdAges": [
-            "CHILD"
-          ]
-        },
-        "contactsLocationsModule": {
-          "overallOfficials": [
-            {
-              "name": "Amy S Pappert, MD",
-              "affiliation": "Rutgers-RWJMS",
-              "role": "PRINCIPAL_INVESTIGATOR"
-            }
-          ],
-          "locations": [
-            {
-              "facility": "Department of Dermatology. Rutgers-RWJMS",
-              "city": "Somerset",
-              "state": "New Jersey",
-              "zip": "08873",
-              "country": "United States",
-              "geoPoint": {
-                "lat": 40.4976,
-                "lon": -74.48849
-              }
-            }
-          ]
-        },
-        "ipdSharingStatementModule": {
-          "ipdSharing": "UNDECIDED"
-        }
-      },
-      "resultsSection": {
-        "participantFlowModule": {
-          "preAssignmentDetails": "No exclusions or significant events were observed in the study.",
-          "recruitmentDetails": "Recruitment was done in the department of dermatology of Rutgers-RWJMS. It was stopped in July 2016.",
-          "groups": [
-            {
-              "id": "FG000",
-              "title": "Standard: Hydrocortisone 1% Ointment",
-              "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-            },
-            {
-              "id": "FG001",
-              "title": "Experimental: Oregano Extract Cream",
-              "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-            }
-          ],
-          "periods": [
-            {
-              "title": "Overall Study",
-              "milestones": [
-                {
-                  "type": "STARTED",
-                  "achievements": [
-                    {
-                      "groupId": "FG000",
-                      "numSubjects": "0"
-                    },
-                    {
-                      "groupId": "FG001",
-                      "numSubjects": "1"
-                    }
-                  ]
-                },
-                {
-                  "type": "COMPLETED",
-                  "achievements": [
-                    {
-                      "groupId": "FG000",
-                      "numSubjects": "0"
-                    },
-                    {
-                      "groupId": "FG001",
-                      "numSubjects": "1"
-                    }
-                  ]
-                },
-                {
-                  "type": "NOT COMPLETED",
-                  "achievements": [
-                    {
-                      "groupId": "FG000",
-                      "numSubjects": "0"
-                    },
-                    {
-                      "groupId": "FG001",
-                      "numSubjects": "0"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "baselineCharacteristicsModule": {
-          "groups": [
-            {
-              "id": "BG000",
-              "title": "Standard: Hydrocortisone 1% Ointment",
-              "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-            },
-            {
-              "id": "BG001",
-              "title": "Experimental: Oregano Extract Cream",
-              "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-            },
-            {
-              "id": "BG002",
-              "title": "Total",
-              "description": "Total of all reporting groups"
-            }
-          ],
-          "denoms": [
-            {
-              "units": "Participants",
-              "counts": [
-                {
-                  "groupId": "BG000",
-                  "value": "0"
-                },
-                {
-                  "groupId": "BG001",
-                  "value": "1"
-                },
-                {
-                  "groupId": "BG002",
-                  "value": "1"
-                }
-              ]
-            }
-          ],
-          "measures": [
-            {
-              "title": "Age, Categorical",
-              "paramType": "COUNT_OF_PARTICIPANTS",
-              "unitOfMeasure": "Participants",
-              "classes": [
-                {
-                  "categories": [
-                    {
-                      "title": "<=18 years",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "1"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "Between 18 and 65 years",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": ">=65 years",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "title": "Sex: Female, Male",
-              "paramType": "COUNT_OF_PARTICIPANTS",
-              "unitOfMeasure": "Participants",
-              "classes": [
-                {
-                  "categories": [
-                    {
-                      "title": "Female",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "Male",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "1"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "title": "Race (NIH/OMB)",
-              "paramType": "COUNT_OF_PARTICIPANTS",
-              "unitOfMeasure": "Participants",
-              "classes": [
-                {
-                  "categories": [
-                    {
-                      "title": "American Indian or Alaska Native",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "Asian",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "Native Hawaiian or Other Pacific Islander",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "Black or African American",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "White",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "1"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "More than one race",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    },
-                    {
-                      "title": "Unknown or Not Reported",
-                      "measurements": [
-                        {
-                          "groupId": "BG001",
-                          "value": "0"
-                        },
-                        {
-                          "groupId": "BG002",
-                          "value": "0"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "outcomeMeasuresModule": {
-          "outcomeMeasures": [
-            {
-              "type": "PRIMARY",
-              "title": "The Clinical Efficacy Rated by the Patient or Caregiver on Days 0 and 25",
-              "description": "This was measured with two questions. The first one referred to the description of the lesion and it included six characteristics: clear, dry, scaly, redness, cracks/opening and oozing. The second questions asked to grade how itchy was the patient.\n\nAll characteristics were measured on a scale from 0 to 5 (0 none, 5 extremely bothered/losing sleep).",
-              "reportingStatus": "POSTED",
-              "paramType": "NUMBER",
-              "unitOfMeasure": "participants",
-              "timeFrame": "From baseline to day 25",
-              "groups": [
-                {
-                  "id": "OG000",
-                  "title": "Standard: Hydrocortisone 1% Ointment",
-                  "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                },
-                {
-                  "id": "OG001",
-                  "title": "Experimental: Oregano Extract Cream",
-                  "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                }
-              ],
-              "denoms": [
-                {
-                  "units": "Participants",
-                  "counts": [
-                    {
-                      "groupId": "OG000",
-                      "value": "0"
-                    },
-                    {
-                      "groupId": "OG001",
-                      "value": "1"
-                    }
-                  ]
-                }
-              ],
-              "classes": [
-                {
-                  "title": "Scaly, redness, cracks/opening day 0",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Very bothered (4) day 0",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Scaly, Redness day 25",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Quite bothered (3) day 25",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "PRIMARY",
-              "title": "Change of the Clinical Efficacy Rated by a Study Physician",
-              "description": "Physician was asked to grade four characteristics: erythema, infiltration/papulation, excoriation and lichenification. The grade was none (0), mild (1), moderate (2) and severe (3).",
-              "reportingStatus": "POSTED",
-              "paramType": "NUMBER",
-              "unitOfMeasure": "participants",
-              "timeFrame": "Baseline to day 28",
-              "groups": [
-                {
-                  "id": "OG000",
-                  "title": "Standard: Hydrocortisone 1% Ointment",
-                  "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                },
-                {
-                  "id": "OG001",
-                  "title": "Experimental: Oregano Extract Cream",
-                  "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                }
-              ],
-              "denoms": [
-                {
-                  "units": "Participants",
-                  "counts": [
-                    {
-                      "groupId": "OG000",
-                      "value": "0"
-                    },
-                    {
-                      "groupId": "OG001",
-                      "value": "1"
-                    }
-                  ]
-                }
-              ],
-              "classes": [
-                {
-                  "title": "Erythema day 0 severe",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Infiltration/Papulation day 0 none",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Excoriation day 0 severe",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Lichenification day 0 moderate",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Erythema day 28 moderate",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Infiltration/Papulation day 28 none",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Excoriation day 28 mild",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Lichenification day 28 mild",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "PRIMARY",
-              "title": "Histological Improvement Measured by Confocal Microscopy",
-              "description": "Confocal microscopy was done to the patient on day 0, day 14 and day 28. Due to technical difficulties, this outcome measure was not collected.",
-              "populationDescription": "Data not collected",
-              "reportingStatus": "POSTED",
-              "timeFrame": "Baseline to day 28",
-              "groups": [
-                {
-                  "id": "OG000",
-                  "title": "Standard: Hydrocortisone 1% Ointment",
-                  "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                },
-                {
-                  "id": "OG001",
-                  "title": "Experimental: Oregano Extract Cream",
-                  "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                }
-              ],
-              "denoms": [
-                {
-                  "units": "Participants",
-                  "counts": [
-                    {
-                      "groupId": "OG000",
-                      "value": "0"
-                    },
-                    {
-                      "groupId": "OG001",
-                      "value": "0"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "SECONDARY",
-              "title": "Measure Presence of S. Aureus Colonization on Affected Skin",
-              "description": "Bacterial culture of the affected area was done on day 0 and day 14.",
-              "reportingStatus": "POSTED",
-              "paramType": "NUMBER",
-              "unitOfMeasure": "participants",
-              "timeFrame": "Baseline to day 14",
-              "groups": [
-                {
-                  "id": "OG000",
-                  "title": "Standard: Hydrocortisone 1% Ointment",
-                  "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                },
-                {
-                  "id": "OG001",
-                  "title": "Experimental: Oregano Extract Cream",
-                  "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                }
-              ],
-              "denoms": [
-                {
-                  "units": "Participants",
-                  "counts": [
-                    {
-                      "groupId": "OG000",
-                      "value": "0"
-                    },
-                    {
-                      "groupId": "OG001",
-                      "value": "1"
-                    }
-                  ]
-                }
-              ],
-              "classes": [
-                {
-                  "title": "Bacterial culture day 0 negative",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Bacterial culture day 14 negative",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "SECONDARY",
-              "title": "Rate Cosmetic Acceptability of Topical Agents",
-              "description": "The patient or caregiver rated how the product felt on their skin after applying the product, measuring the cosmetic acceptability on day 7 and 14. The scale was excellent, good, moderate and poor.",
-              "reportingStatus": "POSTED",
-              "paramType": "NUMBER",
-              "unitOfMeasure": "participants",
-              "timeFrame": "On day 7 and 14",
-              "groups": [
-                {
-                  "id": "OG000",
-                  "title": "Standard: Hydrocortisone 1% Ointment",
-                  "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                },
-                {
-                  "id": "OG001",
-                  "title": "Experimental: Oregano Extract Cream",
-                  "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                }
-              ],
-              "denoms": [
-                {
-                  "units": "Participants",
-                  "counts": [
-                    {
-                      "groupId": "OG000",
-                      "value": "0"
-                    },
-                    {
-                      "groupId": "OG001",
-                      "value": "1"
-                    }
-                  ]
-                }
-              ],
-              "classes": [
-                {
-                  "title": "Cosmetic acceptability day 7 excellent",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Cosmetic acceptability day 14 excellent",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "SECONDARY",
-              "title": "Rate Skin Tolerance of Topical Agents",
-              "description": "The patient or caregiver rated how well the patient tolerated the product after applying it on day 7 and 14. The scale was excellent, good, moderate and poor.",
-              "reportingStatus": "POSTED",
-              "paramType": "NUMBER",
-              "unitOfMeasure": "participants",
-              "timeFrame": "On day 7 and 14",
-              "groups": [
-                {
-                  "id": "OG000",
-                  "title": "Standard: Hydrocortisone 1% Ointment",
-                  "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                },
-                {
-                  "id": "OG001",
-                  "title": "Experimental: Oregano Extract Cream",
-                  "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
-                }
-              ],
-              "denoms": [
-                {
-                  "units": "Participants",
-                  "counts": [
-                    {
-                      "groupId": "OG000",
-                      "value": "0"
-                    },
-                    {
-                      "groupId": "OG001",
-                      "value": "1"
-                    }
-                  ]
-                }
-              ],
-              "classes": [
-                {
-                  "title": "Skin tolerance day 7 excellent",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "title": "Skin tolerance day 14 excellent",
-                  "categories": [
-                    {
-                      "measurements": [
-                        {
-                          "groupId": "OG001",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "adverseEventsModule": {
-          "frequencyThreshold": "0",
-          "eventGroups": [
-            {
-              "id": "EG000",
-              "title": "Standard: Hydrocortisone 1% Ointment",
-              "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
-              "deathsNumAffected": 0,
-              "deathsNumAtRisk": 0,
-              "seriousNumAffected": 0,
-              "seriousNumAtRisk": 0,
-              "otherNumAffected": 0,
-              "otherNumAtRisk": 0
-            },
-            {
-              "id": "EG001",
-              "title": "Experimental: Oregano Extract Cream",
-              "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
-              "deathsNumAffected": 0,
-              "deathsNumAtRisk": 1,
-              "seriousNumAffected": 0,
-              "seriousNumAtRisk": 1,
-              "otherNumAffected": 0,
-              "otherNumAtRisk": 1
-            }
-          ]
-        },
-        "moreInfoModule": {
-          "limitationsAndCaveats": {
-            "description": "Termination of the trial due to difficulty recruiting patients."
-          },
-          "certainAgreement": {
-            "piSponsorEmployee": false,
-            "restrictiveAgreement": false
-          },
-          "pointOfContact": {
-            "title": "Amy Pappert, MD",
-            "organization": "Rutgers Robert Wood Johnson Medical School",
-            "email": "papperas@rwjms.rutgers.edu",
-            "phone": "732-235-7765"
-          }
-        }
-      },
-      "derivedSection": {
-        "miscInfoModule": {
-          "versionHolder": "2026-08-14"
-        },
-        "conditionBrowseModule": {
-          "meshes": [
-            {
-              "id": "D003876",
-              "term": "Dermatitis, Atopic"
-            }
-          ],
-          "ancestors": [
-            {
-              "id": "D012873",
-              "term": "Skin Diseases, Genetic"
-            },
-            {
-              "id": "D030342",
-              "term": "Genetic Diseases, Inborn"
-            },
-            {
-              "id": "D009358",
-              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
-            },
-            {
-              "id": "D003872",
-              "term": "Dermatitis"
-            },
-            {
-              "id": "D012871",
-              "term": "Skin Diseases"
-            },
-            {
-              "id": "D017437",
-              "term": "Skin and Connective Tissue Diseases"
-            },
-            {
-              "id": "D017443",
-              "term": "Skin Diseases, Eczematous"
-            },
-            {
-              "id": "D006969",
-              "term": "Hypersensitivity, Immediate"
-            },
-            {
-              "id": "D006967",
-              "term": "Hypersensitivity"
-            },
-            {
-              "id": "D007154",
-              "term": "Immune System Diseases"
-            }
-          ]
-        },
-        "interventionBrowseModule": {
-          "meshes": [
-            {
-              "id": "D006854",
-              "term": "Hydrocortisone"
-            }
-          ],
-          "ancestors": [
-            {
-              "id": "D011282",
-              "term": "Pregnenediones"
-            },
-            {
-              "id": "D011283",
-              "term": "Pregnenes"
-            },
-            {
-              "id": "D011278",
-              "term": "Pregnanes"
-            },
-            {
-              "id": "D013256",
-              "term": "Steroids"
-            },
-            {
-              "id": "D000072473",
-              "term": "Fused-Ring Compounds"
-            },
-            {
-              "id": "D011083",
-              "term": "Polycyclic Compounds"
-            },
-            {
-              "id": "D015062",
-              "term": "11-Hydroxycorticosteroids"
-            },
-            {
-              "id": "D006889",
-              "term": "Hydroxycorticosteroids"
-            },
-            {
-              "id": "D000305",
-              "term": "Adrenal Cortex Hormones"
-            },
-            {
-              "id": "D006728",
-              "term": "Hormones"
-            },
-            {
-              "id": "D006730",
-              "term": "Hormones, Hormone Substitutes, and Hormone Antagonists"
-            },
-            {
-              "id": "D015065",
-              "term": "17-Hydroxycorticosteroids"
-            }
-          ]
-        }
-      },
-      "hasResults": true
-    },
-    {
-      "protocolSection": {
-        "identificationModule": {
-          "nctId": "NCT06744569",
-          "orgStudyIdInfo": {
-            "id": "CU-10101-103"
-          },
-          "organization": {
-            "fullName": "Cutia Therapeutics（Wuxi）Co.,Ltd",
-            "class": "INDUSTRY"
-          },
-          "briefTitle": "A Phase I Clinical Trial to Evaluate CU-10101 Unguent",
-          "officialTitle": "A Randomized, Double-blind, Vehicle-Controlled Phase I Clinical Trial to Evaluate the Safety, Tolerability, Pharmacokinetic Profile and Preliminary Efficacy of CU-10101 Unguent in Healthy and AD Participants"
-        },
-        "statusModule": {
-          "statusVerifiedDate": "2025-11",
-          "overallStatus": "ENROLLING_BY_INVITATION",
-          "expandedAccessInfo": {
-            "hasExpandedAccess": false
-          },
-          "startDateStruct": {
-            "date": "2024-09-12",
-            "type": "ACTUAL"
-          },
-          "primaryCompletionDateStruct": {
-            "date": "2026-09-09",
-            "type": "ESTIMATED"
-          },
-          "completionDateStruct": {
-            "date": "2026-09-09",
-            "type": "ESTIMATED"
-          },
-          "studyFirstSubmitDate": "2024-08-09",
-          "studyFirstSubmitQcDate": "2024-12-17",
-          "studyFirstPostDateStruct": {
-            "date": "2024-12-20",
-            "type": "ACTUAL"
-          },
-          "lastUpdateSubmitDate": "2026-06-08",
-          "lastUpdatePostDateStruct": {
-            "date": "2026-06-10",
-            "type": "ACTUAL"
-          }
-        },
-        "sponsorCollaboratorsModule": {
-          "responsibleParty": {
-            "type": "SPONSOR"
-          },
-          "leadSponsor": {
-            "name": "Cutia Therapeutics（Wuxi）Co.,Ltd",
-            "class": "INDUSTRY"
-          }
-        },
-        "oversightModule": {
-          "oversightHasDmc": false,
-          "isFdaRegulatedDrug": false,
-          "isFdaRegulatedDevice": false
-        },
-        "descriptionModule": {
-          "briefSummary": "The study was conducted in two parts:Part 1 and Part 2.Part 1 is a single-site,randomized,double-blind,vehicle-controlled single and multiple administration,dose-escalation study in healthy Chinese participants.There are four cohorts in Part 1.Part 2 is a randomized,double-blind,vehicle-controlled single and multiple administration,dose-escalation study in Chinese participants with mild to moderate atopic dermatitis.It is planned to be conduct in 1 to 3 sites,with a total of four cohorts in Part 2.",
-          "detailedDescription": "Part 1:This is a randomized, double-blind, vehicle-controlled Phase I clinical trial to evaluate the safety, tolerability, and pharmacokinetic profile of CU-10101 unguent after single and multiple doses in adult healthy subjects. The study consisted of screening, dosing, and end-of-study (EOS) visits.\n\nScreening (D-7 to D-1): from 7 days before dosing (D-7) to 1 day prior to dosing (D-1), subjects will undergo screening-related examinations as required by this protocol after signing the informed consent form, and eligibility will be confirmed according to the inclusion/exclusion criteria. Eligible subjects will be admitted to the Phase I clinical trial site 1 day before dosing (D-1), relevant examinations will be performed as required by the protocol, and the inclusion/exclusion criteria will be confirmed again. Reconfirmed eligible subjects will remain in the study. Draw areas of skin that require drug application based on body maps .\n\nDosing period (D1-D13): Subjects will be randomized prior to dosing on D1 (each cohort will be randomized in a 2: 1 ratio to the investigational product or vehicle group) and CU-10101 unguent or vehicle will be evenly applied to the specified dose position on the morning of D1 and every morning (dosing interval is 24 h ± 0.5 h) from D4 to D10 based on randomization results. Subjects will collect PK blood samples at the time points specified in the protocol. Left the Phase 1 clinical site after completing blood sampling and relevant examinations on D13.\n\nEOS Visit period (D20): Subjects will return to the Phase I clinical trial site for safety monitoring on D20 ± 1.\n\nPart 2\n\nThis is a randomized, double-blind, vehicle-controlled Phase 1 clinical trial to evaluate the safety, tolerability, and pharmacokinetic profile of CU-10101 unguent after single and multiple doses in adult subjects with atopic dermatitis meanwhile exploring efficacy after multiple doses. The study consisted of screening, dosing, and end-of-study (EOS) visits.\n\nScreening (D-14 to D-1): from 14 days before dosing (D-14) to 2 days prior to dosing (D-2), subjects will undergo screening-related examinations as required by this protocol after signing the informed consent form, and eligibility will be confirmed according to the inclusion/exclusion criteria. Eligible subjects will be admitted to the Phase I clinical trial site 1 day before dosing (D-1), relevant examinations will be performed as required by the protocol, and the inclusion/exclusion criteria will be confirmed again. Reconfirmed eligible subjects will remain in the study. Draw areas of skin that require drug application based on body maps .\n\nDosing period (D1-D29): sujects will be randomized prior to dosing on D1 (each cohort will be randomized in a 4: 1 ratio to the investigational product group or vehicle group) and CU-10101 unguent or vehicle will be evenly applied to the skin lesion sites every morning from D1 to D28 based on the randomization results (dosing will be completed by 12：00 noon daily for QD dosing group; dosing will be administered only once on D1 and D7 of BID groups, dosing interval is not less than 8 h). Given that CU-10101 is a high clearance compound, subjects will leave the Phase 1 clinical trial site after completing the single dose to continue multiple doses of CU-10101 unguent or vehicle at the same dose. After complete the relevant examinations and the investigator assesses that the requirements for continuation this trial are met the protocol at the Phase I clinical trial site on D1-D2 and D6-D8, the subjects will continue dosing until the last dose is completed on D28, and the subjects will continue dosing until the study is completed or the treatment discontinuation criteria are met. Subjects returned to the Phase I clinical trial site for safety monitoring and efficacy evaluation on D15 and D29. Safety monitoring included, but was not limited to, vital signs, physical examinations, 12-lead electrocardiograms (ECGs), laboratory examinations (hematology, blood biochemistry, urinalysis), and pregnancy examinations (D29 only), and AEs and concomitant medications. Efficacy evaluations included BSA, IGA score, EASI score, and NRS score. Subjects will collect PK blood samples at the time points. In addition, the skin areas requiring treatment will be redrawn prior to dosing on D8 and D15 and on D29 or the Early Withdrawal Visit.\n\nEOS Visit Period (D36): subjects will return to the Phase I clinical trial site for safety monitoring on D36 ± 1."
-        },
-        "conditionsModule": {
-          "conditions": [
-            "Atopic Dermatitis"
-          ],
-          "keywords": [
-            "CU-10101 unguent"
-          ]
-        },
-        "designModule": {
-          "studyType": "INTERVENTIONAL",
-          "phases": [
-            "PHASE1"
-          ],
-          "designInfo": {
-            "allocation": "RANDOMIZED",
-            "interventionModel": "PARALLEL",
-            "primaryPurpose": "TREATMENT",
-            "maskingInfo": {
-              "masking": "QUADRUPLE",
-              "whoMasked": [
-                "PARTICIPANT",
-                "CARE_PROVIDER",
-                "INVESTIGATOR",
-                "OUTCOMES_ASSESSOR"
-              ]
-            }
-          },
-          "enrollmentInfo": {
-            "count": 64,
-            "type": "ESTIMATED"
-          }
-        },
-        "armsInterventionsModule": {
-          "armGroups": [
-            {
-              "label": "Part1: cohort1",
-              "type": "EXPERIMENTAL",
-              "description": "BSA20%\\_0.3% (10g:30mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part1: cohort2",
-              "type": "EXPERIMENTAL",
-              "description": "BSA20%\\_1%(10g:100mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part1: cohort3",
-              "type": "EXPERIMENTAL",
-              "description": "BSA20%\\_2%(10g:200mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part1: cohort4",
-              "type": "EXPERIMENTAL",
-              "description": "BSA40%\\_2%(10g:200mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part2: cohort1",
-              "type": "EXPERIMENTAL",
-              "description": "QD\\_0.3%(10g:30mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part2: cohort2",
-              "type": "EXPERIMENTAL",
-              "description": "QD\\_1%(10g:100mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part2: cohort3",
-              "type": "EXPERIMENTAL",
-              "description": "QD\\_2%(10g:200mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            },
-            {
-              "label": "Part2: cohort4",
-              "type": "EXPERIMENTAL",
-              "description": "BID\\_2%(10g:200mg) or BID\\_1%(10g:100mg)",
-              "interventionNames": [
-                "Drug: CU-10101"
-              ]
-            }
-          ],
-          "interventions": [
-            {
-              "type": "DRUG",
-              "name": "CU-10101",
-              "description": "0.3%CU-10101 ；1%CU-10101 ；2%CU-10101； Placebo",
-              "armGroupLabels": [
-                "Part1: cohort1",
-                "Part1: cohort2",
-                "Part1: cohort3",
-                "Part1: cohort4",
-                "Part2: cohort1",
-                "Part2: cohort2",
-                "Part2: cohort3",
-                "Part2: cohort4"
-              ]
-            }
-          ]
-        },
-        "outcomesModule": {
-          "primaryOutcomes": [
-            {
-              "measure": "Adverse Events assessed by CTCAE V5.0",
-              "description": "The latest version of the Regulatory Activity Medical Dictionary (MedDRA) was used to encode AE terms used by investigators in eCRF. All adverse events (TEAE) that occurred during treatment were analyzed. TEAE will be summarized by dose grouping by systematic organ classification, preferred terminology and CTCAE classification, and relationship to investigational drug products.",
-              "timeFrame": "Part1:Day20；Part2:Day36"
-            },
-            {
-              "measure": "Vital signs",
-              "description": "Summary changes in heart rate, blood pressure (systolic and diastolic), body temperature (frontal temperature), and respiratory rate, as well as relative baseline levels, were descriptively summarized at each planned time point.\n\nThe changes of clinical significance before and after physical examination and treatment will be described.",
-              "timeFrame": "Part1: Day-7~Day-1，Day-1，Day1~Day13，Day20；Part2: Day-14~Day-2，Day-1，Day1，Day2，Day7, Day8，Day15, Day29，Day36"
-            },
-            {
-              "measure": "12-lead electrocardiogram",
-              "description": "Including PR interval, QRS interval, QT interval and QTc interval. To provide a descriptive summary of changes in ECG parameters relative to baseline by visit, and to provide a summary of changes in clinical significance of ECG parameters before and after treatment.",
-              "timeFrame": "Part1: Day-7~Day-1，Day-1，Day1~Day13，Day20；Part2: Day-14~Day-2，Day-1，Day1，Day2，Day7, Day8，Day15, Day29，Day36"
-            },
-            {
-              "measure": "Laboratory examination",
-              "description": "The data of laboratory tests were summarized according to the type of laboratory tests, and the changes of laboratory test values at baseline and post-treatment planned time points and relative baseline levels were descriptively summarized, and the changes in clinical significance before and after treatment were provided.",
-              "timeFrame": "Part1: Day-7~Day-1，Day13，Day20；Part2: Day-14~Day-2，Day-1， Day8，Day15, Day29，Day36"
-            },
-            {
-              "measure": "Skin tolerance assessment",
-              "description": "Descriptive summary of skin tolerances. Skin tolerance was assessed based on local irritant reactions (e.g. rash, redness, pain, etc.) to the participant's skin at the time points specified in the SoA. If the skin tolerance problems described above occur after a participant receives the study treatment and are assessed by the investigator as abnormal and clinically significant, an AE should be recorded and adverse event generics performed.Language Standards (CTCAE) v5.0 assessment criteria were used to assess their severity.",
-              "timeFrame": "Part1: Day1~Day20；Part2: Day1~Day36"
-            },
-            {
-              "measure": "Physical examination",
-              "description": "This includes general examination, examination of the skin and mucous membranes, lymph nodes, head, neck, chest, abdomen, spine, and limbs, or other areas as needed.",
-              "timeFrame": "Part1: Day-7~Day-1，Day-1，Day1，Day4~Day9，Day10，Day13，Day20；Part2: Day-14~Day-2，Day-1，Day1，Day7, Day8，Day15, Day29，Day36"
-            }
-          ]
-        },
-        "eligibilityModule": {
-          "eligibilityCriteria": "Inclusion Criteria:\n\nPart 1：1.Subjects were 18-45 years of age (inclusive), male or female, at the time of signing the informed consent form;\n\n2.Male weight ≥ 50.0 kg, female weight ≥ 45.0 kg; body mass index in the range of 18.0-27.0 kg/m2 (including cut-off);\n\n3.Based on physical examination, vital signs, electrocardiogram, and laboratory results, it was shown to be in good health without clinically significant abnormalities (as judged by the investigator);\n\n4.Ability to fully understand the contents of the study, voluntarily participate in the study, and sign the informed consent form. Follow protocol procedures to complete relevant visits during the study;\n\n5.Female participants of childbearing potential and male participants with partners of childbearing potential must consent from signing the informed consent form and no childbearing plan and voluntary use of appropriate contraception up to 3 months after the last dose.\n\nPart 2：1.Subjects were 18-65 years of age (inclusive), male or female, at the time of signing the informed consent form;\n\n2.Diagnosed with AD according to Hanifin-Rajka diagnostic criteria and a history of AD assessed by the investigator for ≥ 6 months;\n\n3.Male weight ≥ 50.0 kg, female weight ≥ 45.0 kg; body mass index in the range of 18.0-27.0 kg/m2 (including cut-off);\n\n4.Investigator Global Assessment (IGA) score of 2 or 3 at screening and baseline;\n\n5.At screening and baseline, BSA was 5% -40% (excluding the area of lesions on the scalp, face, genitalia and intertriginous sites \\[e.g., axillary, inguinal, elbow fossa, etc.\\] when calculating the lesion area);\n\n6.Ability to fully understand the contents of the study, voluntarily participate in the study, and sign the informed consent form. Follow protocol procedures to complete relevant visits during the study;\n\n7.Female participants of childbearing potential and male participants with partners of childbearing potential must consent from signing the informed consent form and no childbearing plan and voluntary use of appropriate contraception up to 3 months after the last dose.\n\nExclusion Criteria:\n\nPart 1 ：1.Allergic constitution (e.g., allergy to two or more drugs, food and pollen), or allergy to the ingredients or excipients of the investigational medicinal product;\n\n2.Those who cannot tolerate venipuncture, or have a history of needle sickness and blood sickness;\n\n3.Subjects with skin damage, atopic dermatitis, eczema, rash, pigmentation and tattoos at the administration site, or other conditions judged by the investigator to be likely to affect drug absorption or affect skin tolerance;\n\n4.Previous or current significant or clinically significant diseases/abnormalities, including, but not limited to, heart/cardiocerebrovascular, respiratory, endocrine, gastrointestinal, kidney, liver, gallbladder, dermatological, hematological, immune, neurological or psychiatric diseases/abnormalities, or, as judged by the investigator, there is a safety risk or impact on safety, tolerability or pharmacokinetic assessment;\n\n5.Participants with a prior diagnosis of malignancy;\n\n6.Lactating women or women with positive pregnancy results, or women who plan to become pregnant during the study;\n\n7.Hepatitis C virus (HCV) antibody, hepatitis B surface antigen (HBsAg), treponema pallidum (TP) antibody, human immunodeficiency virus (HIV) antibody were positive;\n\n8.Those who smoke more than 5 cigarettes per day for 3 months prior to screening or cannot stop using any tobacco products during the study;\n\n9.Frequent drinkers within 3 months prior to screening, i.e., more than 14 units of alcohol per week (1 unit = 360 mL beer or 45 mL of spirits with 40% alcohol or 150 mL of wine) or who were unable to discontinue use of any alcoholic product during the study or had a positive alcohol breath test at screening;\n\n10.Previous history of drug abuse, drug use within 3 months prior to screening, or positive urine drug screen at screening;\n\n11.Donation of blood or massive blood loss (≥ 400 mL) within 3 months prior to screening;\n\n12.Participation in other clinical trials within 3 months prior to screening or during the study;\n\n13.Major surgery within 3 months prior to screening (major surgery is defined in accordance with the Medical Journal of Medicine, May 1, 2009 Grade 3 and 4 surgery specified in the Measures for the Administration of Clinical Application of Therapeutic Techniques), or who plan to undergo surgery during the study;\n\n14.Those who have received live (attenuated) vaccines within 4 weeks prior to screening, or plan to receive live (attenuated) vaccines during treatment and within 4 weeks after the last dose of investigational product;\n\n15.Received any other medication, including herbal and dietary supplements, within 2 weeks or 5 times the elimination half-life prior to screening, whichever is longer;\n\n16.Consumption of excessive amounts of tea, coffee, and/or caffeinated beverages (more than 8 cups, 1 cup = 250 mL) per day for 2 weeks prior to screening;\n\n17.Participants who have taken food or beverages (e.g. grapefruit, grapefruit juice, etc.) or any food or drink containing or metabolized to produce caffeine or xanthine (e.g. coffee, tea, chocolate) within 48 hours prior to dosing;\n\n18.Those who have special requirements for diet and cannot comply with the unified diet;\n\n19.Other conditions or treatments that, as assessed by the investigator, may affect the results of the study, interfere with the participation of participants in the trial, etc.\n\nPart 2：\n\n1. History of allergy to the ingredients or excipients of the investigational product;\n2. Those who cannot tolerate venipuncture, or have a history of needle sickness and blood sickness;\n3. Previous history of clinically significant cardiac, hepatic, neurological, respiratory, blood, digestive, immune, renal or psychiatric disorders, which, in the opinion of the investigator, increases safety risks, affects safety, tolerability, or pharmacokinetics;\n4. Participants with a prior diagnosis of malignancy;\n5. Any active skin diseases, such as psoriasis, lupus erythematosus, seborrheic dermatitis, that may have affected the evaluation of the study results;\n6. Participants with acute-phase atopic dermatitis whose rash was predominantly erosive, exudative, or had a new skin rash 2 weeks before screening;\n7. Active infection or any viral, bacterial, fungal infection (e.g., herpes simplex, herpes zoster, varicella) requiring treatment at screening;\n8. Skin lesions were limited to the head, hands, feet, genitalia and intertriginous areas;\n9. Lactating women or women with positive pregnancy results, or women who plan to become pregnant during the study;\n10. Those who are judged by the investigator to be abnormal and clinically significant at screening or baseline clinical or laboratory tests;\n11. Hepatitis C virus (HCV) antibody, hepatitis B surface antigen (HBsAg), treponema pallidum (TP) antibody, human immunodeficiency virus (HIV) antibody were positive;\n12. Those who smoke more than 5 cigarettes per day for 3 months prior to screening or cannot stop using any tobacco products during the study;\n13. Frequent drinkers within 3 months prior to screening, i.e., more than 14 units of alcohol per week (1 unit = 360 mL beer or 45 mL of spirits with 40% alcohol or 150 mL of wine) or who were unable to discontinue use of any alcoholic product during the study or had a positive alcohol breath test at screening;\n14. Previous history of drug abuse, drug use within 3 months prior to screening, or positive urine drug screen at screening;\n15. Donation of blood or massive blood loss (≥ 400 mL) within 3 months prior to screening;\n16. Participation in other clinical trials within 3 months prior to screening or during the study;\n17. Major surgery within 3 months prior to screening (major surgery defined by reference to 01 May 2009 Grade 3 and 4 surgery specified in the Measures for the Administration of Clinical Application of Medical Technology), or who plan to undergo surgery during the study;\n18. Those who have received live (attenuated) vaccines within 4 weeks prior to screening, or plan to receive live (attenuated) vaccines during treatment and within 4 weeks after the last dose of investigational product;\n19. Systemic systemic therapy (e.g., biologics, small molecule targeted, immunosuppressants, and other systemic therapies, etc.) for any of AD within 4 weeks (or 5 half-lives, whichever is longer) prior to screening;\n20. Has received phototherapy (narrow-band ultraviolet B \\[NBUVB\\], ultraviolet B \\[UVB\\], ultraviolet A1 \\[UVA1\\], psoralen + ultraviolet A \\[PUVA\\]), tanning beds, or any other light-emitting device within 4 weeks prior to screening;\n21. Those who have used any strong inhibitor or inducer of any CYP3A4 enzyme within 4 weeks prior to screening (strong inhibitors include clarithromycin, itraconazole, ketoconazole, ritonavir, and strong inducers include rifampin and phenytoin);\n22. Received topical drug therapies known or likely to affect AD within 2 weeks (or 5 half-lives, whichever is longer) before screening, including but not limited to topical TCS, TCI, topical PDE-4 inhibitors, topical JAK inhibitors, etc.;\n23. Consumption of excessive amounts of tea, coffee, and/or caffeinated beverages (more than 8 cups, 1 cup = 250 mL) per day for 2 weeks prior to screening;\n24. Intake of food or beverages (e.g. tea, coffee, cola, energy drinks or chocolate) containing grapefruit and/or grapefruit, caffeine, and/or xanthine from 48 h before dosing until leaving the ward;\n25. Other conditions or treatments that, as assessed by the investigator, may affect the results of the study, interfere with the participation of participants in the trial, etc.",
-          "healthyVolunteers": true,
-          "sex": "ALL",
-          "minimumAge": "18 Years",
-          "maximumAge": "65 Years",
-          "stdAges": [
-            "ADULT",
-            "OLDER_ADULT"
-          ]
-        },
-        "contactsLocationsModule": {
-          "locations": [
-            {
-              "facility": "Shanghai Skin Disease Hospital",
-              "city": "Shanghai",
-              "state": "Shanghai Municipality",
-              "zip": "200433",
-              "country": "China",
-              "geoPoint": {
-                "lat": 31.22222,
-                "lon": 121.45806
-              }
-            }
-          ]
-        },
-        "ipdSharingStatementModule": {
-          "ipdSharing": "NO"
-        }
-      },
-      "derivedSection": {
-        "miscInfoModule": {
-          "versionHolder": "2026-08-14"
-        },
-        "conditionBrowseModule": {
-          "meshes": [
-            {
-              "id": "D003876",
-              "term": "Dermatitis, Atopic"
-            }
-          ],
-          "ancestors": [
-            {
-              "id": "D012873",
-              "term": "Skin Diseases, Genetic"
-            },
-            {
-              "id": "D030342",
-              "term": "Genetic Diseases, Inborn"
-            },
-            {
-              "id": "D009358",
-              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
-            },
-            {
-              "id": "D003872",
-              "term": "Dermatitis"
-            },
-            {
-              "id": "D012871",
-              "term": "Skin Diseases"
-            },
-            {
-              "id": "D017437",
-              "term": "Skin and Connective Tissue Diseases"
-            },
-            {
-              "id": "D017443",
-              "term": "Skin Diseases, Eczematous"
-            },
-            {
-              "id": "D006969",
-              "term": "Hypersensitivity, Immediate"
-            },
-            {
-              "id": "D006967",
-              "term": "Hypersensitivity"
-            },
-            {
-              "id": "D007154",
-              "term": "Immune System Diseases"
-            }
-          ]
-        }
-      },
-      "hasResults": false
-    },
-    {
-      "protocolSection": {
-        "identificationModule": {
           "nctId": "NCT05763914",
           "orgStudyIdInfo": {
             "id": "20205100702"
@@ -2337,7 +906,497 @@
         }
       },
       "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT05286047",
+          "orgStudyIdInfo": {
+            "id": "CMUH-2021001"
+          },
+          "organization": {
+            "fullName": "Glac Biotech Co., Ltd",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "Probiotic on Atopic Dermatitis in Infant",
+          "officialTitle": "Effects of Oral Bifidobacterium Longum CCFM1029 on Atopic Dermatitis in Infant"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2026-01",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2022-09-23",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2025-05-28",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2025-05-28",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2022-03-09",
+          "studyFirstSubmitQcDate": "2022-03-17",
+          "studyFirstPostDateStruct": {
+            "date": "2022-03-18",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2026-01-08",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-01-12",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "PRINCIPAL_INVESTIGATOR",
+            "investigatorFullName": "Hsieh-Hsun Ho",
+            "investigatorTitle": "R&D Director",
+            "investigatorAffiliation": "Glac Biotech Co., Ltd"
+          },
+          "leadSponsor": {
+            "name": "Glac Biotech Co., Ltd",
+            "class": "INDUSTRY"
+          }
+        },
+        "oversightModule": {
+          "oversightHasDmc": false,
+          "isFdaRegulatedDrug": false,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "The clinical trial will be carried out in China Medical University Hospital. The overall plan is a double-blind trial. All recruited 3 months-3 years old atopic dermatitis (AD) patients are divided into two groups, 50 in each group and 100 in two groups. The two groups are placebo and Bifidobacterium longum CCFM1029. The entire evaluation plan lasts for 3 months. The number of probiotic bacteria is 5 billion per capsule, and the number of bacteria taken by the subjects is 5 billion per day (one capsule before bed each day). During the planning period, the eczema area and severity index (EASI) score of the patient's dermatitis was evaluated every month, and the score differences of dermatitis before and after taking probiotics was observed. In addition, subjects must perform two fecal samplings before and after the trial, and the isolated DNA was analyzed using the next-generation high-throughput sequencing method (NGS) for subject fecal flora changes. Comparing the two groups before and after taking the capsule, whether the intestinal flora changed. Statistical analysis of the relationship between changes in intestinal flora and the degree of AD. Through the above test, the investigators evaluated whether Bifidobacterium longum CCFM1029 can regulate the pediatric intestinal flora and relieve the inflammatory response in the body, thereby regulating atopic dermatitis."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Atopic Dermatitis"
+          ],
+          "keywords": [
+            "Atopic dermatitis",
+            "Probiotics",
+            "Intestinal flora",
+            "Allergic diseases"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "NA"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "PARALLEL",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "DOUBLE",
+              "whoMasked": [
+                "PARTICIPANT",
+                "INVESTIGATOR"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 100,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Bifidobacterium longum CCFM1029",
+              "type": "EXPERIMENTAL",
+              "interventionNames": [
+                "Dietary Supplement: Bifidobacterium longum CCFM1029"
+              ]
+            },
+            {
+              "label": "Placebo",
+              "type": "PLACEBO_COMPARATOR",
+              "interventionNames": [
+                "Dietary Supplement: Placebo"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DIETARY_SUPPLEMENT",
+              "name": "Bifidobacterium longum CCFM1029",
+              "description": "Subjects take one capsule containing Bifidobacterium longum CCFM1029 daily at bedtime.",
+              "armGroupLabels": [
+                "Bifidobacterium longum CCFM1029"
+              ]
+            },
+            {
+              "type": "DIETARY_SUPPLEMENT",
+              "name": "Placebo",
+              "description": "Subjects take one capsule containing maltodextrin daily at bedtime.",
+              "armGroupLabels": [
+                "Placebo"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Changes in eczema area and severity index (EASI) scores.",
+              "description": "Changes in eczema area and severity index (EASI) scores were assessed before and 3 months of intervention. The minimum value is \"0\" and maximum value is \"72\", higher scores mean a worse outcome.",
+              "timeFrame": "Before and 3-month intervention."
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Changes in eczema area and severity index (EASI) scores.",
+              "description": "Changes in eczema area and severity index (EASI) scores were assessed after 1 month and 2 months of intervention. The minimum value is \"0\" and maximum value is \"72\", higher scores mean a worse outcome.",
+              "timeFrame": "After 1 month and 2 months of intervention."
+            },
+            {
+              "measure": "Changes in gut microbiota ratios.",
+              "description": "Changes in gut microbiota ratios were assessed by NGS before and 3 months of intervention.",
+              "timeFrame": "Before and 3 months of intervention."
+            },
+            {
+              "measure": "Changes in infants' dermatitis quality of life (IDQOL) index.",
+              "description": "Changes in infants' dermatitis quality of life (IDQOL) index were assessed by questionnaire before and 1-, 2- and 3-month intervention. The minimum value is \"0\" and maximum value is \"30\", higher scores mean a worse outcome.",
+              "timeFrame": "Before and 1-, 2- and 3-month intervention."
+            },
+            {
+              "measure": "Changes in dermatitis family impact (DFI) scores.",
+              "description": "Changes in dermatitis family impact (DFI) scores were assessed by questionnaire before and 1-, 2- and 3-months intervention. The minimum value is \"0\" and maximum value is \"30\", higher scores mean a worse outcome.",
+              "timeFrame": "Before and 1-, 2- and 3-month intervention."
+            },
+            {
+              "measure": "Changes in subjects' frequency of medicine use from questionnaires.",
+              "description": "Changes in subjects' frequency of medicine use were assessed from questionnaire before and 1-, 2- and 3-months intervention. When subjects returned to the clinic, the average daily medicine use over the past month is asked by a professional physician.",
+              "timeFrame": "Before and 1-, 2- and 3-month intervention."
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Subjects were between 3 months and 3 years old.\n* For patients diagnosed with atopic dermatitis by a professional physician and the EASI score is greater than 5, the type and frequency of drugs used during the experiment should be recorded.\n* The subject's parents agree to join the trial and sign the informed consent form.\n\nExclusion Criteria:\n\n* The patient who has a history of allergic reactions, or the use of other highly sensitive or contraindicated drugs (allergy to antibiotics or antipyretics).\n* The patient who has taken oral immunosuppressants and systemic steroids within the past 2 weeks.\n* The patient who has consumed probiotic-related products (including drops, lozenges, capsules, powder or yogurt) within the past 1 month.\n* The patient who has participated in other clinical studies within the past 1 month.\n* The patient who has received immunotherapy within the past 1 year.\n* The patient who suffering from major diseases (with a IC card for severe illness), congenital diseases.\n* The patient who is not suitable to participate in the trial as assessed by the professional physician.",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "3 Months",
+          "maximumAge": "3 Years",
+          "stdAges": [
+            "CHILD"
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Glac Biotech Co., Ltd.",
+              "city": "Tainan",
+              "zip": "74442",
+              "country": "Taiwan",
+              "geoPoint": {
+                "lat": 22.99083,
+                "lon": 120.21333
+              }
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003876",
+              "term": "Dermatitis, Atopic"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D012873",
+              "term": "Skin Diseases, Genetic"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D003872",
+              "term": "Dermatitis"
+            },
+            {
+              "id": "D012871",
+              "term": "Skin Diseases"
+            },
+            {
+              "id": "D017437",
+              "term": "Skin and Connective Tissue Diseases"
+            },
+            {
+              "id": "D017443",
+              "term": "Skin Diseases, Eczematous"
+            },
+            {
+              "id": "D006969",
+              "term": "Hypersensitivity, Immediate"
+            },
+            {
+              "id": "D006967",
+              "term": "Hypersensitivity"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT02627989",
+          "orgStudyIdInfo": {
+            "id": "18690"
+          },
+          "organization": {
+            "fullName": "LEO Pharma",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "An Observational Study Investigating the Treatment Satisfaction of Atopic Dermatitis Patients Who Have Switched to Ointment (W/O Emulsion) Formulation of Very Strong Class Topical Corticosteroids",
+          "officialTitle": "An Observational Study Investigating the Treatment Satisfaction of Atopic Dermatitis Patients Who Have Switched to Ointment (W/O Emulsion) Formulation of Very Strong Class Topical Corticosteroids",
+          "acronym": "Ointment TS-AD"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2018-01",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2015-12-10",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2016-11-17",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2017-01-17",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2015-12-09",
+          "studyFirstSubmitQcDate": "2015-12-09",
+          "studyFirstPostDateStruct": {
+            "date": "2015-12-11",
+            "type": "ESTIMATED"
+          },
+          "lastUpdateSubmitDate": "2020-03-30",
+          "lastUpdatePostDateStruct": {
+            "date": "2020-04-01",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "LEO Pharma",
+            "class": "INDUSTRY"
+          },
+          "collaborators": [
+            {
+              "name": "Bayer",
+              "class": "INDUSTRY"
+            }
+          ]
+        },
+        "oversightModule": {
+          "oversightHasDmc": false
+        },
+        "descriptionModule": {
+          "briefSummary": "This study intends to investigate patient satisfaction of treatment with Ointment (W/O emulsion) formulations of Potency Class II topical corticosteroids (TCs) for atopic dermatitis (AD) patients in Japan. Objectives include measuring patient satisfaction, treatment adherence, itchiness, and AD severity scores."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Dermatitis, Atopic"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "patientRegistry": false,
+          "designInfo": {
+            "observationalModel": "OTHER",
+            "timePerspective": "PROSPECTIVE"
+          },
+          "enrollmentInfo": {
+            "count": 55,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Diflucortolone valerate (Nerisona/Texmeten)",
+              "description": "Adult patients with atopic dermatitis switching from diflucortolone-valerate fatty ointment to ointment (water/oil emulsion) during autumn/ winter (Nov to Feb) or spring/ summer (May to Aug)",
+              "interventionNames": [
+                "Drug: Diflucortolone valerate (Nerisona)",
+                "Drug: Diflucortolone valerate (Texmeten)"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Diflucortolone valerate (Nerisona)",
+              "description": "Potency Class II (classified as Very Strong class in Japan) topical corticosteroids",
+              "armGroupLabels": [
+                "Diflucortolone valerate (Nerisona/Texmeten)"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Diflucortolone valerate (Texmeten)",
+              "description": "Potency Class II (classified as Very Strong class in Japan) topical corticosteroids",
+              "armGroupLabels": [
+                "Diflucortolone valerate (Nerisona/Texmeten)"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Treatment satisfaction measured by Treatment Satisfaction Questionnaire for Medication (TSQM-9)",
+              "description": "A Patient Reported Outcome questionnaire assessing treatment satisfaction by recalling the last 2-3 weeks of treatment",
+              "timeFrame": "10 months"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Treatment adherence measured by Morisky Medication Adherence Scale (MMAS-8-Item)",
+              "timeFrame": "10 months"
+            },
+            {
+              "measure": "Itchiness according to Visual Analogue Scale (VAS)",
+              "timeFrame": "10 months"
+            },
+            {
+              "measure": "Severity Scoring of Atopic Dermatitis (SCORAD)",
+              "timeFrame": "10 months"
+            },
+            {
+              "measure": "Eczema Area and Severity Index (EASI)",
+              "timeFrame": "10 months"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Female and male patients with a diagnosis of atopic dermatitis who are treated with Fatty Ointment Potency Class II (Very strong class) TCs\n* Patients who are scheduled to change the formulation of the Potency Class II TC from Fatty Ointment to Ointment (Water in Oil; Water per Oil emulsion) as per investigator's routine treatment practice\n* Patients who are aged over 20\n* Patients who are able to understand and sign a written informed consent\n\nExclusion Criteria:\n\n-Patients participating in an investigational program with interventions outside of routine clinical practice\n\n* Patients with any contraindication to TCs\n* Patients who are regarded as ineligible by the investigator\n* Patients who are pregnant or breastfeeding\n* For Period 2 (Spring-Summer), patients enrolled in the Period 1",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "20 Years",
+          "stdAges": [
+            "ADULT",
+            "OLDER_ADULT"
+          ],
+          "studyPopulation": "Patients will be recruited by the investigator who will also be the treating physician. As an observational study, only patients who the investigator plans on switching to the ointment (W/O emulsion) from fatty ointment formulation will be eligible to participate. Patients will be recruited for each seasonal phase and same patients may not necessarily be observed between the two seasonal phases.",
+          "samplingMethod": "NON_PROBABILITY_SAMPLE"
+        },
+        "contactsLocationsModule": {
+          "overallOfficials": [
+            {
+              "name": "Bayer Study Director",
+              "affiliation": "Bayer",
+              "role": "STUDY_DIRECTOR"
+            }
+          ],
+          "locations": [
+            {
+              "city": "Tsu",
+              "state": "Mie-ken",
+              "zip": "514-8507",
+              "country": "Japan",
+              "geoPoint": {
+                "lat": 34.73333,
+                "lon": 136.51667
+              }
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003876",
+              "term": "Dermatitis, Atopic"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D012873",
+              "term": "Skin Diseases, Genetic"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D003872",
+              "term": "Dermatitis"
+            },
+            {
+              "id": "D012871",
+              "term": "Skin Diseases"
+            },
+            {
+              "id": "D017437",
+              "term": "Skin and Connective Tissue Diseases"
+            },
+            {
+              "id": "D017443",
+              "term": "Skin Diseases, Eczematous"
+            },
+            {
+              "id": "D006969",
+              "term": "Hypersensitivity, Immediate"
+            },
+            {
+              "id": "D006967",
+              "term": "Hypersensitivity"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        },
+        "interventionBrowseModule": {
+          "meshes": [
+            {
+              "id": "C013486",
+              "term": "diflucortolone valerate"
+            }
+          ]
+        }
+      },
+      "hasResults": false
     }
   ],
-  "nextPageToken": "ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4TmjeTtA"
+  "nextPageToken": "ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4blD-Wv_E"
 }

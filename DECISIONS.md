@@ -89,3 +89,19 @@ ci.yml gained a top-level `permissions: contents: read` block so the
 `GITHUB_TOKEN` can never write, whatever the repo default is. Deliberate
 upgrades go through `pre-commit autoupdate`, which rewrites SHA pins. Both
 changes came out of the security-reviewer pass on the CI edit.
+
+## 2026-08-14 — Fixture data minimization: personal contact data removed
+
+The original `fixture_page.json` and `fixture_dates_mixed.json` carried a
+named investigator's direct email and phone (a `pointOfContact` block on
+NCT02289989). This is verbatim public ClinicalTrials.gov registry data, so
+re-publishing it discloses nothing new — it was removed on principle anyway:
+a GitHub copy is indexable in ways the registry page may not be, and the
+fixtures don't need it. SPEC-01's fixture criteria were amended (no
+`pointOfContact` or direct emails/phones; investigator names in
+`overallOfficials` remain acceptable) and both fixtures were re-captured
+from the live API: the page envelope filtered to COMPLETED studies without
+results, and the partial-date example replaced by NCT01138761 (same quirk,
+no contact data). The prior fixture versions persist in local pre-push git
+history — accepted and documented here rather than scrubbed, since the repo
+has never been pushed and the data remains public either way.
