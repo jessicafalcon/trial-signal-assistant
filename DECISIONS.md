@@ -75,3 +75,15 @@ adapted (see "Project tooling" in CLAUDE.md). Non-obvious choices:
   revisit before Phase 4 introduces real Snowflake/AWS credentials. Tests
   are network- and credential-free by policy, so the hook's output tail
   cannot echo secrets.
+
+## 2026-08-14 — Hook revs SHA-pinned; CI token read-only
+
+Moving CI lint to `pre-commit run --all-files` made CI clone and execute the
+hook repos, so their `rev:` fields switched from tags (v0.16.3, 4.3.0) to the
+tags' full commit SHAs: a tag is mutable and can be repointed upstream with no
+visible change in this repo, while a SHA pin also satisfies the determinism
+policy ("same inputs → same outputs"). For the same blast-radius reason,
+ci.yml gained a top-level `permissions: contents: read` block so the
+`GITHUB_TOKEN` can never write, whatever the repo default is. Deliberate
+upgrades go through `pre-commit autoupdate`, which rewrites SHA pins. Both
+changes came out of the security-reviewer pass on the CI edit.
