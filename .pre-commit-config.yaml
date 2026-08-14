@@ -1,13 +1,13 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: 65dbdb59d2f2d9c3bdc343c566821ad3319ddaa3  # v0.16.3
     hooks:
       - id: ruff-check
         args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 4.3.0
+    rev: 8108cc202d2aa2732b21d48507152c95ee244030  # 4.3.0
     hooks:
       - id: sqlfluff-lint
         # dbt templater needs dbt itself inside the hook's isolated env
