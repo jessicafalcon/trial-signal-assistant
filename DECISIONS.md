@@ -2,6 +2,24 @@
 
 Why-not-X log. One entry per non-obvious choice.
 
+## 2026-08-14 — Phase list joined to a single string
+
+The API sends `phases` as a list (usually one entry, sometimes
+`["PHASE1", "PHASE2"]`). `TrialRecord.phase` joins it with `/` —
+`"PHASE1/PHASE2"` — so the field stays a flat string for dbt and Chroma
+metadata, and the raw list is recoverable by splitting on `/`. `"NA"` is
+kept verbatim rather than mapped to None: it means "not applicable"
+(e.g. observational), which is information, unlike an absent field.
+
+## 2026-08-14 — Interventions parsed as name strings only
+
+`TrialRecord.interventions` keeps only each intervention's `name`; the
+API's `type` (DRUG, DEVICE, BIOLOGICAL, …) and `description` are dropped.
+Names are all the staging models and status-change marts need, and a flat
+`list[str]` keeps the record simple. Revisit in Phase 5: the RAG layer
+may want type and description for richer per-field embedding docs — at
+that point extend the record rather than re-parse ad hoc.
+
 ## 2026-08-14 — Date formats corrected from corpus scan
 
 The documented date formats ("January 2024", "January 15, 2024") did not

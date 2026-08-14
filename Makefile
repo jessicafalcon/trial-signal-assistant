@@ -1,6 +1,8 @@
 VENV := .venv
 PY := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
+# CI overrides with PYTEST=pytest (no venv there)
+PYTEST ?= $(VENV)/bin/pytest
 
 .PHONY: setup test ingest dbt dbt-snowflake eval lint
 
@@ -10,10 +12,10 @@ setup:
 	$(VENV)/bin/pre-commit install
 
 test:
-	$(VENV)/bin/pytest tests/test_parser.py -v
+	$(PYTEST) tests/test_parser.py -v
 
 ingest:
-	@echo "not implemented until phase 1"
+	$(PY) -m ingest.fetch_clinical_trials
 
 dbt:
 	@echo "not implemented until phase 2"
