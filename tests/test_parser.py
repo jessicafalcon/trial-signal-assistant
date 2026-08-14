@@ -70,18 +70,18 @@ class TestDates:
     def test_iso_month_resolves_to_first_of_month(
         self, dates_mixed: list[dict]
     ) -> None:
-        record = parse_study(dates_mixed[1])  # NCT02289989
-        assert record.nct_id == "NCT02289989"
-        assert record.start_date_raw == "2014-11"
-        assert record.start_date == "2014-11-01"
+        record = parse_study(dates_mixed[1])  # NCT01138761
+        assert record.nct_id == "NCT01138761"
+        assert record.start_date_raw == "2010-06"
+        assert record.start_date == "2010-06-01"
         assert record.date_precision == "month"
 
     def test_partial_struct_without_type_key(self, dates_mixed: list[dict]) -> None:
-        # NCT02289989: startDateStruct is {"date": "2014-11"} with no "type" key
+        # NCT01138761: startDateStruct is {"date": "2010-06"} with no "type" key
         struct = dates_mixed[1]["protocolSection"]["statusModule"]["startDateStruct"]
         assert "type" not in struct
         record = parse_study(dates_mixed[1])
-        assert record.start_date == "2014-11-01"
+        assert record.start_date == "2010-06-01"
         assert record.date_precision == "month"
 
     def test_absent_date_struct(self, dates_mixed: list[dict]) -> None:
@@ -132,7 +132,7 @@ class TestPagination:
     def test_envelope_yields_studies_and_token(self) -> None:
         studies, next_token = parse_page(load("fixture_page.json"))
         assert len(studies) == 5
-        assert next_token == "ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4TmjeTtA"
+        assert next_token == "ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4blD-Wv_E"
 
     def test_envelope_without_token(self) -> None:
         studies, next_token = parse_page({"studies": []})
