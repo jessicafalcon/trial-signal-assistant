@@ -38,6 +38,15 @@ running against captured fixture payloads. No live network calls in tests.
 Located in `tests/fixtures/`. Do not edit, regenerate, or "fix" them —
 they are ground truth captured from the live API:
 
+> Amended 2026-08-14 (data minimization): captured studies must contain
+> no `pointOfContact` block or personal contact details — investigator
+> name lists in `overallOfficials` are acceptable; direct emails/phones
+> are not. Reason: the original `fixture_page.json` and
+> `fixture_dates_mixed.json` carried a named investigator's direct email
+> and phone (public registry data, removed on principle). Both were
+> re-captured from the live API per this criterion; the partial-date
+> example changed from NCT02289989 to NCT01138761.
+
 - `fixture_complete.json` — a well-populated ACTIVE_NOT_RECRUITING Phase 2
   trial (barzolvolimab-type record) with all modules present.
 - `fixture_withdrawn.json` — a WITHDRAWN trial with a `whyStopped` string.
@@ -76,7 +85,7 @@ If a fixture appears malformed, STOP and report it — do not repair it.
      first-of-month + `date_precision="month"`; absent date struct →
      `None`/`None`; one unknown-format string → raw kept,
      `date_precision=None`, no exception; partial date struct (no
-     `type` key, real example NCT02289989 in fixture_dates_mixed.json)
+     `type` key, real example NCT01138761 in fixture_dates_mixed.json)
      → parses like any other date, no KeyError.
    - `why_stopped` extracted when present, `None` when absent.
    - Pagination: envelope parsing yields the studies list + next token.
