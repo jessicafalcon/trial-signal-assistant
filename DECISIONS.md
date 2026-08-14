@@ -39,7 +39,9 @@ assistant pattern, but naming it after them would tie a public portfolio
 piece to one employer and imply an affiliation that doesn't exist. A neutral
 name keeps the repo reusable across applications and honest about being an
 independent build. The pattern it mirrors is described in the README and
-CLAUDE.md instead, where context can be given properly.
+CLAUDE.md instead, where context can be given properly. 2026-08-14: CLAUDE.md
+now describes the pattern generically too — the named reference belongs only
+in the README case-study section (Phase 7), aligning with this decision.
 
 ## 2026-08-14 — Dual dbt targets: DuckDB (local/CI) + Snowflake (demo)
 

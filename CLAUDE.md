@@ -7,7 +7,7 @@ A portfolio-grade data + GenAI pipeline: ingests public clinical trial data
 warehouse (DuckDB locally/CI, Snowflake for demo), tracks trial status
 changes over time via dbt snapshots, and answers natural-language questions
 ("why was this trial withdrawn?") through a RAG layer with cited Claude API
-answers. It mirrors the "Concierge" assistant pattern (unified data platform
+answers. It mirrors an industry assistant pattern (unified data platform
 + agentic Q&A instead of dashboard-hunting) at small scale.
 
 Built by a developer who is NEW to dbt and Airflow — see Teaching rule below.
@@ -128,7 +128,8 @@ AI sits at the edges; everything in the middle is deterministic.
   (dict in, typed record out) — dbt seeds and the RAG embedder import them.
 - Dependencies: ask before adding ANY new package. Current allowlist:
   requests, pytest, dbt-core, dbt-duckdb, dbt-snowflake,
-  sentence-transformers, chromadb, anthropic, ruff, sqlfluff, pre-commit.
+  sentence-transformers, chromadb, anthropic, ruff, sqlfluff, pre-commit,
+  sqlfluff-templater-dbt.
 - dbt naming: `stg_` staging, `mart_` marts, snapshots in `snapshots/`.
   SQL keywords lowercase, one column per line in select lists.
 - Secrets defense in depth: never commit .env, data/, *.duckdb, .terraform/,
