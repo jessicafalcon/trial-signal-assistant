@@ -8,3 +8,4 @@ __pycache__/
 terraform.tfstate*
 .DS_Store
 .astro/
+.claude/settings.local.json

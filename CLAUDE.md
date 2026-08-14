@@ -127,8 +127,13 @@ AI sits at the edges; everything in the middle is deterministic.
   sentence-transformers, chromadb, anthropic, ruff, sqlfluff.
 - dbt naming: `stg_` staging, `mart_` marts, snapshots in `snapshots/`.
   SQL keywords lowercase, one column per line in select lists.
-- Never commit: .env, data/, *.duckdb, .terraform/, credentials of any kind.
-  Never echo secrets into files, logs, or command output.
+- Secrets defense in depth: never commit .env, data/, *.duckdb, .terraform/,
+  or credentials of any kind; never echo secrets into files, logs, or command
+  output. Enforced in layers: .gitignore, the user-level block-secrets hook
+  (blocks secret-looking Write/Edit content; Bash output is not covered), and
+  the security-reviewer agent, which MUST run and pass before committing
+  changes that touch terraform/, CI workflows, .env/credential handling,
+  ingest network code, or LLM-context assembly (see Project tooling).
 
 ## Teaching rule (IMPORTANT)
 
@@ -150,6 +155,34 @@ clever way.
 - End each loop with a summary: what changed + decisions the spec didn't
   cover, listed explicitly for human review.
 - Live network calls: only via `make ingest`, never inside pytest or CI.
+
+## Project tooling
+
+Index only — hooks fire from settings.json; agents and skills self-describe
+in their own files. All agents are report-only by contract: none carry
+Write/Edit, and their instructions forbid fixing, committing, or working
+around findings (Bash is granted for git/pytest, so the boundary is
+prompt-enforced, not a permission wall). A finding is fixed in the main
+session or explicitly accepted — never auto-fixed, ignored, or committed
+around.
+
+- `run-tests` hook — `.claude/hooks/run-tests.py`; after any .py edit inside
+  this repo, runs pytest and blocks on red. Wired in `.claude/settings.json`.
+- `block-secrets` hook — `~/.claude/hooks/block-secrets.py` (user-level, all
+  projects); blocks writes containing secret-looking values.
+- `code-reviewer` agent — `.claude/agents/`; diff review against this file's
+  conventions. Run at each spec's finish line, before commit.
+- `security-reviewer` agent — `.claude/agents/`; secrets/exposure/prompt-
+  injection review. Mandatory-use rule: see "Secrets defense in depth" under
+  Conventions.
+- `functionality-tester` agent — `.claude/agents/`; runs the suite + the
+  spec's DONE command, compares behavior to intent. Run after code-reviewer.
+- `coherence-auditor` agent — `.claude/agents/`; whole-repo drift audit vs
+  CLAUDE.md/PLAN.md/DECISIONS.md. MANDATORY once at each PLAN.md phase exit.
+- `/selfcheck` command — `.claude/commands/selfcheck.md`; verifies the last
+  commit (suite, DONE command, determinism, fixtures), then stops.
+- `strategic-compact` skill — `~/.claude/skills/strategic-compact/`
+  (user-level); suggests /compact at phase breakpoints.
 
 ## Current status
 
