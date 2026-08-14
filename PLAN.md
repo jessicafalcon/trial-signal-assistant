@@ -25,4 +25,24 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
 - [ ] **7 Packaging** — README with screenshots, DECISIONS.md complete,
       case-study framing.
       Exit: a stranger can follow the README from clone to answer;
-      revisit committed-hook inbound-PR surface before public flip.
+      revisit committed-hook inbound-PR surface before public flip;
+      phase 7 pre-public audit checklist below cleared or re-accepted.
+
+## Phase 7 pre-public audit checklist
+
+Audit notes accepted-and-deferred during the 2026-08-14 pre-push review
+rounds; clear or consciously re-accept each before the repo goes public:
+
+- [ ] .env.example exception is filename-only at any depth with no content
+      assertion — add a mechanical bare-keys check (every non-comment,
+      non-blank line ends in "="); consider narrowing the gitignore
+      negation to the root file.
+- [ ] Floor asserts no minimum gitleaks version — have the script compare
+      `gitleaks version` against CI's pin (8.30.1) and FAIL on mismatch
+      (determinism: old binaries parse [[allowlists]]/condition
+      differently).
+- [ ] .gitleaks.toml is self-governing — a PR widening the allowlist
+      disables the check for its own diff; consider CODEOWNERS or a CI
+      guard on .gitleaks.toml/.gitignore changes.
+- [ ] CI: SHA-pin actions/checkout (mutable @v4 tag, three instances) and
+      set persist-credentials: false on the secrets job.

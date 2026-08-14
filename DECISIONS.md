@@ -105,3 +105,24 @@ results, and the partial-date example replaced by NCT01138761 (same quirk,
 no contact data). The prior fixture versions persist in local pre-push git
 history — accepted and documented here rather than scrubbed, since the repo
 has never been pushed and the data remains public either way.
+
+## 2026-08-14 — Gitleaks allowlist: OR-default near-miss
+
+Path-scoping the fixture-cursor allowlist (`paths = ^tests/`) as first
+specified silently widened it: gitleaks `[[allowlists]]` blocks default to
+`condition = "OR"`, so the path entry alone allowlisted every finding under
+tests/ regardless of value. The mandated planted-token probe caught it
+before commit — the probe, not the config review, is why the allowlist is
+trusted. `condition = "AND"` is now explicit with a load-bearing comment.
+Standing rule: no allowlist change lands without the probe pair (planted
+random token must be caught; HEAD scan must be clean).
+
+## 2026-08-14 — Pre-push audit closed by human risk decision
+
+Four review rounds (one full-tree audit, three delta reviews, rulings on
+every finding) ended with deterministic-only verification: the floor's four
+checks, the three gitleaks probes, and git check-ignore spot checks. The
+owner terminated further judgment review: the repo is private, the floor is
+green, and history contains zero credentials. Remaining depth is the
+phase 7 pre-public audit checklist in PLAN.md — scheduled for the public
+flip, not forgotten.

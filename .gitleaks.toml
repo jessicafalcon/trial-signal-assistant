@@ -8,6 +8,10 @@ useDefault = true
 
 [[allowlists]]
 description = "ClinicalTrials.gov nextPageToken fixture cursors (not credentials)"
+# AND is load-bearing: the default OR would allowlist everything under
+# tests/ regardless of value. Both the path and the literal must match.
+condition = "AND"
+paths = ['''^tests/''']
 regexTarget = "secret"
 regexes = [
   '''^ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4TmjeTtA$''',
