@@ -30,4 +30,13 @@ RAG retrieval ──► Claude API ──► grounded answer with NCT citations
 
 Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 
+## Setup
+
+Prerequisites: Python 3.11+, and [gitleaks](https://github.com/gitleaks/gitleaks)
+(`brew install gitleaks`) for the pre-push secrets audit
+(`scripts/secrets_audit.sh`).
+
+    make setup   # venv, dependencies, pre-commit hooks
+    make test    # parser suite (no network)
+
 Status: phase 1 complete — see PLAN.md.

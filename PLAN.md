@@ -24,4 +24,5 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
       demo assets captured.
 - [ ] **7 Packaging** — README with screenshots, DECISIONS.md complete,
       case-study framing.
-      Exit: a stranger can follow the README from clone to answer.
+      Exit: a stranger can follow the README from clone to answer;
+      revisit committed-hook inbound-PR surface before public flip.

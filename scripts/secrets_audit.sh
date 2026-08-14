@@ -27,9 +27,10 @@ data_hits=$(git ls-files | grep -E '^data/|\.duckdb$' || true)
 check_empty "(b) no data/ or *.duckdb tracked" "$data_hits"
 
 # (c) known secret shapes across all history (-l: report commit:path, never the value)
+# own path excluded: the pattern literals below would otherwise self-match
 grep_hits=$(git grep -I -l -E \
   'sk-ant-|AKIA[A-Z0-9]{16}|BEGIN (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY' \
-  $(git rev-list --all) -- 2>/dev/null || true)
+  $(git rev-list --all) -- ':!scripts/secrets_audit.sh' 2>/dev/null || true)
 check_empty "(c) git grep over rev-list --all (sk-ant- / AKIA / private keys)" "$grep_hits"
 
 # (d) gitleaks over full git history (--redact: report findings, never the value)
