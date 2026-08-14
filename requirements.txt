@@ -1,0 +1,13 @@
+requests==2.34.2
+pytest==9.1.1
+dbt-core==1.12.2
+dbt-duckdb==1.11.0
+dbt-snowflake==1.12.0
+sentence-transformers==5.7.0
+chromadb==1.5.9
+anthropic==0.122.0
+ruff==0.16.3
+sqlfluff==4.3.0
+# pre-commit is not on the CLAUDE.md allowlist, but `make setup` and
+# `make lint` (both defined in CLAUDE.md) require it.
+pre-commit==4.6.2

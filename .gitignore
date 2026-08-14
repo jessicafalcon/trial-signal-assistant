@@ -1,0 +1,10 @@
+.env
+.venv/
+data/
+*.duckdb
+__pycache__/
+.pytest_cache/
+.terraform/
+terraform.tfstate*
+.DS_Store
+.astro/
