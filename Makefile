@@ -10,7 +10,7 @@ setup:
 	$(VENV)/bin/pre-commit install
 
 test:
-	@echo "not implemented until phase 1"
+	$(VENV)/bin/pytest tests/test_parser.py -v
 
 ingest:
 	@echo "not implemented until phase 1"
