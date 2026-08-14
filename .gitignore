@@ -6,6 +6,11 @@ __pycache__/
 .pytest_cache/
 .terraform/
 terraform.tfstate*
+*.tfvars
+*.auto.tfvars
+*.pem
+*.p8
+*.key
 .DS_Store
 .astro/
 .claude/settings.local.json

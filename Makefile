@@ -10,6 +10,7 @@ setup:
 	python3 -m venv $(VENV)
 	$(PIP) install -r requirements.txt
 	$(VENV)/bin/pre-commit install
+	$(VENV)/bin/pre-commit install --hook-type pre-push
 	@command -v gitleaks >/dev/null || echo "WARNING: gitleaks not installed (brew install gitleaks); scripts/secrets_audit.sh check (d) will fail"
 
 test:

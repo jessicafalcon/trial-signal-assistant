@@ -1,0 +1,15 @@
+# Extends the default gitleaks config. The allowlist masks ONLY the two
+# literal ClinicalTrials.gov nextPageToken values captured in the fixtures —
+# public, unauthenticated pagination cursors, proven benign (ruled
+# 2026-08-14). Value-scoped on purpose: any other value, at any line in any
+# commit, still fires. New entries need explicit user sign-off.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "ClinicalTrials.gov nextPageToken fixture cursors (not credentials)"
+regexTarget = "secret"
+regexes = [
+  '''^ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4TmjeTtA$''',
+  '''^ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4blD-Wv_E$''',
+]

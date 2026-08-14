@@ -33,8 +33,8 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 ## Setup
 
 Prerequisites: Python 3.11+, and [gitleaks](https://github.com/gitleaks/gitleaks)
-(`brew install gitleaks`) for the pre-push secrets audit
-(`scripts/secrets_audit.sh`).
+(`brew install gitleaks`) for the secrets audit enforced at push via
+pre-push hook (`scripts/secrets_audit.sh`).
 
     make setup   # venv, dependencies, pre-commit hooks
     make test    # parser suite (no network)
