@@ -51,3 +51,25 @@ cloud warehouse with COPY INTO from S3 — the pattern employers actually run.
 Keeping both in one profiles.yml proves the dbt code is warehouse-portable
 rather than coupled to one engine. CI stays green without Snowflake
 credentials existing at all (the trial isn't even activated yet).
+
+## 2026-08-14 — Claude Code tooling ported from a prior project
+
+Agents, hooks, and a /selfcheck command were ported from an earlier repo and
+adapted (see "Project tooling" in CLAUDE.md). Non-obvious choices:
+
+- The run-tests hook runs the full suite (`pytest -q`), not `make test`
+  (currently `tests/test_parser.py` only): the hook should catch breakage in
+  any future test file without editing the hook. Revisit if the suite ever
+  gets slow.
+- Agents keep Bash despite the report-only contract — they need it for
+  `git diff` and pytest. The boundary is prompt-enforced (no Write/Edit in
+  their tools line), not a permission wall; CLAUDE.md says so explicitly
+  rather than claiming a stronger property than the config enforces.
+- Accepted risk: `.claude/settings.json` is committed, so anyone opening
+  this public repo in Claude Code auto-runs run-tests.py (and therefore
+  pytest and conftest.py) on .py edits, without a permission prompt. This is
+  the standard Claude Code hook model; review branches that touch
+  conftest.py or .claude/ before opening them.
+- Accepted risk: on red, run-tests echoes the last 15 lines of pytest output
+  into the transcript. Pytest defaults don't print environment values;
+  revisit before Phase 4 introduces real Snowflake/AWS credentials.
