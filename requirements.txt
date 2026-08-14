@@ -8,6 +8,4 @@ chromadb==1.5.9
 anthropic==0.122.0
 ruff==0.16.3
 sqlfluff==4.3.0
-# pre-commit is not on the CLAUDE.md allowlist, but `make setup` and
-# `make lint` (both defined in CLAUDE.md) require it.
 pre-commit==4.6.2

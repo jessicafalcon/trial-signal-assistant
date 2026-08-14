@@ -30,4 +30,4 @@ RAG retrieval ──► Claude API ──► grounded answer with NCT citations
 
 Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 
-Status: work in progress, phase 0.
+Status: phase 1 complete — see PLAN.md.

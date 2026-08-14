@@ -72,4 +72,6 @@ adapted (see "Project tooling" in CLAUDE.md). Non-obvious choices:
   conftest.py or .claude/ before opening them.
 - Accepted risk: on red, run-tests echoes the last 15 lines of pytest output
   into the transcript. Pytest defaults don't print environment values;
-  revisit before Phase 4 introduces real Snowflake/AWS credentials.
+  revisit before Phase 4 introduces real Snowflake/AWS credentials. Tests
+  are network- and credential-free by policy, so the hook's output tail
+  cannot echo secrets.
