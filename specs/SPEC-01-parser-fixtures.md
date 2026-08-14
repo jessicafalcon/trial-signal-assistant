@@ -26,6 +26,10 @@ running against captured fixture payloads. No live network calls in tests.
      measured 2026-08-14 across 1,738 AD studies. Date structs can
      also be absent entirely. Any other format must be kept raw with
      `date_precision=None` and a logged warning, never an exception.
+     Date structs can also be PARTIAL (e.g. `{"date": "2014-11"}` with
+     no `type` key). Access every key inside a struct defensively; a
+     missing inner key is handled the same as an absent struct, never
+     a KeyError.
   3. Withdrawn trials may carry a free-text `whyStopped` field; most
      trials have no such field at all.
 
@@ -71,7 +75,9 @@ If a fixture appears malformed, STOP and report it — do not repair it.
    - `"YYYY-MM-DD"` → ISO date + `date_precision="day"`; `"YYYY-MM"` →
      first-of-month + `date_precision="month"`; absent date struct →
      `None`/`None`; one unknown-format string → raw kept,
-     `date_precision=None`, no exception.
+     `date_precision=None`, no exception; partial date struct (no
+     `type` key, real example NCT02289989 in fixture_dates_mixed.json)
+     → parses like any other date, no KeyError.
    - `why_stopped` extracted when present, `None` when absent.
    - Pagination: envelope parsing yields the studies list + next token.
    - A raw fixture round-trip: every study in `fixture_page.json` parses
