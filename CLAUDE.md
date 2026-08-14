@@ -140,8 +140,8 @@ AI sits at the edges; everything in the middle is deterministic.
   changes that touch terraform/, CI workflows, .env/credential handling,
   ingest network code, or LLM-context assembly (see Project tooling).
   Pre-push audits are two-layer: `scripts/secrets_audit.sh` (deterministic
-  floor, enforced at push via pre-push hook) runs first, then the
-  security-reviewer's judgment on top.
+  floor; run by a local pre-push hook and in CI on pushes to main and on
+  pull requests) runs first, then the security-reviewer's judgment on top.
 
 ## Teaching rule (IMPORTANT)
 

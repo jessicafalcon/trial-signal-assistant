@@ -17,10 +17,13 @@ check_empty() { # $1 label, $2 offending output (empty = pass)
   fi
 }
 
-# (a) .env never tracked — current index and full history
+# (a) env files (.env, .env.*, .envrc*, *.env) never tracked — current index
+# and full history, case-insensitive. .env.example is the one sanctioned
+# exception: bare keys, no values.
 env_hits=$( { git ls-files; git log --all --pretty=format: --name-only --diff-filter=A; } \
-  | grep -E '(^|/)\.env$' | sort -u || true)
-check_empty "(a) .env never tracked (index + full history)" "$env_hits"
+  | grep -iE '(^|/)\.env(rc)?(\..+)?$|(^|/)[^/]+\.env$' \
+  | grep -ivE '(^|/)\.env\.example$' | sort -u || true)
+check_empty "(a) env files (.env* / .envrc* / *.env) never tracked (index + full history)" "$env_hits"
 
 # (b) no data/ or *.duckdb tracked
 data_hits=$(git ls-files | grep -E '^data/|\.duckdb$' || true)
