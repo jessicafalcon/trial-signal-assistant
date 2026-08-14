@@ -1,0 +1,619 @@
+{
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT06727552",
+      "orgStudyIdInfo": {
+        "id": "CDX0159-15"
+      },
+      "organization": {
+        "fullName": "Celldex Therapeutics",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "A Study of Barzolvolimab in Patients With Atopic Dermatitis",
+      "officialTitle": "A Phase 2, Randomized, Double-Blind, Placebo-Controlled Study to Assess the Efficacy and Safety of Barzolvolimab in Patients With Moderate to Severe Atopic Dermatitis"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2026-08",
+      "overallStatus": "ACTIVE_NOT_RECRUITING",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2024-12-18",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2026-05-06",
+        "type": "ACTUAL"
+      },
+      "completionDateStruct": {
+        "date": "2026-12",
+        "type": "ESTIMATED"
+      },
+      "studyFirstSubmitDate": "2024-12-09",
+      "studyFirstSubmitQcDate": "2024-12-09",
+      "studyFirstPostDateStruct": {
+        "date": "2024-12-11",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2026-08-10",
+      "lastUpdatePostDateStruct": {
+        "date": "2026-08-11",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "Celldex Therapeutics",
+        "class": "INDUSTRY"
+      }
+    },
+    "oversightModule": {
+      "oversightHasDmc": true,
+      "isFdaRegulatedDrug": true,
+      "isFdaRegulatedDevice": false
+    },
+    "descriptionModule": {
+      "briefSummary": "The purpose of this study is to assess the efficacy and safety of barzolvolimab in adults with Atopic Dermatitis",
+      "detailedDescription": "This is a multicenter, randomized, double-blind, parallel group, placebo controlled phase 2 study to assess the efficacy and safety of barzolvolimab (CDX-0159) in adult participants with Atopic Dermatitis.\n\nThere is a screening period of up to 28 days, a 16-week double-blind, placebo-controlled treatment period, a 16-week double-blind, active treatment period, and a 16-week follow-up period. On Day 1, participants will be randomly assigned on a 1:1:1 ratio to receive barzolvolimab (CDX-0159) by subcutaneous injections of 150 mg every 4 weeks (Q4W) after an initial loading dose of 450 mg \\[Arm 1\\], 300 mg Q4W after an initial loading dose of 450 mg \\[Arm 2\\], or placebo Q4W \\[Arm 3\\]. At Week 16, participants on placebo will be re-randomized on a 1:1 ratio to receive barzolvolimab by subcutaneous injections of 150 mg every 4 weeks (Q4W) after an initial loading dose of 450 mg, 300 mg Q4W after an initial loading dose of 450 mg. Participants on Arms 1 and 2 will undergo a mock re-randomization at Week 16 to maintain the blind."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Atopic Dermatitis"
+      ],
+      "keywords": [
+        "AD",
+        "Atopic Dermatitis",
+        "eczema",
+        "barzolvolimab",
+        "CDX-0159",
+        "CDX0159-15"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "PHASE2"
+      ],
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+          "masking": "QUADRUPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR",
+            "OUTCOMES_ASSESSOR"
+          ]
+        }
+      },
+      "enrollmentInfo": {
+        "count": 131,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Barzolvolimab 150 mg",
+          "type": "EXPERIMENTAL",
+          "description": "Barzolvolimab loading dose of 450 mg subcutaneous injection followed by 150 mg administered every 4 weeks for 32 weeks",
+          "interventionNames": [
+            "Biological: Barzolvolimab"
+          ]
+        },
+        {
+          "label": "Barzolvolimab 300 mg",
+          "type": "EXPERIMENTAL",
+          "description": "Barzolvolimab loading dose of 450 mg subcutaneous injection followed by 300 mg administered every 4 weeks for 32 weeks",
+          "interventionNames": [
+            "Biological: Barzolvolimab"
+          ]
+        },
+        {
+          "label": "Placebo then barzolvolimab 150 mg",
+          "type": "EXPERIMENTAL",
+          "description": "Placebo subcutaneous injection every 4 weeks for 16 weeks and then barzolvolimab loading dose of 450 mg followed by 150 mg administered every 4 weeks for 16 weeks.",
+          "interventionNames": [
+            "Biological: Barzolvolimab",
+            "Drug: Matching placebo"
+          ]
+        },
+        {
+          "label": "Placebo then barzolvolimab 300 mg",
+          "type": "EXPERIMENTAL",
+          "description": "Placebo subcutaneous injection every 4 weeks for 16 weeks and then barzolvolimab loading dose of 450 mg followed by 300 mg administered every 4 weeks for 16 weeks.",
+          "interventionNames": [
+            "Biological: Barzolvolimab",
+            "Drug: Matching placebo"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "BIOLOGICAL",
+          "name": "Barzolvolimab",
+          "description": "Subcutaneous Administration",
+          "armGroupLabels": [
+            "Barzolvolimab 150 mg",
+            "Barzolvolimab 300 mg",
+            "Placebo then barzolvolimab 150 mg",
+            "Placebo then barzolvolimab 300 mg"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Matching placebo",
+          "description": "Subcutaneous Administration",
+          "armGroupLabels": [
+            "Placebo then barzolvolimab 150 mg",
+            "Placebo then barzolvolimab 300 mg"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Percent change from Baseline in the weekly average of the daily Peak Pruritus Numerical Rating Scale (PP-NRS) score at Week 16",
+          "description": "Evaluate the clinical efficacy of 2 dose levels (150 mg and 300 mg) of barzolvolimab, compared to placebo, in adult participants with moderate to severe atopic dermatitis (AD) using the PP-NRS. The PP-NRS ranges from 0 = \"no itch\" to 10 =\"worst imaginable itch\" for the worst intensity itch in the preceding 24-hr period.",
+          "timeFrame": "From Day 1 (first dose) to Day 113 (week 16)"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "Percent change from Baseline in Eczema Area Severity Index (EASI) score at Week 16.",
+          "description": "A total EASI score range from 0 to 72 points will be recorded for each assessment, with higher scores reflecting worse severity of AD.\n\n* 0 = clear\n* 0.1-1.0 = almost clear\n* 1.1-7.0 = mild\n* 7.1-21.0 = moderate\n* 21.1-50.0 = severe\n* 50.1-72.0 = very severe",
+          "timeFrame": "From Day 1 (first dose) to Day 113 (week 16)"
+        },
+        {
+          "measure": "Proportion of participants achieving an Investigator Global Assessment (IGA) score of \"0\" or \"1\" at Week 16.",
+          "description": "The IGA determines severity of AD and clinical response to treatment on a static 5-point scale based on erythema and papulation/infiltration\n\n* 0 = Clear\n* 1 = Almost clear\n* 2 = Mild\n* 3 = Moderate\n* 4 = Severe",
+          "timeFrame": "From Day 1 (first dose) to Day 113 (week 16)"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n1. Male or female ≥ 18 years of age\n2. Diagnosis of chronic atopic dermatitis (AD) for at least 1 year\n3. Onset of symptoms at least 1 year prior and current symptoms consistent with moderate to severe AD as defined by:\n\n   1. EASI ≥ 12 at Visit 1 and EASI ≥ 16 at Visit 2\n   2. Body Surface Area of Involvement (BSA) ≥ 10% at Visit 1 and Visit 2\n   3. IGA score ≥ 3 at Visit 1 and Visit 2\n   4. Severe itch, defined by weekly average of daily PP-NRS score of ≥ 5, during the 7 days prior to treatment\n4. Documented history of inadequate response to treatment with topical medications or for whom topical medications are otherwise medically inadvisable.\n5. Willing and able to complete a daily symptom electronic diary for the duration of the study and adhere to the study visit schedule.\n\nExclusion Criteria:\n\n1. Any other active pruritic skin diseases that would confound AD assessments based on the Investigator's clinical judgment.\n2. Phototherapy with ultraviolet (UV) A or UVB within 4 weeks of Visit 1.\n3. Planned or anticipated use of any prohibited medications at any time during the study.\n4. Prior receipt of barzolvolimab or other anti-KIT therapy. There are additional criteria that your study doctor will review with you to confirm you are eligible for the study.",
+      "healthyVolunteers": false,
+      "sex": "ALL",
+      "minimumAge": "18 Years",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ]
+    },
+    "contactsLocationsModule": {
+      "locations": [
+        {
+          "facility": "Cahaba Dermatology & Skin Health Center, LLC",
+          "city": "Birmingham",
+          "state": "Alabama",
+          "zip": "35244",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 33.52066,
+            "lon": -86.80249
+          }
+        },
+        {
+          "facility": "Ohara Aivaz MD Dermatology",
+          "city": "Beverly Hills",
+          "state": "California",
+          "zip": "90212",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.07362,
+            "lon": -118.40036
+          }
+        },
+        {
+          "facility": "Advanced Dermatology Center - Burbank",
+          "city": "Burbank",
+          "state": "California",
+          "zip": "91506",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.18084,
+            "lon": -118.30897
+          }
+        },
+        {
+          "facility": "310 Clinical Research",
+          "city": "Inglewood",
+          "state": "California",
+          "zip": "90301",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 33.96168,
+            "lon": -118.35313
+          }
+        },
+        {
+          "facility": "Avance Trials",
+          "city": "Laguna Niguel",
+          "state": "California",
+          "zip": "92677",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 33.52253,
+            "lon": -117.70755
+          }
+        },
+        {
+          "facility": "LA Universal Research Center, Inc.",
+          "city": "Los Angeles",
+          "state": "California",
+          "zip": "90057",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.05223,
+            "lon": -118.24368
+          }
+        },
+        {
+          "facility": "UCLA Division of Dermatology",
+          "city": "Los Angeles",
+          "state": "California",
+          "zip": "90089",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.05223,
+            "lon": -118.24368
+          }
+        },
+        {
+          "facility": "Dynasty Dermatology",
+          "city": "Pasadena",
+          "state": "California",
+          "zip": "91105",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.14778,
+            "lon": -118.14452
+          }
+        },
+        {
+          "facility": "Acclaim Clinical Research",
+          "city": "San Diego",
+          "state": "California",
+          "zip": "92120",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 32.71571,
+            "lon": -117.16472
+          }
+        },
+        {
+          "facility": "FOMAT Medical Research - Allergy, Asthma, & Immunology Medical Group",
+          "city": "Ventura",
+          "state": "California",
+          "zip": "93003",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.27834,
+            "lon": -119.29317
+          }
+        },
+        {
+          "facility": "Focus Clinical Research",
+          "city": "West Hills",
+          "state": "California",
+          "zip": "91307",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.19731,
+            "lon": -118.64398
+          }
+        },
+        {
+          "facility": "Direct Helpers Research Center",
+          "city": "Hialeah",
+          "state": "Florida",
+          "zip": "33012",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 25.8576,
+            "lon": -80.27811
+          }
+        },
+        {
+          "facility": "International Dermatology Research Inc - Miami",
+          "city": "Miami Lakes",
+          "state": "Florida",
+          "zip": "33144",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 25.90871,
+            "lon": -80.30866
+          }
+        },
+        {
+          "facility": "Sarasota Clinical Research",
+          "city": "Sarasota",
+          "state": "Florida",
+          "zip": "34233",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 27.33643,
+            "lon": -82.53065
+          }
+        },
+        {
+          "facility": "Well Pharma Medical Research Corporation",
+          "city": "South Miami",
+          "state": "Florida",
+          "zip": "33173",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 25.7076,
+            "lon": -80.29338
+          }
+        },
+        {
+          "facility": "Centricity Research Columbus Dermatology",
+          "city": "Columbus",
+          "state": "Georgia",
+          "zip": "31904",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 32.46098,
+            "lon": -84.98771
+          }
+        },
+        {
+          "facility": "Georgia Skin and Cancer Clinic",
+          "city": "Savannah",
+          "state": "Georgia",
+          "zip": "31419",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 32.08354,
+            "lon": -81.09983
+          }
+        },
+        {
+          "facility": "Treasure Valley Medical Research",
+          "city": "Boise",
+          "state": "Idaho",
+          "zip": "83706",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 43.6135,
+            "lon": -116.20345
+          }
+        },
+        {
+          "facility": "Center for Medical Dermatology + Immunology Research",
+          "city": "Chicago",
+          "state": "Illinois",
+          "zip": "60657",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 41.85003,
+            "lon": -87.65005
+          }
+        },
+        {
+          "facility": "Sneeze Wheeze and Itch Associates LLC",
+          "city": "Normal",
+          "state": "Illinois",
+          "zip": "61761",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 40.5142,
+            "lon": -88.99063
+          }
+        },
+        {
+          "facility": "Equity Medical LLC",
+          "city": "Bowling Green",
+          "state": "Kentucky",
+          "zip": "42104",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 36.99032,
+            "lon": -86.4436
+          }
+        },
+        {
+          "facility": "Allergy and Asthma Specialists PSC",
+          "city": "Owensboro",
+          "state": "Kentucky",
+          "zip": "42301",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 37.77422,
+            "lon": -87.11333
+          }
+        },
+        {
+          "facility": "Onyx Clinical Research - Michigan",
+          "city": "Flint",
+          "state": "Michigan",
+          "zip": "48532",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 43.01253,
+            "lon": -83.68746
+          }
+        },
+        {
+          "facility": "Revival Research Institute, LLC",
+          "city": "Troy",
+          "state": "Michigan",
+          "zip": "48084",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 42.60559,
+            "lon": -83.14993
+          }
+        },
+        {
+          "facility": "Excel Clinical Research",
+          "city": "Las Vegas",
+          "state": "Nevada",
+          "zip": "89109",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 36.17497,
+            "lon": -115.13722
+          }
+        },
+        {
+          "facility": "Equity Medical, LLC",
+          "city": "New York",
+          "state": "New York",
+          "zip": "10023",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 40.71427,
+            "lon": -74.00597
+          }
+        },
+        {
+          "facility": "OptiSkin Medical",
+          "city": "New York",
+          "state": "New York",
+          "zip": "10128",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 40.71427,
+            "lon": -74.00597
+          }
+        },
+        {
+          "facility": "Bernstein Clinical Research Center, LLC",
+          "city": "Cincinnati",
+          "state": "Ohio",
+          "zip": "45236",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 39.12711,
+            "lon": -84.51439
+          }
+        },
+        {
+          "facility": "Palmetto Clinical Trial Services LLC",
+          "city": "Simpsonville",
+          "state": "South Carolina",
+          "zip": "29615",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 34.73706,
+            "lon": -82.25428
+          }
+        },
+        {
+          "facility": "Zenos Clinical Research",
+          "city": "Dallas",
+          "state": "Texas",
+          "zip": "75230",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 32.78306,
+            "lon": -96.80667
+          }
+        },
+        {
+          "facility": "Sienna Dermatology",
+          "city": "Sugar Land",
+          "state": "Texas",
+          "zip": "77479",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 29.61968,
+            "lon": -95.63495
+          }
+        },
+        {
+          "facility": "Center for Clinical Studies LTD.LLP",
+          "city": "Webster",
+          "state": "Texas",
+          "zip": "77598",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 29.53773,
+            "lon": -95.11826
+          }
+        },
+        {
+          "facility": "Jordan Valley Dermatology Center - South Jordan",
+          "city": "South Jordan",
+          "state": "Utah",
+          "zip": "84095",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 40.56217,
+            "lon": -111.92966
+          }
+        }
+      ]
+    }
+  },
+  "derivedSection": {
+    "miscInfoModule": {
+      "versionHolder": "2026-08-14"
+    },
+    "conditionBrowseModule": {
+      "meshes": [
+        {
+          "id": "D003876",
+          "term": "Dermatitis, Atopic"
+        },
+        {
+          "id": "D004485",
+          "term": "Eczema"
+        }
+      ],
+      "ancestors": [
+        {
+          "id": "D012873",
+          "term": "Skin Diseases, Genetic"
+        },
+        {
+          "id": "D030342",
+          "term": "Genetic Diseases, Inborn"
+        },
+        {
+          "id": "D009358",
+          "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+        },
+        {
+          "id": "D003872",
+          "term": "Dermatitis"
+        },
+        {
+          "id": "D012871",
+          "term": "Skin Diseases"
+        },
+        {
+          "id": "D017437",
+          "term": "Skin and Connective Tissue Diseases"
+        },
+        {
+          "id": "D017443",
+          "term": "Skin Diseases, Eczematous"
+        },
+        {
+          "id": "D006969",
+          "term": "Hypersensitivity, Immediate"
+        },
+        {
+          "id": "D006967",
+          "term": "Hypersensitivity"
+        },
+        {
+          "id": "D007154",
+          "term": "Immune System Diseases"
+        }
+      ]
+    }
+  },
+  "hasResults": false
+}
