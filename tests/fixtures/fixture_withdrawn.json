@@ -1,0 +1,326 @@
+{
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT04965233",
+      "orgStudyIdInfo": {
+        "id": "H-19020696"
+      },
+      "organization": {
+        "fullName": "Studies&Me",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "Using a Telemedicine Approach in a Genome-wide Association Study of Atopic Dermatitis - Searching for Novel Biomarkers in Clinically Relevant Phenotypes",
+      "officialTitle": "Using a Telemedicine Approach in a Genome-wide Association Study of Atopic Dermatitis - Searching for Novel Biomarkers in Clinically Relevant Phenotypes"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2021-09",
+      "overallStatus": "WITHDRAWN",
+      "whyStopped": "Due to protocol changes, and the observational design of this study (not an ACT), the study registry is withdrawn from clinicaltrials.gov.",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2020-11-30",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2021-12-31",
+        "type": "ESTIMATED"
+      },
+      "completionDateStruct": {
+        "date": "2021-12-31",
+        "type": "ESTIMATED"
+      },
+      "studyFirstSubmitDate": "2021-06-30",
+      "studyFirstSubmitQcDate": "2021-07-15",
+      "studyFirstPostDateStruct": {
+        "date": "2021-07-16",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2021-09-13",
+      "lastUpdatePostDateStruct": {
+        "date": "2021-09-20",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "Studies&Me",
+        "class": "INDUSTRY"
+      },
+      "collaborators": [
+        {
+          "name": "Bispebjerg Hospital",
+          "class": "OTHER"
+        },
+        {
+          "name": "Biotx.ai",
+          "class": "UNKNOWN"
+        },
+        {
+          "name": "Life&Brain",
+          "class": "UNKNOWN"
+        },
+        {
+          "name": "Stanford Health Care",
+          "class": "UNKNOWN"
+        }
+      ]
+    },
+    "oversightModule": {
+      "oversightHasDmc": false,
+      "isFdaRegulatedDrug": false,
+      "isFdaRegulatedDevice": false
+    },
+    "descriptionModule": {
+      "briefSummary": "Atopic eczema is a common skin disorder affecting at least 2-3% of the western population. Atopic eczema cannot be cured and therefore treatment aims to alleviate the symptoms of the disease. Today, many different medical treatments are available: from mild hormone creams to harsh systemic treatments. The treatment chosen depends in part on the severity of the eczema and on the treatment response of the individual. This practice may mean that some people with eczema undergo unnecessary treatment courses with associated side effects. We know today that eczema has a hereditary component, and different areas have been identified in the hereditary material that appear to play a role. Although it is thought that variations in specific areas of the inheritance material may influence how eczema is expressed in the individual, the significance of these variations is far from clarified. The investigators want to increase the knowledge about atopic eczema, about the disease and how in the future we can organize the treatment of eczema based on knowledge of our genetic material. In this study, the investigators want to elucidate whether there is a correlation between specific variations in the genetic material and how the eczema is clinically expressed. In addition, the investigators want to assess whether reports with specific information about the individual's genetic material in relation to his or her lifestyle can help retain participants in research projects."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Atopic Dermatitis",
+        "Eczema",
+        "DNA"
+      ]
+    },
+    "designModule": {
+      "studyType": "OBSERVATIONAL",
+      "patientRegistry": false,
+      "designInfo": {
+        "observationalModel": "CASE_CONTROL",
+        "timePerspective": "PROSPECTIVE"
+      },
+      "bioSpec": {
+        "retention": "SAMPLES_WITH_DNA",
+        "description": "Saliva"
+      },
+      "enrollmentInfo": {
+        "count": 0,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Participants recruited in Denmark",
+          "description": "Participants recruited in Denmark will consist of 63 healthy individuals and 187 individuals with atopic dermatitis",
+          "interventionNames": [
+            "Behavioral: Information reports"
+          ]
+        },
+        {
+          "label": "Participant recruited in the United States of America",
+          "description": "Participants recruited in the US will consist of 125 healthy individuals, 3000 individuals with atopic dermatitis",
+          "interventionNames": [
+            "Behavioral: DNA reports"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "BEHAVIORAL",
+          "name": "DNA reports",
+          "description": "The personalized DNA lifestyle reports cover the following topics: Healthy weight, Vitamin D, Alcohol, Lactose, Injuries, Caffeine, Fitness, Carbohydrates, The mind, Vitamin B, The senses, and Omega.",
+          "armGroupLabels": [
+            "Participant recruited in the United States of America"
+          ]
+        },
+        {
+          "type": "BEHAVIORAL",
+          "name": "Information reports",
+          "description": "Reports containing general information on eczema",
+          "armGroupLabels": [
+            "Participants recruited in Denmark"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the SCORing Atopic Dermatitis (SCORAD) evaluated remotely through photos by investigator assessment.",
+          "description": "SCORAD measures the severity of eczema on a scale from 0-103.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the Three Item Severity Score (TIS) evaluated remotely through photos by investigator assessment.",
+          "description": "TIS measures the severity of erythema, oedema/papulation and excoriation on a scale from 0-9.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the Eczema Area and Severity Index (EASI) evaluated remotely through photos by investigator assessment.",
+          "description": "EASI measures the severity and body surface area of eczema on a scale from 0-72.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the The Validated Investigator Global Assessment for Atopic Dermatitis (vIGA-AD)) evaluated remotely through photos by investigator assessment.",
+          "description": "vIGA-AD measures the severity of eczema on a scale from 0-4.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the Patient Oriented Eczema Measurement (POEM) questionnaire.",
+          "description": "POEM measures the severity of eczema as experienced by the patient on a scale from 0-28.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the Skindex-mini questionnaire.",
+          "description": "Skindex-mini measures the symptomatic, emotional and functional aspects of an individual's skin disorder on a scale from 0-18.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the Patient's Global Impression of Severity Numerical Rating System (PGIS-NRS) questionnaire.",
+          "description": "PGIS-NRS measures the impression of severity of an individual's skin disorder on a scale from 0-10.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured on a weekly basis for 12 weeks using the Eczema-related sleep quality NRS questionnaire.",
+          "description": "Eczema-related sleep quality NRS measures the sleep quality, itch and dryness on a scale from 0-10.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured by patient-perceived flare ups on a weekly basis for 12 weeks.",
+          "description": "Number of days on a weekly basis with flare ups.",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured by the disease extent method on a weekly basis for 12 weeks.",
+          "description": "Palm method to measure AD affected body surface area (0-100%).",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Change in AD phenotype measured by the Eczema Area and Severity Index (EASI) on a weekly basis for 12 weeks.",
+          "description": "EASI measures the severity and body surface area of eczema on a scale from 0-72.",
+          "timeFrame": "12 weeks"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "Personalized DNA lifestyle reports/information reports as an engagement tool in clinical trials",
+          "description": "Number of completers receiving DNA lifestyle reports/information reports at different time points will be compared to evaluate effect on retention.",
+          "timeFrame": "12 weeks"
+        }
+      ],
+      "otherOutcomes": [
+        {
+          "measure": "Correlation between environmental factors and AD flare ups",
+          "description": "Passive data on geographical localisation, daily activity level and an approximation for length of sleep",
+          "timeFrame": "12 weeks"
+        },
+        {
+          "measure": "Number of days on a weekly cycle of patient-use of medication/treatment",
+          "description": "Number of days on a weekly cycle of patient-use of medication/treatment",
+          "timeFrame": "12 weeks"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Informed consent has been signed\n* 18 years or older\n* Resident in the USA or Denmark\n* AD meeting the UK Diagnostic Criteria for Atopic Dermatitis\n* At least one visible AD lesion at the time of recruitment (as confirmed remotely through photo upload in screening)\n* Smartphone user with daily access to internet (WIFI or 3G/4G)\n* Willing to donate a DNA sample\n* Confirmed intention to comply with study protocol procedures\n\nExclusion Criteria:\n\n* Female subjects that are pregnant (or plan to become so during the study period) or lactating\n* Active dermatological condition that may confound the diagnosis of AD and/or the assessment of disease activity\n* Unable to speak or understand English or Danish\n* Overlap with participation in interventional trials\n* No visible AD at time of screening\n* Any other reasons that in the investigator's opinion could:\n* Impede a subject's ability to complete the study period\n* Influence the objectivity or quality of the findings of the study",
+      "healthyVolunteers": true,
+      "sex": "ALL",
+      "minimumAge": "18 Years",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ],
+      "studyPopulation": "Recruitment is performed through the Studies\\&Me platform (https://studiesandme.com/), which is recruiting and screening people with AD, who are generally interested in participating in a study related to their disease.\n\nParticipants will also be recruited through clinics and hospitals.",
+      "samplingMethod": "PROBABILITY_SAMPLE"
+    },
+    "contactsLocationsModule": {
+      "overallOfficials": [
+        {
+          "name": "Justin M Ko, MD, MBA",
+          "affiliation": "Study Principal Investigator",
+          "role": "PRINCIPAL_INVESTIGATOR"
+        }
+      ],
+      "locations": [
+        {
+          "facility": "450 Broadway F4",
+          "city": "Redwood City",
+          "state": "California",
+          "zip": "94063",
+          "country": "United States",
+          "geoPoint": {
+            "lat": 37.48522,
+            "lon": -122.23635
+          }
+        },
+        {
+          "facility": "Studies&Me",
+          "city": "Copenhagen",
+          "zip": "1113",
+          "country": "Denmark",
+          "geoPoint": {
+            "lat": 55.67594,
+            "lon": 12.56553
+          }
+        }
+      ]
+    },
+    "ipdSharingStatementModule": {
+      "ipdSharing": "NO"
+    }
+  },
+  "derivedSection": {
+    "miscInfoModule": {
+      "versionHolder": "2026-08-14"
+    },
+    "conditionBrowseModule": {
+      "meshes": [
+        {
+          "id": "D003876",
+          "term": "Dermatitis, Atopic"
+        },
+        {
+          "id": "D004485",
+          "term": "Eczema"
+        }
+      ],
+      "ancestors": [
+        {
+          "id": "D012873",
+          "term": "Skin Diseases, Genetic"
+        },
+        {
+          "id": "D030342",
+          "term": "Genetic Diseases, Inborn"
+        },
+        {
+          "id": "D009358",
+          "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+        },
+        {
+          "id": "D003872",
+          "term": "Dermatitis"
+        },
+        {
+          "id": "D012871",
+          "term": "Skin Diseases"
+        },
+        {
+          "id": "D017437",
+          "term": "Skin and Connective Tissue Diseases"
+        },
+        {
+          "id": "D017443",
+          "term": "Skin Diseases, Eczematous"
+        },
+        {
+          "id": "D006969",
+          "term": "Hypersensitivity, Immediate"
+        },
+        {
+          "id": "D006967",
+          "term": "Hypersensitivity"
+        },
+        {
+          "id": "D007154",
+          "term": "Immune System Diseases"
+        }
+      ]
+    }
+  },
+  "hasResults": false
+}

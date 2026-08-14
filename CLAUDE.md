@@ -55,7 +55,7 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `make eval` — run rag/eval/run_eval.py against golden questions
 - `make lint` — ruff + sqlfluff via pre-commit run --all-files
 
-## Data source facts (VERIFIED — do not re-derive or second-guess)
+## Data source facts (verified against live API 2026-08-14 — empirical findings supersede docs)
 
 - Endpoint: `https://clinicaltrials.gov/api/v2/studies`, no auth.
 - Params: `query.cond="Atopic Dermatitis"`, `pageSize` (≤1000), `pageToken`
@@ -65,8 +65,13 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   outcomesModule, eligibilityModule); `resultsSection` only for some trials.
 - Known quirks that MUST be handled: (1) array fields (conditions,
   interventions, locations) may be null/missing/empty — always default to [];
-  (2) dates arrive as "2024-01-15", "January 2024", or "January 15, 2024"
-  with no normalization — parse all three, record date_precision day|month;
+  (2) dates are ISO strings at two precisions with no API-side
+  normalization: "YYYY-MM-DD" (day) and "YYYY-MM" (month) — measured
+  2026-08-14 across 1,738 AD studies (e.g. startDateStruct.date:
+  1,188 day / 541 month). Date structs can also be absent entirely.
+  Parse both precisions (month resolves to first-of-month,
+  date_precision="month"); absent → None/None; any OTHER format →
+  keep raw string, date_precision=None, log a warning, never raise;
   (3) `whyStopped` free-text exists only on some withdrawn/terminated trials.
 
 ## Determinism policy (core design principle)

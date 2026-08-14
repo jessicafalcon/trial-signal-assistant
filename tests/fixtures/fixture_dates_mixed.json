@@ -1,0 +1,1969 @@
+[
+  {
+    "protocolSection": {
+      "identificationModule": {
+        "nctId": "NCT06361992",
+        "orgStudyIdInfo": {
+          "id": "BC_SERBIA_2022"
+        },
+        "organization": {
+          "fullName": "Catalysis SL",
+          "class": "INDUSTRY"
+        },
+        "briefTitle": "Efficacy and Safety of Blue Cap for the Treatment of Atopic Dermatitis in Children",
+        "officialTitle": "Efficacy and Safety of Blue Cap for the Treatment of Atopic Dermatitis in Children"
+      },
+      "statusModule": {
+        "statusVerifiedDate": "2024-04",
+        "overallStatus": "COMPLETED",
+        "expandedAccessInfo": {
+          "hasExpandedAccess": false
+        },
+        "startDateStruct": {
+          "date": "2022-03-15",
+          "type": "ACTUAL"
+        },
+        "primaryCompletionDateStruct": {
+          "date": "2023-09-15",
+          "type": "ACTUAL"
+        },
+        "completionDateStruct": {
+          "date": "2024-02-13",
+          "type": "ACTUAL"
+        },
+        "studyFirstSubmitDate": "2024-04-08",
+        "studyFirstSubmitQcDate": "2024-04-08",
+        "studyFirstPostDateStruct": {
+          "date": "2024-04-12",
+          "type": "ACTUAL"
+        },
+        "lastUpdateSubmitDate": "2024-04-12",
+        "lastUpdatePostDateStruct": {
+          "date": "2024-04-15",
+          "type": "ACTUAL"
+        }
+      },
+      "sponsorCollaboratorsModule": {
+        "responsibleParty": {
+          "type": "SPONSOR"
+        },
+        "leadSponsor": {
+          "name": "Catalysis SL",
+          "class": "INDUSTRY"
+        }
+      },
+      "oversightModule": {
+        "oversightHasDmc": false,
+        "isFdaRegulatedDrug": false,
+        "isFdaRegulatedDevice": false
+      },
+      "descriptionModule": {
+        "briefSummary": "To verify the efficacy and tolerability of Activated Piroctone Olamine (Blue Cap Foam, label volume 100 ml) by CATALYSIS, S. L. Madrid, applied in the management of all types of dermatitis (atopic, seborrheic, eczema) in patients with significant manifestations of the disease in varying areas of the body of varying extent and to assess differences in individual tolerability and the final effect in a group of selected patients aged 3 to 18 years.",
+        "detailedDescription": "The first reports on the possibility of using Activated Piroctone Olamine as an effective treatment for patients with papulosquamous dermatoses, eczema and seborrhoeic dermatitis date back to the 1970s. The observations are presented in scientific papers by dermatologists, pharmacologists and laboratory workers who have verified the original thesis in practice by the practical use of different types of products. Activated Piroctone Olamine as an active ingredient is now used by a number of companies in their product range, either as the only active ingredient or, for example, in combination with other active ingredients such as liquid carbonis detergens. The Spanish company CATALYSIS S.L Madrid has also started to produce preparations containing Activated Piroctone Olamine intended for targeted use in dermatological practice. The products have been named Blue Cap® and the original shampoo has been gradually supplemented by spray, cream and foam formulations. The company has an eminent interest in the serious evaluation of the products and has therefore ordered a number of large clinical multicentre studies carried out in different geographical zones - ranging from the Tropical, through the Temperate to the Siberian regions.\n\nThe active ingredient Activated Piroctone Olamine alone or in combination with other active ingredients makes for products with excellent properties. Activated Piroctone Olamine itself has a proven antiseptic, antimicrobial, antifungal and keratolytic effect.\n\nThe effect is selective, only acting on the morbidly altered cells. The concentrations of Activated Piroctone Olamine used in BLUE-CAP formulations are absolutely safe. The products can also be used on the surface of larger body areas and in virtually all age groups.\n\nActivated Piroctone Olamine has a number of positive effects on pathological processes in the skin - high antimicrobial and antifungal effect, selective cytostatic effect on skin cells (at the stage of hyperproliferation, but does not affect healthy cells), it regulates the amount and number of cellular enzymes and determines the anti-inflammatory effect (if it is employed in a targeted manner in form of topically applied preparations.\n\nTo evaluate the efficacy and safety of the use of Piroctone Olamine in paediatric patients, the following clinical trial was conducted. A commercial formulation of Piroctone Olamine, Blue Cap, in foam format was used on patients aged 3 to 18 years and evaluated for safety and efficacy in the control of symptoms associated with dermatitis."
+      },
+      "conditionsModule": {
+        "conditions": [
+          "Atopic Dermatitis",
+          "Atopic Dermatitis and Related Conditions",
+          "Atopic Dermatitis Eczema",
+          "Atopic Dermatitis \\(AD\\)"
+        ],
+        "keywords": [
+          "Piroctone Olamine",
+          "paediatrics",
+          "Dermatology",
+          "Atopic Dermatitis",
+          "Skin"
+        ]
+      },
+      "designModule": {
+        "studyType": "INTERVENTIONAL",
+        "phases": [
+          "PHASE3"
+        ],
+        "designInfo": {
+          "allocation": "NA",
+          "interventionModel": "SINGLE_GROUP",
+          "primaryPurpose": "TREATMENT",
+          "maskingInfo": {
+            "masking": "NONE"
+          }
+        },
+        "enrollmentInfo": {
+          "count": 58,
+          "type": "ACTUAL"
+        }
+      },
+      "armsInterventionsModule": {
+        "armGroups": [
+          {
+            "label": "Blue cap Foam",
+            "type": "EXPERIMENTAL",
+            "description": "Application regimen: Blue Cap foam 100 ml, Activated Piroctone Olamine (Foam, label 100 ml), Catalysis S.L. Madrid must be applied twice a day on all affected areas. The application is to be continued for 30 days, after which the patients stop using the foam until the final assessment at day 45.",
+            "interventionNames": [
+              "Other: Blue Cap Foam"
+            ]
+          }
+        ],
+        "interventions": [
+          {
+            "type": "OTHER",
+            "name": "Blue Cap Foam",
+            "description": "Application regimen: Blue Cap foam 100 ml, Activated Piroctone Olamine (Foam, label 100 ml), Catalysis S.L. Madrid must be applied twice a day on all affected areas. The application is to be continued for 30 days, after which the patients stop using the foam until the final assessment at day 45.",
+            "armGroupLabels": [
+              "Blue cap Foam"
+            ]
+          }
+        ]
+      },
+      "outcomesModule": {
+        "primaryOutcomes": [
+          {
+            "measure": "Grade of Patient Tolerability to the investigation product",
+            "description": "Assessment of tolerance to the application of the test product in paediatric patients. This was done by following and monitoring patients in contact with the Blue Cap product at the topical level by reporting adverse effects during and after use of the product. The assessment of the tolerance of each patient is made throughout the follow-up of the patient (45 days or in case of exclusion of the patient) made by both the investigator and the patient: 1-4 (1- excellent, 2 - very good, 3 - good, 4 - intolerance).",
+            "timeFrame": "45 days"
+          },
+          {
+            "measure": "Clinical Improvement of Patients with Dermatitis",
+            "description": "Assessment of the clinical improvement of paediatric patients with dermatitis over the course of the visits using a questionnaire. The global questionnaire assesses the disappearance of clinical manifestations and improvement in skin quality with the following scale: None, Slight, Moderate, Great. The evaluation of each patient is carried out at time 0, 15 days, 30 days, 45 days or on exclusion of the patient.",
+            "timeFrame": "45 days"
+          },
+          {
+            "measure": "Clinical assessment of symptoms and sings associated with Dermatitis",
+            "description": "Evaluation of the clinical improvement of symptoms and signs associated with dermatitis in paediatric patients by means of a questionnaire on the presence or absence (Yes/No) of the following symptoms: Erythema, Scaling, Infiltration, Excoriations, Lichenification, Xerosis, Pruritus. The evaluation of each patient is carried out at time 0, 15 days, 30 days, 45 days or on exclusion of the patient.",
+            "timeFrame": "45 days"
+          }
+        ],
+        "secondaryOutcomes": [
+          {
+            "measure": "Evaluation of the therapeutic effect of Blue Cap in paediatric patients with dermatitis.",
+            "description": "Evaluation of the effect of the therapy performed by the investigator according to the percentage of healing of the dermatitis affected area after the use of Blue Cap compared to baseline time: Scale of grade l-4.\n\n1. Excellent, 80 - 100% improvement in skin quality, excellent aesthetic effect.\n2. Satisfactory, up to 60% improvement in skin quality, satisfactory aesthetic and cosmetic effect.\n3. Insignificant improvement, 30% improvement in skin quality, dissatisfactory aesthetic and cosmetic effect\n4. Unsatisfactory condition, finding in original extent.",
+            "timeFrame": "45 days"
+          },
+          {
+            "measure": "Evaluation of the therapeutic effect of Blue Cap on healing of the skin at the patients",
+            "description": "Subjective evaluation of the effect of the therapy on skin healing by the investigator visually based on the healing of the dermatitis affected area after use of Blue Cap compared to baseline time: Scale of grade l - 4.\n\n1. Excellent aesthetic and cosmetic effect, no undesired effects\n2. Satisfactory aesthetic effect\n3. Insignificant improvement, unsatisfactory effect\n4. Unsatisfactory effect",
+            "timeFrame": "45 days"
+          }
+        ]
+      },
+      "eligibilityModule": {
+        "eligibilityCriteria": "Inclusion Criteria:\n\n* Dermatitis affecting different areas of the body in varying extent.\n* Outpatient status\n* Age of 3 to 18 years, male, female\n* Voluntary participation in the trial\n* Signed informed patient consent form (Parents, legal tutor, or individual)\n* One-time participation in the trial\n\nExclusion Criteria:\n\n* Specific exclusion criteria\n\n  * Usage of other systemic preparation which might influence the final assessment (natural preparations, physical therapy)\n  * Known allergy to the tested preparation\n  * Disease focus infection manifestations (superinfection requiring therapy)\n  * Immunosuppressive therapy\n  * Cancer\n  * Malignancies\n* General exclusion criteria:\n\n  * Alcohol and drug abuse.\n  * Participation in another clinical trial within the past 30 days.\n  * Simultaneous participation in any other clinical trial.\n  * Other reasons excluding the patient from the trial.\n  * Restricted ability of the patient to follow therapy instructions.\n  * Other physical or mental disorders disturbing the trial plan.\n  * Possible consent withdrawal, presumed patient unreliability.",
+        "healthyVolunteers": false,
+        "sex": "ALL",
+        "minimumAge": "3 Years",
+        "maximumAge": "18 Years",
+        "stdAges": [
+          "CHILD",
+          "ADULT"
+        ]
+      },
+      "contactsLocationsModule": {
+        "locations": [
+          {
+            "facility": "University of Niš Faculty of Medicine, Department of Dermatology and Venereology, University Clinical Center of Niš",
+            "city": "Niš",
+            "state": "Nišava",
+            "zip": "18108",
+            "country": "Serbia",
+            "geoPoint": {
+              "lat": 43.32472,
+              "lon": 21.90333
+            }
+          },
+          {
+            "facility": "City Institute for Skin and Venereal Diseases Belgrade",
+            "city": "Belgrade",
+            "zip": "11000",
+            "country": "Serbia",
+            "geoPoint": {
+              "lat": 44.80401,
+              "lon": 20.46513
+            }
+          },
+          {
+            "facility": "University of Belgrade Faculty of Medicine, University Clinical Center of Serbia",
+            "city": "Belgrade",
+            "zip": "11000",
+            "country": "Serbia",
+            "geoPoint": {
+              "lat": 44.80401,
+              "lon": 20.46513
+            }
+          }
+        ]
+      },
+      "referencesModule": {
+        "references": [
+          {
+            "pmid": "23712284",
+            "type": "BACKGROUND",
+            "citation": "Leung DY. New insights into atopic dermatitis: role of skin barrier and immune dysregulation. Allergol Int. 2013 Jun;62(2):151-61. doi: 10.2332/allergolint.13-RAI-0564."
+          },
+          {
+            "pmid": "34437922",
+            "type": "BACKGROUND",
+            "citation": "Chovatiya R, Paller AS. JAK inhibitors in the treatment of atopic dermatitis. J Allergy Clin Immunol. 2021 Oct;148(4):927-940. doi: 10.1016/j.jaci.2021.08.009. Epub 2021 Aug 24."
+          },
+          {
+            "pmid": "25482871",
+            "type": "BACKGROUND",
+            "citation": "Hamilton JD, Suarez-Farinas M, Dhingra N, Cardinale I, Li X, Kostic A, Ming JE, Radin AR, Krueger JG, Graham N, Yancopoulos GD, Pirozzi G, Guttman-Yassky E. Dupilumab improves the molecular signature in skin of patients with moderate-to-severe atopic dermatitis. J Allergy Clin Immunol. 2014 Dec;134(6):1293-1300. doi: 10.1016/j.jaci.2014.10.013."
+          },
+          {
+            "pmid": "34815171",
+            "type": "BACKGROUND",
+            "citation": "Nakashima C, Yanagihara S, Otsuka A. Innovation in the treatment of atopic dermatitis: Emerging topical and oral Janus kinase inhibitors. Allergol Int. 2022 Jan;71(1):40-46. doi: 10.1016/j.alit.2021.10.004. Epub 2021 Nov 21."
+          },
+          {
+            "pmid": "31190937",
+            "type": "BACKGROUND",
+            "citation": "Puviani M, Campione E, Offidani AM, De Grandi R, Bianchi L, Bobyr I, Giannoni M, Campanati A, Bottagisio M, Bidossi A, De Vecchi E, Eisendle K, Milani M. Effects of a cream containing 5% hyaluronic acid mixed with a bacterial-wall-derived glycoprotein, glycyrretinic acid, piroctone olamine and climbazole on signs, symptoms and skin bacterial microbiota in subjects with seborrheic dermatitis of the face. Clin Cosmet Investig Dermatol. 2019 May 2;12:285-293. doi: 10.2147/CCID.S205904. eCollection 2019."
+          },
+          {
+            "pmid": "31396944",
+            "type": "BACKGROUND",
+            "citation": "Piquero-Casals J, Hexsel D, Mir-Bonafe JF, Rozas-Munoz E. Topical Non-Pharmacological Treatment for Facial Seborrheic Dermatitis. Dermatol Ther (Heidelb). 2019 Sep;9(3):469-477. doi: 10.1007/s13555-019-00319-0. Epub 2019 Aug 8."
+          },
+          {
+            "pmid": "18498517",
+            "type": "BACKGROUND",
+            "citation": "Pierard-Franchimont C, Goffin V, Henry F, Uhoda I, Braham C, Pierard GE. Nudging hair shedding by antidandruff shampoos. A comparison of 1% ketoconazole, 1% piroctone olamine and 1% zinc pyrithione formulations. Int J Cosmet Sci. 2002 Oct;24(5):249-56. doi: 10.1046/j.1467-2494.2002.00145.x."
+          },
+          {
+            "pmid": "27377141",
+            "type": "BACKGROUND",
+            "citation": "Fabbrocini G, Panariello L, DE Padova MP, Lorenzi S, Caro G, Marasca C, Russo G. Efficacy and tolerability of a spray product containing hydroxypropyl chitosan, climbazole and piroctone olamine, applied twice weekly for the treatment of the pitiriasis versicolor. G Ital Dermatol Venereol. 2017 Dec;152(6):565-568. doi: 10.23736/S0392-0488.16.05299-8. Epub 2016 Jul 5."
+          }
+        ],
+        "seeAlsoLinks": [
+          {
+            "label": "Results of the pilot study conducted with Blue Cap Foam in paediatric patients previously in Slovakia.",
+            "url": "https://www.kosmetischemedizin-online.de/case-study/abschlussbericht-ueber-die-pilotstudie-zur-ueberpruefung-der-wirkung-von-activated-piroctone-olamine-etikett-100ml-bei-der-behandlung-von-psoriasis-und-seborrhoischer-dermatitis-bei-patienten-im-alt/"
+          },
+          {
+            "label": "Results of the pilot study conducted with Blue Cap Foam in paediatric patients previously in St. Petersburg.",
+            "url": "https://pediatria.orscience.ru/2658-6630/article/view/111070"
+          }
+        ]
+      },
+      "ipdSharingStatementModule": {
+        "ipdSharing": "YES",
+        "infoTypes": [
+          "CSR"
+        ]
+      }
+    },
+    "derivedSection": {
+      "miscInfoModule": {
+        "versionHolder": "2026-08-14"
+      },
+      "conditionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D003876",
+            "term": "Dermatitis, Atopic"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D012873",
+            "term": "Skin Diseases, Genetic"
+          },
+          {
+            "id": "D030342",
+            "term": "Genetic Diseases, Inborn"
+          },
+          {
+            "id": "D009358",
+            "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+          },
+          {
+            "id": "D003872",
+            "term": "Dermatitis"
+          },
+          {
+            "id": "D012871",
+            "term": "Skin Diseases"
+          },
+          {
+            "id": "D017437",
+            "term": "Skin and Connective Tissue Diseases"
+          },
+          {
+            "id": "D017443",
+            "term": "Skin Diseases, Eczematous"
+          },
+          {
+            "id": "D006969",
+            "term": "Hypersensitivity, Immediate"
+          },
+          {
+            "id": "D006967",
+            "term": "Hypersensitivity"
+          },
+          {
+            "id": "D007154",
+            "term": "Immune System Diseases"
+          }
+        ]
+      }
+    },
+    "hasResults": false
+  },
+  {
+    "protocolSection": {
+      "identificationModule": {
+        "nctId": "NCT02289989",
+        "orgStudyIdInfo": {
+          "id": "Pro2012002449"
+        },
+        "organization": {
+          "fullName": "Rutgers, The State University of New Jersey",
+          "class": "OTHER"
+        },
+        "briefTitle": "Oregano Ointment vs. Standard Treatment for Pediatric Atopic Dermatitis",
+        "officialTitle": "Investigator-Initiated, Randomized, Investigator-Blind, Half-Side Comparison of Topical Oregano Extract Ointment vs .Hydrocortisone 1% for the Treatment of Atopic Dermatitis in Pediatric Patients"
+      },
+      "statusModule": {
+        "statusVerifiedDate": "2017-01",
+        "overallStatus": "TERMINATED",
+        "whyStopped": "Lack of response to recruitment",
+        "expandedAccessInfo": {
+          "hasExpandedAccess": false
+        },
+        "startDateStruct": {
+          "date": "2014-11"
+        },
+        "primaryCompletionDateStruct": {
+          "date": "2017-01",
+          "type": "ACTUAL"
+        },
+        "completionDateStruct": {
+          "date": "2017-01",
+          "type": "ACTUAL"
+        },
+        "studyFirstSubmitDate": "2014-11-10",
+        "studyFirstSubmitQcDate": "2014-11-10",
+        "studyFirstPostDateStruct": {
+          "date": "2014-11-13",
+          "type": "ESTIMATED"
+        },
+        "resultsFirstSubmitDate": "2017-02-06",
+        "resultsFirstSubmitQcDate": "2017-03-29",
+        "resultsFirstPostDateStruct": {
+          "date": "2017-05-10",
+          "type": "ACTUAL"
+        },
+        "lastUpdateSubmitDate": "2017-03-29",
+        "lastUpdatePostDateStruct": {
+          "date": "2017-05-10",
+          "type": "ACTUAL"
+        }
+      },
+      "sponsorCollaboratorsModule": {
+        "responsibleParty": {
+          "type": "SPONSOR"
+        },
+        "leadSponsor": {
+          "name": "Rutgers, The State University of New Jersey",
+          "class": "OTHER"
+        }
+      },
+      "oversightModule": {
+        "oversightHasDmc": false
+      },
+      "descriptionModule": {
+        "briefSummary": "This study is designed to evaluate and compare the efficacy of 3% oregano extract ointment prepared in aqueous solution versus 1% hydrocortisone ointment, a standard treatment, in decreasing the inflammation associated with mild to moderate atopic dermatitis. We plan to recruit 40 patients on the ages comprised between 2 and 17 years old and the study duration for each of the patient is 1 month.",
+        "detailedDescription": "A single-center, investigator initiated, randomized controlled, double-blind trial will be conducted to determine the effects of an oregano extract in aqueous solution versus 1% hydrocortisone in the treatment of acute-subacute pediatric atopic dermatitis (AD). We suspect that topical oregano will serve as an effective, non-steroidal AD therapy, simultaneously offering extra benefits to pediatric patients as oregano is a natural product with antimicrobial, anti-inflammatory, and antiseptic properties that lacks reports of adverse effects associated with steroids, which children have been noted to be more susceptible to."
+      },
+      "conditionsModule": {
+        "conditions": [
+          "Atopic Dermatitis"
+        ],
+        "keywords": [
+          "Atopic dermatitis",
+          "Oregano",
+          "Atopic Dermatitis Quick (ADQ) score",
+          "Eczema Area and Severity Index score",
+          "Reflectance confocal microscopy"
+        ]
+      },
+      "designModule": {
+        "studyType": "INTERVENTIONAL",
+        "phases": [
+          "NA"
+        ],
+        "designInfo": {
+          "allocation": "RANDOMIZED",
+          "interventionModel": "SINGLE_GROUP",
+          "primaryPurpose": "TREATMENT",
+          "maskingInfo": {
+            "masking": "QUADRUPLE",
+            "whoMasked": [
+              "PARTICIPANT",
+              "CARE_PROVIDER",
+              "INVESTIGATOR",
+              "OUTCOMES_ASSESSOR"
+            ]
+          }
+        },
+        "enrollmentInfo": {
+          "count": 1,
+          "type": "ACTUAL"
+        }
+      },
+      "armsInterventionsModule": {
+        "armGroups": [
+          {
+            "label": "Standard: Hydrocortisone 1% ointment",
+            "type": "ACTIVE_COMPARATOR",
+            "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm",
+            "interventionNames": [
+              "Drug: Hydrocortisone"
+            ]
+          },
+          {
+            "label": "Experimental: oregano extract cream",
+            "type": "EXPERIMENTAL",
+            "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm",
+            "interventionNames": [
+              "Drug: Oregano extract cream"
+            ]
+          }
+        ],
+        "interventions": [
+          {
+            "type": "DRUG",
+            "name": "Oregano extract cream",
+            "description": "An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
+            "armGroupLabels": [
+              "Experimental: oregano extract cream"
+            ],
+            "otherNames": [
+              "experimental treatment"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Hydrocortisone",
+            "description": "An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
+            "armGroupLabels": [
+              "Standard: Hydrocortisone 1% ointment"
+            ],
+            "otherNames": [
+              "active control"
+            ]
+          }
+        ]
+      },
+      "outcomesModule": {
+        "primaryOutcomes": [
+          {
+            "measure": "The Clinical Efficacy Rated by the Patient or Caregiver on Days 0 and 25",
+            "description": "This was measured with two questions. The first one referred to the description of the lesion and it included six characteristics: clear, dry, scaly, redness, cracks/opening and oozing. The second questions asked to grade how itchy was the patient.\n\nAll characteristics were measured on a scale from 0 to 5 (0 none, 5 extremely bothered/losing sleep).",
+            "timeFrame": "From baseline to day 25"
+          },
+          {
+            "measure": "Change of the Clinical Efficacy Rated by a Study Physician",
+            "description": "Physician was asked to grade four characteristics: erythema, infiltration/papulation, excoriation and lichenification. The grade was none (0), mild (1), moderate (2) and severe (3).",
+            "timeFrame": "Baseline to day 28"
+          },
+          {
+            "measure": "Histological Improvement Measured by Confocal Microscopy",
+            "description": "Confocal microscopy was done to the patient on day 0, day 14 and day 28. Due to technical difficulties, this outcome measure was not collected.",
+            "timeFrame": "Baseline to day 28"
+          }
+        ],
+        "secondaryOutcomes": [
+          {
+            "measure": "Measure Presence of S. Aureus Colonization on Affected Skin",
+            "description": "Bacterial culture of the affected area was done on day 0 and day 14.",
+            "timeFrame": "Baseline to day 14"
+          },
+          {
+            "measure": "Rate Cosmetic Acceptability of Topical Agents",
+            "description": "The patient or caregiver rated how the product felt on their skin after applying the product, measuring the cosmetic acceptability on day 7 and 14. The scale was excellent, good, moderate and poor.",
+            "timeFrame": "On day 7 and 14"
+          },
+          {
+            "measure": "Rate Skin Tolerance of Topical Agents",
+            "description": "The patient or caregiver rated how well the patient tolerated the product after applying it on day 7 and 14. The scale was excellent, good, moderate and poor.",
+            "timeFrame": "On day 7 and 14"
+          }
+        ]
+      },
+      "eligibilityModule": {
+        "eligibilityCriteria": "Inclusion Criteria:\n\n* Male or non-pregnant female subjects aged 2-17 years of age.\n* Individuals must be diagnosed with acute-subacute AD regardless of the study.\n* Written informed consent must be obtained from all patients or caregivers.\n* Women of childbearing potential (WOCBP) must be willing to practice effective contraception for the duration of study treatment.\n* Subjects must be willing and able to comply with study conditions, properly apply or have caregivers apply topical medications to the selected body sites, as well as return to the clinic for required visits.\n* Subject caregivers must be willing and able to perform ADQ assessment test.\n\nExclusion Criteria:\n\n* Individuals who are immune-compromised or suffering from infectious disease, malignant disease, are known to be HIV+ or present with a general reduced level of health.\n* Individuals diagnosed with underlying dermatological conditions in addition to AD.\n* Individuals with a chronic pre-existing disease such as diabetes mellitus or others that in the opinion of the investigator would preclude their participation in the study.\n* Individuals who are pregnant, nursing mothers, or subjects planning a pregnancy during the course of the study.\n* Subjects/caregivers who are unable to communicate or comply with study conditions due to language disability, poor mental development, or impaired cerebral function.\n* Individuals who are simultaneously enrolled in another clinical drug or device research study.\n* Individuals with a history of chronic steroid use.\n* Individuals needing to concurrently use topical agents, medicinal products containing corticosteroids, or immunosuppressants.\n* Individuals who have received systemically administered corticosteroids and/or antihistamines 2 weeks prior to the start of study.\n* Individuals undergoing light therapy.\n* Individuals who have been treated with another investigation device or drug within 30 days prior to study enrollment.\n* Individuals with a known allergy to oregano.",
+        "healthyVolunteers": false,
+        "sex": "ALL",
+        "minimumAge": "2 Years",
+        "maximumAge": "17 Years",
+        "stdAges": [
+          "CHILD"
+        ]
+      },
+      "contactsLocationsModule": {
+        "overallOfficials": [
+          {
+            "name": "Amy S Pappert, MD",
+            "affiliation": "Rutgers-RWJMS",
+            "role": "PRINCIPAL_INVESTIGATOR"
+          }
+        ],
+        "locations": [
+          {
+            "facility": "Department of Dermatology. Rutgers-RWJMS",
+            "city": "Somerset",
+            "state": "New Jersey",
+            "zip": "08873",
+            "country": "United States",
+            "geoPoint": {
+              "lat": 40.4976,
+              "lon": -74.48849
+            }
+          }
+        ]
+      },
+      "ipdSharingStatementModule": {
+        "ipdSharing": "UNDECIDED"
+      }
+    },
+    "resultsSection": {
+      "participantFlowModule": {
+        "preAssignmentDetails": "No exclusions or significant events were observed in the study.",
+        "recruitmentDetails": "Recruitment was done in the department of dermatology of Rutgers-RWJMS. It was stopped in July 2016.",
+        "groups": [
+          {
+            "id": "FG000",
+            "title": "Standard: Hydrocortisone 1% Ointment",
+            "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+          },
+          {
+            "id": "FG001",
+            "title": "Experimental: Oregano Extract Cream",
+            "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+          }
+        ],
+        "periods": [
+          {
+            "title": "Overall Study",
+            "milestones": [
+              {
+                "type": "STARTED",
+                "achievements": [
+                  {
+                    "groupId": "FG000",
+                    "numSubjects": "0"
+                  },
+                  {
+                    "groupId": "FG001",
+                    "numSubjects": "1"
+                  }
+                ]
+              },
+              {
+                "type": "COMPLETED",
+                "achievements": [
+                  {
+                    "groupId": "FG000",
+                    "numSubjects": "0"
+                  },
+                  {
+                    "groupId": "FG001",
+                    "numSubjects": "1"
+                  }
+                ]
+              },
+              {
+                "type": "NOT COMPLETED",
+                "achievements": [
+                  {
+                    "groupId": "FG000",
+                    "numSubjects": "0"
+                  },
+                  {
+                    "groupId": "FG001",
+                    "numSubjects": "0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "baselineCharacteristicsModule": {
+        "groups": [
+          {
+            "id": "BG000",
+            "title": "Standard: Hydrocortisone 1% Ointment",
+            "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+          },
+          {
+            "id": "BG001",
+            "title": "Experimental: Oregano Extract Cream",
+            "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+          },
+          {
+            "id": "BG002",
+            "title": "Total",
+            "description": "Total of all reporting groups"
+          }
+        ],
+        "denoms": [
+          {
+            "units": "Participants",
+            "counts": [
+              {
+                "groupId": "BG000",
+                "value": "0"
+              },
+              {
+                "groupId": "BG001",
+                "value": "1"
+              },
+              {
+                "groupId": "BG002",
+                "value": "1"
+              }
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "title": "Age, Categorical",
+            "paramType": "COUNT_OF_PARTICIPANTS",
+            "unitOfMeasure": "Participants",
+            "classes": [
+              {
+                "categories": [
+                  {
+                    "title": "<=18 years",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "1"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "1"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Between 18 and 65 years",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": ">=65 years",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Sex: Female, Male",
+            "paramType": "COUNT_OF_PARTICIPANTS",
+            "unitOfMeasure": "Participants",
+            "classes": [
+              {
+                "categories": [
+                  {
+                    "title": "Female",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Male",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "1"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Race (NIH/OMB)",
+            "paramType": "COUNT_OF_PARTICIPANTS",
+            "unitOfMeasure": "Participants",
+            "classes": [
+              {
+                "categories": [
+                  {
+                    "title": "American Indian or Alaska Native",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Asian",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Native Hawaiian or Other Pacific Islander",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Black or African American",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "White",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "1"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "1"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "More than one race",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Unknown or Not Reported",
+                    "measurements": [
+                      {
+                        "groupId": "BG001",
+                        "value": "0"
+                      },
+                      {
+                        "groupId": "BG002",
+                        "value": "0"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "outcomeMeasuresModule": {
+        "outcomeMeasures": [
+          {
+            "type": "PRIMARY",
+            "title": "The Clinical Efficacy Rated by the Patient or Caregiver on Days 0 and 25",
+            "description": "This was measured with two questions. The first one referred to the description of the lesion and it included six characteristics: clear, dry, scaly, redness, cracks/opening and oozing. The second questions asked to grade how itchy was the patient.\n\nAll characteristics were measured on a scale from 0 to 5 (0 none, 5 extremely bothered/losing sleep).",
+            "reportingStatus": "POSTED",
+            "paramType": "NUMBER",
+            "unitOfMeasure": "participants",
+            "timeFrame": "From baseline to day 25",
+            "groups": [
+              {
+                "id": "OG000",
+                "title": "Standard: Hydrocortisone 1% Ointment",
+                "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              },
+              {
+                "id": "OG001",
+                "title": "Experimental: Oregano Extract Cream",
+                "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              }
+            ],
+            "denoms": [
+              {
+                "units": "Participants",
+                "counts": [
+                  {
+                    "groupId": "OG000",
+                    "value": "0"
+                  },
+                  {
+                    "groupId": "OG001",
+                    "value": "1"
+                  }
+                ]
+              }
+            ],
+            "classes": [
+              {
+                "title": "Scaly, redness, cracks/opening day 0",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Very bothered (4) day 0",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Scaly, Redness day 25",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Quite bothered (3) day 25",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "PRIMARY",
+            "title": "Change of the Clinical Efficacy Rated by a Study Physician",
+            "description": "Physician was asked to grade four characteristics: erythema, infiltration/papulation, excoriation and lichenification. The grade was none (0), mild (1), moderate (2) and severe (3).",
+            "reportingStatus": "POSTED",
+            "paramType": "NUMBER",
+            "unitOfMeasure": "participants",
+            "timeFrame": "Baseline to day 28",
+            "groups": [
+              {
+                "id": "OG000",
+                "title": "Standard: Hydrocortisone 1% Ointment",
+                "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              },
+              {
+                "id": "OG001",
+                "title": "Experimental: Oregano Extract Cream",
+                "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              }
+            ],
+            "denoms": [
+              {
+                "units": "Participants",
+                "counts": [
+                  {
+                    "groupId": "OG000",
+                    "value": "0"
+                  },
+                  {
+                    "groupId": "OG001",
+                    "value": "1"
+                  }
+                ]
+              }
+            ],
+            "classes": [
+              {
+                "title": "Erythema day 0 severe",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Infiltration/Papulation day 0 none",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Excoriation day 0 severe",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Lichenification day 0 moderate",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Erythema day 28 moderate",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Infiltration/Papulation day 28 none",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Excoriation day 28 mild",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Lichenification day 28 mild",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "PRIMARY",
+            "title": "Histological Improvement Measured by Confocal Microscopy",
+            "description": "Confocal microscopy was done to the patient on day 0, day 14 and day 28. Due to technical difficulties, this outcome measure was not collected.",
+            "populationDescription": "Data not collected",
+            "reportingStatus": "POSTED",
+            "timeFrame": "Baseline to day 28",
+            "groups": [
+              {
+                "id": "OG000",
+                "title": "Standard: Hydrocortisone 1% Ointment",
+                "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              },
+              {
+                "id": "OG001",
+                "title": "Experimental: Oregano Extract Cream",
+                "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              }
+            ],
+            "denoms": [
+              {
+                "units": "Participants",
+                "counts": [
+                  {
+                    "groupId": "OG000",
+                    "value": "0"
+                  },
+                  {
+                    "groupId": "OG001",
+                    "value": "0"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "SECONDARY",
+            "title": "Measure Presence of S. Aureus Colonization on Affected Skin",
+            "description": "Bacterial culture of the affected area was done on day 0 and day 14.",
+            "reportingStatus": "POSTED",
+            "paramType": "NUMBER",
+            "unitOfMeasure": "participants",
+            "timeFrame": "Baseline to day 14",
+            "groups": [
+              {
+                "id": "OG000",
+                "title": "Standard: Hydrocortisone 1% Ointment",
+                "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              },
+              {
+                "id": "OG001",
+                "title": "Experimental: Oregano Extract Cream",
+                "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              }
+            ],
+            "denoms": [
+              {
+                "units": "Participants",
+                "counts": [
+                  {
+                    "groupId": "OG000",
+                    "value": "0"
+                  },
+                  {
+                    "groupId": "OG001",
+                    "value": "1"
+                  }
+                ]
+              }
+            ],
+            "classes": [
+              {
+                "title": "Bacterial culture day 0 negative",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Bacterial culture day 14 negative",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "SECONDARY",
+            "title": "Rate Cosmetic Acceptability of Topical Agents",
+            "description": "The patient or caregiver rated how the product felt on their skin after applying the product, measuring the cosmetic acceptability on day 7 and 14. The scale was excellent, good, moderate and poor.",
+            "reportingStatus": "POSTED",
+            "paramType": "NUMBER",
+            "unitOfMeasure": "participants",
+            "timeFrame": "On day 7 and 14",
+            "groups": [
+              {
+                "id": "OG000",
+                "title": "Standard: Hydrocortisone 1% Ointment",
+                "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              },
+              {
+                "id": "OG001",
+                "title": "Experimental: Oregano Extract Cream",
+                "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              }
+            ],
+            "denoms": [
+              {
+                "units": "Participants",
+                "counts": [
+                  {
+                    "groupId": "OG000",
+                    "value": "0"
+                  },
+                  {
+                    "groupId": "OG001",
+                    "value": "1"
+                  }
+                ]
+              }
+            ],
+            "classes": [
+              {
+                "title": "Cosmetic acceptability day 7 excellent",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Cosmetic acceptability day 14 excellent",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "SECONDARY",
+            "title": "Rate Skin Tolerance of Topical Agents",
+            "description": "The patient or caregiver rated how well the patient tolerated the product after applying it on day 7 and 14. The scale was excellent, good, moderate and poor.",
+            "reportingStatus": "POSTED",
+            "paramType": "NUMBER",
+            "unitOfMeasure": "participants",
+            "timeFrame": "On day 7 and 14",
+            "groups": [
+              {
+                "id": "OG000",
+                "title": "Standard: Hydrocortisone 1% Ointment",
+                "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              },
+              {
+                "id": "OG001",
+                "title": "Experimental: Oregano Extract Cream",
+                "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment"
+              }
+            ],
+            "denoms": [
+              {
+                "units": "Participants",
+                "counts": [
+                  {
+                    "groupId": "OG000",
+                    "value": "0"
+                  },
+                  {
+                    "groupId": "OG001",
+                    "value": "1"
+                  }
+                ]
+              }
+            ],
+            "classes": [
+              {
+                "title": "Skin tolerance day 7 excellent",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Skin tolerance day 14 excellent",
+                "categories": [
+                  {
+                    "measurements": [
+                      {
+                        "groupId": "OG001",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "adverseEventsModule": {
+        "frequencyThreshold": "0",
+        "eventGroups": [
+          {
+            "id": "EG000",
+            "title": "Standard: Hydrocortisone 1% Ointment",
+            "description": "Intervention: hydrocortisone 1% ointment will be applied to one patient's forearm\n\nHydrocortisone: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
+            "deathsNumAffected": 0,
+            "deathsNumAtRisk": 0,
+            "seriousNumAffected": 0,
+            "seriousNumAtRisk": 0,
+            "otherNumAffected": 0,
+            "otherNumAtRisk": 0
+          },
+          {
+            "id": "EG001",
+            "title": "Experimental: Oregano Extract Cream",
+            "description": "Intervention: Oregano extract cream for mild to moderate atopic dermatitis will be applied to the other patient's forearm\n\nOregano extract cream: An experimental cream will be applied to one of the arms of the patient which will be an oregano extract and will be compared to the standard treatment which will be hydrocortisone 1% ointment",
+            "deathsNumAffected": 0,
+            "deathsNumAtRisk": 1,
+            "seriousNumAffected": 0,
+            "seriousNumAtRisk": 1,
+            "otherNumAffected": 0,
+            "otherNumAtRisk": 1
+          }
+        ]
+      },
+      "moreInfoModule": {
+        "limitationsAndCaveats": {
+          "description": "Termination of the trial due to difficulty recruiting patients."
+        },
+        "certainAgreement": {
+          "piSponsorEmployee": false,
+          "restrictiveAgreement": false
+        },
+        "pointOfContact": {
+          "title": "Amy Pappert, MD",
+          "organization": "Rutgers Robert Wood Johnson Medical School",
+          "email": "papperas@rwjms.rutgers.edu",
+          "phone": "732-235-7765"
+        }
+      }
+    },
+    "derivedSection": {
+      "miscInfoModule": {
+        "versionHolder": "2026-08-14"
+      },
+      "conditionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D003876",
+            "term": "Dermatitis, Atopic"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D012873",
+            "term": "Skin Diseases, Genetic"
+          },
+          {
+            "id": "D030342",
+            "term": "Genetic Diseases, Inborn"
+          },
+          {
+            "id": "D009358",
+            "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+          },
+          {
+            "id": "D003872",
+            "term": "Dermatitis"
+          },
+          {
+            "id": "D012871",
+            "term": "Skin Diseases"
+          },
+          {
+            "id": "D017437",
+            "term": "Skin and Connective Tissue Diseases"
+          },
+          {
+            "id": "D017443",
+            "term": "Skin Diseases, Eczematous"
+          },
+          {
+            "id": "D006969",
+            "term": "Hypersensitivity, Immediate"
+          },
+          {
+            "id": "D006967",
+            "term": "Hypersensitivity"
+          },
+          {
+            "id": "D007154",
+            "term": "Immune System Diseases"
+          }
+        ]
+      },
+      "interventionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D006854",
+            "term": "Hydrocortisone"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D011282",
+            "term": "Pregnenediones"
+          },
+          {
+            "id": "D011283",
+            "term": "Pregnenes"
+          },
+          {
+            "id": "D011278",
+            "term": "Pregnanes"
+          },
+          {
+            "id": "D013256",
+            "term": "Steroids"
+          },
+          {
+            "id": "D000072473",
+            "term": "Fused-Ring Compounds"
+          },
+          {
+            "id": "D011083",
+            "term": "Polycyclic Compounds"
+          },
+          {
+            "id": "D015062",
+            "term": "11-Hydroxycorticosteroids"
+          },
+          {
+            "id": "D006889",
+            "term": "Hydroxycorticosteroids"
+          },
+          {
+            "id": "D000305",
+            "term": "Adrenal Cortex Hormones"
+          },
+          {
+            "id": "D006728",
+            "term": "Hormones"
+          },
+          {
+            "id": "D006730",
+            "term": "Hormones, Hormone Substitutes, and Hormone Antagonists"
+          },
+          {
+            "id": "D015065",
+            "term": "17-Hydroxycorticosteroids"
+          }
+        ]
+      }
+    },
+    "hasResults": true
+  },
+  {
+    "protocolSection": {
+      "identificationModule": {
+        "nctId": "NCT02677610",
+        "orgStudyIdInfo": {
+          "id": "M169981001"
+        },
+        "organization": {
+          "fullName": "Merz North America, Inc.",
+          "class": "INDUSTRY"
+        },
+        "briefTitle": "Efficacy and Safety Study of MSRD-100 in Subjects With Atopic Dermatitis >=3 Months of Age and Older",
+        "officialTitle": "A Phase 3, Double-Blind, Randomized, Vehicle-Controlled, Multicenter, Parallel Group Evaluation of the Efficacy and Safety of MSRD-100 in Subjects >=3 Months of Age With Atopic Dermatitis",
+        "acronym": "MSRD-100"
+      },
+      "statusModule": {
+        "statusVerifiedDate": "2016-09",
+        "overallStatus": "WITHDRAWN",
+        "expandedAccessInfo": {
+          "hasExpandedAccess": false
+        },
+        "primaryCompletionDateStruct": {
+          "date": "2016-07",
+          "type": "ACTUAL"
+        },
+        "completionDateStruct": {
+          "date": "2017-03",
+          "type": "ESTIMATED"
+        },
+        "studyFirstSubmitDate": "2016-01-27",
+        "studyFirstSubmitQcDate": "2016-02-08",
+        "studyFirstPostDateStruct": {
+          "date": "2016-02-09",
+          "type": "ESTIMATED"
+        },
+        "lastUpdateSubmitDate": "2016-09-08",
+        "lastUpdatePostDateStruct": {
+          "date": "2016-09-09",
+          "type": "ESTIMATED"
+        }
+      },
+      "sponsorCollaboratorsModule": {
+        "responsibleParty": {
+          "type": "SPONSOR"
+        },
+        "leadSponsor": {
+          "name": "Merz North America, Inc.",
+          "class": "INDUSTRY"
+        }
+      },
+      "oversightModule": {
+        "oversightHasDmc": false
+      },
+      "descriptionModule": {
+        "briefSummary": "This is a double-blind, randomized, vehicle-controlled, multi-center, parallel group Phase 3 study of MSRD-100 in the treatment of atopic dermatitis in subjects aged 3 months and up.",
+        "detailedDescription": "This is a 4-week efficacy, safety and tolerability study of MSRD-100 applied twice daily for 4 weeks compared to its vehicle among subjects ≥3 months of age in the treatment of atopic dermatitis covering ≥5% body surface area.\n\nThe study will consist of up to 4 visits which includes Screening - Visit 1 (Screening), Baseline - Visit 2 , Visit 3 (Day 14), and an End of Treatment/Final Study Visit - Visit 4 (Day 28).\n\nStudy IDs M169981001 and M169981002 are two identical studies being run in parallel with different study sites."
+      },
+      "conditionsModule": {
+        "conditions": [
+          "Atopic Dermatitis"
+        ],
+        "keywords": [
+          "Dermatitis, Atopic",
+          "Eczema",
+          "Dermatitis",
+          "Pruritus",
+          "Genetic Diseases, Inborn",
+          "Hypersensitivity",
+          "Hypersensitivity, Immediate",
+          "Immune System Diseases",
+          "Skin Diseases, Eczematous",
+          "Skin Diseases, Genetic",
+          "Skin Diseases",
+          "Itching",
+          "Rash",
+          "Steroid"
+        ]
+      },
+      "designModule": {
+        "studyType": "INTERVENTIONAL",
+        "phases": [
+          "PHASE3"
+        ],
+        "designInfo": {
+          "allocation": "RANDOMIZED",
+          "interventionModel": "PARALLEL",
+          "primaryPurpose": "TREATMENT",
+          "maskingInfo": {
+            "masking": "TRIPLE",
+            "whoMasked": [
+              "PARTICIPANT",
+              "CARE_PROVIDER",
+              "INVESTIGATOR"
+            ]
+          }
+        },
+        "enrollmentInfo": {
+          "count": 0,
+          "type": "ACTUAL"
+        }
+      },
+      "armsInterventionsModule": {
+        "armGroups": [
+          {
+            "label": "MSRD-100",
+            "type": "EXPERIMENTAL",
+            "description": "MSRD-100 is a topical gel with an active ingredient in a vehicle. Excipients are purified water, propylene glycol, polysorbate 20, benzyl alcohol, edetate disodium, diethylene glycol monoethyl ether and hydroxyethyl cellulose. Application is twice daily for 28 days.",
+            "interventionNames": [
+              "Drug: MSRD-100"
+            ]
+          },
+          {
+            "label": "Vehicle",
+            "type": "PLACEBO_COMPARATOR",
+            "description": "The vehicle is a topical gel and contains excipients of the formulation: purified water, propylene glycol, polysorbate 20, benzyl alcohol, edetate disodium, diethylene glycol monoethyl ether and hydroxyethyl cellulose. It does not contain the active ingredient MSRD-100. Application is twice daily for 28 days.",
+            "interventionNames": [
+              "Drug: Vehicle"
+            ]
+          }
+        ],
+        "interventions": [
+          {
+            "type": "DRUG",
+            "name": "MSRD-100",
+            "description": "MSRD-100 is a topical gel.",
+            "armGroupLabels": [
+              "MSRD-100"
+            ],
+            "otherNames": [
+              "active"
+            ]
+          },
+          {
+            "type": "DRUG",
+            "name": "Vehicle",
+            "description": "Vehicle is a topical gel without the active ingredient in MSRD-100",
+            "armGroupLabels": [
+              "Vehicle"
+            ],
+            "otherNames": [
+              "placebo"
+            ]
+          }
+        ]
+      },
+      "outcomesModule": {
+        "primaryOutcomes": [
+          {
+            "measure": "Compare the proportion of subjects with treatment success in the MSRD-100 and vehicle group",
+            "description": "Treatment success is defined as an Investigator Global Assessment (IGA) score of clear or almost clear and a minimum of a 2-grade improvement in IGA score from baseline plus no worsening on any of the signs present at baseline.\n\nThe primary endpoint is a composite of: (1) the IGA score of clear or almost clear as well as subjects having a minimum two point improvement on the IGA, plus (2) no worsening of any of the signs present at baseline.",
+            "timeFrame": "Visit 4 (Day 28)"
+          }
+        ],
+        "secondaryOutcomes": [
+          {
+            "measure": "Compare the proportion of subjects with an IGA score of 0 or 1 between the MSRD-100 and vehicle at Visit 4",
+            "timeFrame": "Visit 4 (Day 28)"
+          }
+        ]
+      },
+      "eligibilityModule": {
+        "eligibilityCriteria": "Key Inclusion Criteria:\n\n1. Subjects who are male or female, ≥3 months of age on the date of Baseline Visit.\n2. Subjects with a diagnosis of atopic dermatitis, active inflammation and meeting the Hanifin and Rajka Diagnosis Criteria for Atopic Dermatitis.\n3. Subjects must have an Investigator Global Assessment (IGA) score of ≥2 at baseline.\n4. Subjects who have atopic dermatitis covering ≥5% Body Surface Area (BSA) excluding the eyelids, perioral area, around the nostrils, and in the diaper area (for subjects who wear diapers or plastic pants).\n5. Subjects who have atopic dermatitis with a sign and symptom score ≥ 2 on the following three signs and symptoms: erythema, infiltration/papulation, and erosion/oozing/crusting present in at least one body surface area affected.\n\nKey Exclusion Criteria:\n\n1. Unstable course of Atopic Dermatitis (spontaneously improving or rapidly deteriorating) as determined by the investigator over the previous 4 weeks prior to baseline.\n2. Concurrent conditions and history of other diseases.\n3. Used any of the following treatments within the indicated washout period before the baseline visit or those who would require the following during the study.\n4. Subjects who require treatment with any other topical or systemic therapy for the study disease other than bland emollients in untreated areas of disease.",
+        "healthyVolunteers": false,
+        "sex": "ALL",
+        "minimumAge": "3 Months",
+        "stdAges": [
+          "CHILD",
+          "ADULT",
+          "OLDER_ADULT"
+        ]
+      },
+      "contactsLocationsModule": {
+        "overallOfficials": [
+          {
+            "name": "Michael Kuligowski, MD, PhD, MBA",
+            "affiliation": "Executive Medical Director",
+            "role": "STUDY_DIRECTOR"
+          }
+        ]
+      }
+    },
+    "derivedSection": {
+      "miscInfoModule": {
+        "versionHolder": "2026-08-14"
+      },
+      "conditionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D003876",
+            "term": "Dermatitis, Atopic"
+          },
+          {
+            "id": "D004485",
+            "term": "Eczema"
+          },
+          {
+            "id": "D003872",
+            "term": "Dermatitis"
+          },
+          {
+            "id": "D011537",
+            "term": "Pruritus"
+          },
+          {
+            "id": "D030342",
+            "term": "Genetic Diseases, Inborn"
+          },
+          {
+            "id": "D006967",
+            "term": "Hypersensitivity"
+          },
+          {
+            "id": "D006969",
+            "term": "Hypersensitivity, Immediate"
+          },
+          {
+            "id": "D007154",
+            "term": "Immune System Diseases"
+          },
+          {
+            "id": "D017443",
+            "term": "Skin Diseases, Eczematous"
+          },
+          {
+            "id": "D012873",
+            "term": "Skin Diseases, Genetic"
+          },
+          {
+            "id": "D012871",
+            "term": "Skin Diseases"
+          },
+          {
+            "id": "D005076",
+            "term": "Exanthema"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D009358",
+            "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+          },
+          {
+            "id": "D017437",
+            "term": "Skin and Connective Tissue Diseases"
+          },
+          {
+            "id": "D012877",
+            "term": "Skin Manifestations"
+          },
+          {
+            "id": "D012816",
+            "term": "Signs and Symptoms"
+          },
+          {
+            "id": "D013568",
+            "term": "Pathological Conditions, Signs and Symptoms"
+          }
+        ]
+      },
+      "interventionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D015444",
+            "term": "Exercise"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D009043",
+            "term": "Motor Activity"
+          },
+          {
+            "id": "D009068",
+            "term": "Movement"
+          },
+          {
+            "id": "D009142",
+            "term": "Musculoskeletal Physiological Phenomena"
+          },
+          {
+            "id": "D055687",
+            "term": "Musculoskeletal and Neural Physiological Phenomena"
+          }
+        ]
+      }
+    },
+    "hasResults": false
+  },
+  {
+    "protocolSection": {
+      "identificationModule": {
+        "nctId": "NCT01179529",
+        "orgStudyIdInfo": {
+          "id": "AMBITIOUS"
+        },
+        "organization": {
+          "fullName": "Technical University of Munich",
+          "class": "OTHER"
+        },
+        "briefTitle": "Atopic Dermatitis Biomarker Identification Trial in Omalizumab Usage",
+        "officialTitle": "Single- Arm Trial to Identify Potential Markers Underlying Variability in Response to Omalizumab (Xolair®) Treatment in Atopic Dermatitis",
+        "acronym": "AMB-WEI-1052-I"
+      },
+      "statusModule": {
+        "statusVerifiedDate": "2012-01",
+        "overallStatus": "COMPLETED",
+        "expandedAccessInfo": {
+          "hasExpandedAccess": false
+        },
+        "studyFirstSubmitDate": "2010-08-02",
+        "studyFirstSubmitQcDate": "2010-08-09",
+        "studyFirstPostDateStruct": {
+          "date": "2010-08-11",
+          "type": "ESTIMATED"
+        },
+        "lastUpdateSubmitDate": "2012-01-09",
+        "lastUpdatePostDateStruct": {
+          "date": "2012-01-10",
+          "type": "ESTIMATED"
+        }
+      },
+      "sponsorCollaboratorsModule": {
+        "leadSponsor": {
+          "name": "Technical University of Munich",
+          "class": "OTHER"
+        }
+      },
+      "oversightModule": {
+        "oversightHasDmc": false
+      },
+      "descriptionModule": {
+        "briefSummary": "This study aims at evaluating the therapeutic potential of omalizumab in atopic dermatitis, and to work out biomarkers predictive of treatment response."
+      },
+      "conditionsModule": {
+        "conditions": [
+          "Atopic Dermatitis",
+          "Atopic Eczema"
+        ],
+        "keywords": [
+          "Atopic dermatitis (atopic eczema)"
+        ]
+      },
+      "designModule": {
+        "studyType": "INTERVENTIONAL",
+        "phases": [
+          "PHASE2"
+        ],
+        "designInfo": {
+          "allocation": "NA",
+          "interventionModel": "SINGLE_GROUP",
+          "primaryPurpose": "TREATMENT"
+        }
+      },
+      "armsInterventionsModule": {
+        "armGroups": [
+          {
+            "label": "Omalizumab",
+            "type": "EXPERIMENTAL",
+            "interventionNames": [
+              "Drug: Omalizumab (Xolair®)"
+            ]
+          }
+        ],
+        "interventions": [
+          {
+            "type": "DRUG",
+            "name": "Omalizumab (Xolair®)",
+            "armGroupLabels": [
+              "Omalizumab"
+            ]
+          }
+        ]
+      },
+      "outcomesModule": {
+        "primaryOutcomes": [
+          {
+            "measure": "To evaluate efficacy of Omalizumab treatment in a sample of adult patients with moderate to severe AD"
+          }
+        ]
+      },
+      "eligibilityModule": {
+        "eligibilityCriteria": "Inclusion Criteria:\n\n* Age ≥ 18-70 years of age, body weight ≥ 20 kg and ≤ 150 kg\n* Dermatological diagnosis of AD, SCORAD \\>=20\n* A positive RAST (≥CAP1) result for at least one aeroallergen specific IgE and total IgE \\>=100kU/l at screening (or within the previous 12 months)\n* Eligible to receive systemic therapy for AD in accordance to local guidelines\n* Signed informed consent from patient\n\nExclusion Criteria:\n\n* Evidence of skin disease other than AD (e.g. psoriasis) at the inclusion time\n* Treatment with systemic AD medications or any investigational drug within a 30-day washout period\n* Concomitant treatment with substances interfering with the immune system\n* Permanent severe diseases, especially those affecting the immune system, except asthma\n* Pregnancy or breast feeding\n* History of food or drug related severe anaphylactoid or anaphylactic reaction(s)\n* History or presence of epilepsy, significant neurological disorders, cerebrovascular attacks or ischemia\n* History or presence of myocardial infarction or cardiac arrhythmia which requires drug therapy\n* Elevated serum IgE levels for reasons other than allergy and/or urticaria (e.g.: parasite infections, hyperimmunoglobulin E syndrome, Wiskott - Aldrich syndrome or clinical allergic bronchopulmonary aspergillosis)\n* Evidence of severe renal dysfunction or significant hepatic disease\n* Evidence for active infection that in the opinion of the investigator would compromise the patient's ability to tolerate therapy\n* History of malignancy of any organ system, treated or untreated, whether or not there is evidence of local recurrence or metastases, with the exception of localized basal cell carcinoma of the skin\n* Clinically significant laboratory abnormalities (not associated with AD) at Visit 1\n* Known hypersensitivity to any ingredients, including excipients (sucrose, histidine, polysorbate 20) of the study medication or drugs related to Omalizumab (e.g.: monoclonal antibodies, polyclonal gammaglobulin)\n* Patients who are considered potentially unreliable or where it is envisaged the patient may not consistently attend scheduled study visits\n* Patients with serious psychiatric and/or psychological disturbances\n* Patients with a history of drug or alcohol abuse\n* Patients who are unable to complete a patient diary or complete questionnaires on paper\n* Patients with any other condition or prior/current treatment, which in the opinion of the investigator renders the patient ineligible for the study schedule",
+        "healthyVolunteers": false,
+        "sex": "ALL",
+        "minimumAge": "18 Years",
+        "maximumAge": "70 Years",
+        "stdAges": [
+          "ADULT",
+          "OLDER_ADULT"
+        ]
+      },
+      "contactsLocationsModule": {
+        "overallOfficials": [
+          {
+            "name": "Stephan Weidinger, Prof.Dr.med.",
+            "role": "PRINCIPAL_INVESTIGATOR"
+          }
+        ],
+        "locations": [
+          {
+            "facility": "Klinikum rechts der Isar Dermatologie/Biederstein",
+            "city": "Munich",
+            "state": "Bavaria",
+            "zip": "80802",
+            "country": "Germany",
+            "geoPoint": {
+              "lat": 48.13743,
+              "lon": 11.57549
+            }
+          }
+        ]
+      }
+    },
+    "derivedSection": {
+      "miscInfoModule": {
+        "versionHolder": "2026-08-14"
+      },
+      "conditionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D003876",
+            "term": "Dermatitis, Atopic"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D012873",
+            "term": "Skin Diseases, Genetic"
+          },
+          {
+            "id": "D030342",
+            "term": "Genetic Diseases, Inborn"
+          },
+          {
+            "id": "D009358",
+            "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+          },
+          {
+            "id": "D003872",
+            "term": "Dermatitis"
+          },
+          {
+            "id": "D012871",
+            "term": "Skin Diseases"
+          },
+          {
+            "id": "D017437",
+            "term": "Skin and Connective Tissue Diseases"
+          },
+          {
+            "id": "D017443",
+            "term": "Skin Diseases, Eczematous"
+          },
+          {
+            "id": "D006969",
+            "term": "Hypersensitivity, Immediate"
+          },
+          {
+            "id": "D006967",
+            "term": "Hypersensitivity"
+          },
+          {
+            "id": "D007154",
+            "term": "Immune System Diseases"
+          }
+        ]
+      },
+      "interventionBrowseModule": {
+        "meshes": [
+          {
+            "id": "D000069444",
+            "term": "Omalizumab"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "D000888",
+            "term": "Antibodies, Anti-Idiotypic"
+          },
+          {
+            "id": "D000906",
+            "term": "Antibodies"
+          },
+          {
+            "id": "D007136",
+            "term": "Immunoglobulins"
+          },
+          {
+            "id": "D007162",
+            "term": "Immunoproteins"
+          },
+          {
+            "id": "D001798",
+            "term": "Blood Proteins"
+          },
+          {
+            "id": "D011506",
+            "term": "Proteins"
+          },
+          {
+            "id": "D000602",
+            "term": "Amino Acids, Peptides, and Proteins"
+          },
+          {
+            "id": "D061067",
+            "term": "Antibodies, Monoclonal, Humanized"
+          },
+          {
+            "id": "D000911",
+            "term": "Antibodies, Monoclonal"
+          },
+          {
+            "id": "D012712",
+            "term": "Serum Globulins"
+          },
+          {
+            "id": "D005916",
+            "term": "Globulins"
+          }
+        ]
+      }
+    },
+    "hasResults": false
+  }
+]

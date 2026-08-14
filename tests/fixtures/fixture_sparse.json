@@ -1,0 +1,127 @@
+{
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT00098150",
+      "orgStudyIdInfo": {
+        "id": "Ext 1 to ASM981C202"
+      },
+      "organization": {
+        "fullName": "Novartis",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "Follow-Up Study of Patients Previously Treated With Pimecrolimus Tablets for Atopic Dermatitis",
+      "officialTitle": "A Follow-Up Study of Patients Previously Treated in a Core Study With Pimecrolimus Tablets for Atopic Dermatitis"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2006-08",
+      "overallStatus": "COMPLETED",
+      "startDateStruct": {
+        "date": "2004-07"
+      },
+      "studyFirstSubmitDate": "2004-12-03",
+      "studyFirstSubmitQcDate": "2004-12-03",
+      "studyFirstPostDateStruct": {
+        "date": "2004-12-06",
+        "type": "ESTIMATED"
+      },
+      "lastUpdateSubmitDate": "2006-08-29",
+      "lastUpdatePostDateStruct": {
+        "date": "2006-08-31",
+        "type": "ESTIMATED"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "leadSponsor": {
+        "name": "Novartis",
+        "class": "INDUSTRY"
+      }
+    },
+    "descriptionModule": {
+      "briefSummary": "This extension study is being conducted to collect post-treatment safety information on patients who previously participated in the core clinical trial."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Atopic Dermatitis"
+      ],
+      "keywords": [
+        "Safety, atopic dermatitis, adverse event, SAE, extension"
+      ]
+    },
+    "designModule": {
+      "studyType": "OBSERVATIONAL",
+      "designInfo": {
+        "observationalModel": "DEFINED_POPULATION",
+        "timePerspective": "RETROSPECTIVE"
+      },
+      "enrollmentInfo": {
+        "count": 66
+      }
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Consenting patients who participated in the core clinical trial",
+      "healthyVolunteers": false,
+      "sex": "ALL",
+      "minimumAge": "18 Years",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ]
+    }
+  },
+  "derivedSection": {
+    "miscInfoModule": {
+      "versionHolder": "2026-08-14"
+    },
+    "conditionBrowseModule": {
+      "meshes": [
+        {
+          "id": "D003876",
+          "term": "Dermatitis, Atopic"
+        }
+      ],
+      "ancestors": [
+        {
+          "id": "D012873",
+          "term": "Skin Diseases, Genetic"
+        },
+        {
+          "id": "D030342",
+          "term": "Genetic Diseases, Inborn"
+        },
+        {
+          "id": "D009358",
+          "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+        },
+        {
+          "id": "D003872",
+          "term": "Dermatitis"
+        },
+        {
+          "id": "D012871",
+          "term": "Skin Diseases"
+        },
+        {
+          "id": "D017437",
+          "term": "Skin and Connective Tissue Diseases"
+        },
+        {
+          "id": "D017443",
+          "term": "Skin Diseases, Eczematous"
+        },
+        {
+          "id": "D006969",
+          "term": "Hypersensitivity, Immediate"
+        },
+        {
+          "id": "D006967",
+          "term": "Hypersensitivity"
+        },
+        {
+          "id": "D007154",
+          "term": "Immune System Diseases"
+        }
+      ]
+    }
+  },
+  "hasResults": false
+}
