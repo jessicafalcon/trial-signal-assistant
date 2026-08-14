@@ -1,4 +1,13 @@
 repos:
+  - repo: local
+    hooks:
+      - id: secrets-audit
+        name: secrets audit (deterministic floor)
+        entry: scripts/secrets_audit.sh
+        language: script
+        pass_filenames: false
+        stages: [pre-push]
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 65dbdb59d2f2d9c3bdc343c566821ad3319ddaa3  # v0.16.3
     hooks:
