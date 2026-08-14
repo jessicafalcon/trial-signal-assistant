@@ -2,6 +2,17 @@
 
 Why-not-X log. One entry per non-obvious choice.
 
+## 2026-08-14 — Date formats corrected from corpus scan
+
+The documented date formats ("January 2024", "January 15, 2024") did not
+survive contact with the live API: a scan of every string field across all
+1,738 AD studies found zero date fields in those shapes. The API v2 actually
+returns two ISO precisions — "YYYY-MM-DD" (day) and "YYYY-MM" (month) — and
+date structs can be absent entirely. CLAUDE.md and SPEC-01 were corrected to
+the measured formats, and the parser requirement was made defensive: any
+unknown format keeps the raw string with date_precision=None and a logged
+warning instead of raising. Empirical findings supersede docs.
+
 ## 2026-08-14 — Neutral repo name
 
 The repo is named after what it does (trial and safety signal assistance),

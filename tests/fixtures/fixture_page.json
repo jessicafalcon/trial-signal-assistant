@@ -1,0 +1,1402 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT06361992",
+          "orgStudyIdInfo": {
+            "id": "BC_SERBIA_2022"
+          },
+          "organization": {
+            "fullName": "Catalysis SL",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "Efficacy and Safety of Blue Cap for the Treatment of Atopic Dermatitis in Children",
+          "officialTitle": "Efficacy and Safety of Blue Cap for the Treatment of Atopic Dermatitis in Children"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2024-04",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2022-03-15",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2023-09-15",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2024-02-13",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2024-04-08",
+          "studyFirstSubmitQcDate": "2024-04-08",
+          "studyFirstPostDateStruct": {
+            "date": "2024-04-12",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2024-04-12",
+          "lastUpdatePostDateStruct": {
+            "date": "2024-04-15",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "Catalysis SL",
+            "class": "INDUSTRY"
+          }
+        },
+        "oversightModule": {
+          "oversightHasDmc": false,
+          "isFdaRegulatedDrug": false,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "To verify the efficacy and tolerability of Activated Piroctone Olamine (Blue Cap Foam, label volume 100 ml) by CATALYSIS, S. L. Madrid, applied in the management of all types of dermatitis (atopic, seborrheic, eczema) in patients with significant manifestations of the disease in varying areas of the body of varying extent and to assess differences in individual tolerability and the final effect in a group of selected patients aged 3 to 18 years.",
+          "detailedDescription": "The first reports on the possibility of using Activated Piroctone Olamine as an effective treatment for patients with papulosquamous dermatoses, eczema and seborrhoeic dermatitis date back to the 1970s. The observations are presented in scientific papers by dermatologists, pharmacologists and laboratory workers who have verified the original thesis in practice by the practical use of different types of products. Activated Piroctone Olamine as an active ingredient is now used by a number of companies in their product range, either as the only active ingredient or, for example, in combination with other active ingredients such as liquid carbonis detergens. The Spanish company CATALYSIS S.L Madrid has also started to produce preparations containing Activated Piroctone Olamine intended for targeted use in dermatological practice. The products have been named Blue Cap® and the original shampoo has been gradually supplemented by spray, cream and foam formulations. The company has an eminent interest in the serious evaluation of the products and has therefore ordered a number of large clinical multicentre studies carried out in different geographical zones - ranging from the Tropical, through the Temperate to the Siberian regions.\n\nThe active ingredient Activated Piroctone Olamine alone or in combination with other active ingredients makes for products with excellent properties. Activated Piroctone Olamine itself has a proven antiseptic, antimicrobial, antifungal and keratolytic effect.\n\nThe effect is selective, only acting on the morbidly altered cells. The concentrations of Activated Piroctone Olamine used in BLUE-CAP formulations are absolutely safe. The products can also be used on the surface of larger body areas and in virtually all age groups.\n\nActivated Piroctone Olamine has a number of positive effects on pathological processes in the skin - high antimicrobial and antifungal effect, selective cytostatic effect on skin cells (at the stage of hyperproliferation, but does not affect healthy cells), it regulates the amount and number of cellular enzymes and determines the anti-inflammatory effect (if it is employed in a targeted manner in form of topically applied preparations.\n\nTo evaluate the efficacy and safety of the use of Piroctone Olamine in paediatric patients, the following clinical trial was conducted. A commercial formulation of Piroctone Olamine, Blue Cap, in foam format was used on patients aged 3 to 18 years and evaluated for safety and efficacy in the control of symptoms associated with dermatitis."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Atopic Dermatitis",
+            "Atopic Dermatitis and Related Conditions",
+            "Atopic Dermatitis Eczema",
+            "Atopic Dermatitis \\(AD\\)"
+          ],
+          "keywords": [
+            "Piroctone Olamine",
+            "paediatrics",
+            "Dermatology",
+            "Atopic Dermatitis",
+            "Skin"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE3"
+          ],
+          "designInfo": {
+            "allocation": "NA",
+            "interventionModel": "SINGLE_GROUP",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "NONE"
+            }
+          },
+          "enrollmentInfo": {
+            "count": 58,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Blue cap Foam",
+              "type": "EXPERIMENTAL",
+              "description": "Application regimen: Blue Cap foam 100 ml, Activated Piroctone Olamine (Foam, label 100 ml), Catalysis S.L. Madrid must be applied twice a day on all affected areas. The application is to be continued for 30 days, after which the patients stop using the foam until the final assessment at day 45.",
+              "interventionNames": [
+                "Other: Blue Cap Foam"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "OTHER",
+              "name": "Blue Cap Foam",
+              "description": "Application regimen: Blue Cap foam 100 ml, Activated Piroctone Olamine (Foam, label 100 ml), Catalysis S.L. Madrid must be applied twice a day on all affected areas. The application is to be continued for 30 days, after which the patients stop using the foam until the final assessment at day 45.",
+              "armGroupLabels": [
+                "Blue cap Foam"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Grade of Patient Tolerability to the investigation product",
+              "description": "Assessment of tolerance to the application of the test product in paediatric patients. This was done by following and monitoring patients in contact with the Blue Cap product at the topical level by reporting adverse effects during and after use of the product. The assessment of the tolerance of each patient is made throughout the follow-up of the patient (45 days or in case of exclusion of the patient) made by both the investigator and the patient: 1-4 (1- excellent, 2 - very good, 3 - good, 4 - intolerance).",
+              "timeFrame": "45 days"
+            },
+            {
+              "measure": "Clinical Improvement of Patients with Dermatitis",
+              "description": "Assessment of the clinical improvement of paediatric patients with dermatitis over the course of the visits using a questionnaire. The global questionnaire assesses the disappearance of clinical manifestations and improvement in skin quality with the following scale: None, Slight, Moderate, Great. The evaluation of each patient is carried out at time 0, 15 days, 30 days, 45 days or on exclusion of the patient.",
+              "timeFrame": "45 days"
+            },
+            {
+              "measure": "Clinical assessment of symptoms and sings associated with Dermatitis",
+              "description": "Evaluation of the clinical improvement of symptoms and signs associated with dermatitis in paediatric patients by means of a questionnaire on the presence or absence (Yes/No) of the following symptoms: Erythema, Scaling, Infiltration, Excoriations, Lichenification, Xerosis, Pruritus. The evaluation of each patient is carried out at time 0, 15 days, 30 days, 45 days or on exclusion of the patient.",
+              "timeFrame": "45 days"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Evaluation of the therapeutic effect of Blue Cap in paediatric patients with dermatitis.",
+              "description": "Evaluation of the effect of the therapy performed by the investigator according to the percentage of healing of the dermatitis affected area after the use of Blue Cap compared to baseline time: Scale of grade l-4.\n\n1. Excellent, 80 - 100% improvement in skin quality, excellent aesthetic effect.\n2. Satisfactory, up to 60% improvement in skin quality, satisfactory aesthetic and cosmetic effect.\n3. Insignificant improvement, 30% improvement in skin quality, dissatisfactory aesthetic and cosmetic effect\n4. Unsatisfactory condition, finding in original extent.",
+              "timeFrame": "45 days"
+            },
+            {
+              "measure": "Evaluation of the therapeutic effect of Blue Cap on healing of the skin at the patients",
+              "description": "Subjective evaluation of the effect of the therapy on skin healing by the investigator visually based on the healing of the dermatitis affected area after use of Blue Cap compared to baseline time: Scale of grade l - 4.\n\n1. Excellent aesthetic and cosmetic effect, no undesired effects\n2. Satisfactory aesthetic effect\n3. Insignificant improvement, unsatisfactory effect\n4. Unsatisfactory effect",
+              "timeFrame": "45 days"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Dermatitis affecting different areas of the body in varying extent.\n* Outpatient status\n* Age of 3 to 18 years, male, female\n* Voluntary participation in the trial\n* Signed informed patient consent form (Parents, legal tutor, or individual)\n* One-time participation in the trial\n\nExclusion Criteria:\n\n* Specific exclusion criteria\n\n  * Usage of other systemic preparation which might influence the final assessment (natural preparations, physical therapy)\n  * Known allergy to the tested preparation\n  * Disease focus infection manifestations (superinfection requiring therapy)\n  * Immunosuppressive therapy\n  * Cancer\n  * Malignancies\n* General exclusion criteria:\n\n  * Alcohol and drug abuse.\n  * Participation in another clinical trial within the past 30 days.\n  * Simultaneous participation in any other clinical trial.\n  * Other reasons excluding the patient from the trial.\n  * Restricted ability of the patient to follow therapy instructions.\n  * Other physical or mental disorders disturbing the trial plan.\n  * Possible consent withdrawal, presumed patient unreliability.",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "3 Years",
+          "maximumAge": "18 Years",
+          "stdAges": [
+            "CHILD",
+            "ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "University of Niš Faculty of Medicine, Department of Dermatology and Venereology, University Clinical Center of Niš",
+              "city": "Niš",
+              "state": "Nišava",
+              "zip": "18108",
+              "country": "Serbia",
+              "geoPoint": {
+                "lat": 43.32472,
+                "lon": 21.90333
+              }
+            },
+            {
+              "facility": "City Institute for Skin and Venereal Diseases Belgrade",
+              "city": "Belgrade",
+              "zip": "11000",
+              "country": "Serbia",
+              "geoPoint": {
+                "lat": 44.80401,
+                "lon": 20.46513
+              }
+            },
+            {
+              "facility": "University of Belgrade Faculty of Medicine, University Clinical Center of Serbia",
+              "city": "Belgrade",
+              "zip": "11000",
+              "country": "Serbia",
+              "geoPoint": {
+                "lat": 44.80401,
+                "lon": 20.46513
+              }
+            }
+          ]
+        },
+        "referencesModule": {
+          "references": [
+            {
+              "pmid": "23712284",
+              "type": "BACKGROUND",
+              "citation": "Leung DY. New insights into atopic dermatitis: role of skin barrier and immune dysregulation. Allergol Int. 2013 Jun;62(2):151-61. doi: 10.2332/allergolint.13-RAI-0564."
+            },
+            {
+              "pmid": "34437922",
+              "type": "BACKGROUND",
+              "citation": "Chovatiya R, Paller AS. JAK inhibitors in the treatment of atopic dermatitis. J Allergy Clin Immunol. 2021 Oct;148(4):927-940. doi: 10.1016/j.jaci.2021.08.009. Epub 2021 Aug 24."
+            },
+            {
+              "pmid": "25482871",
+              "type": "BACKGROUND",
+              "citation": "Hamilton JD, Suarez-Farinas M, Dhingra N, Cardinale I, Li X, Kostic A, Ming JE, Radin AR, Krueger JG, Graham N, Yancopoulos GD, Pirozzi G, Guttman-Yassky E. Dupilumab improves the molecular signature in skin of patients with moderate-to-severe atopic dermatitis. J Allergy Clin Immunol. 2014 Dec;134(6):1293-1300. doi: 10.1016/j.jaci.2014.10.013."
+            },
+            {
+              "pmid": "34815171",
+              "type": "BACKGROUND",
+              "citation": "Nakashima C, Yanagihara S, Otsuka A. Innovation in the treatment of atopic dermatitis: Emerging topical and oral Janus kinase inhibitors. Allergol Int. 2022 Jan;71(1):40-46. doi: 10.1016/j.alit.2021.10.004. Epub 2021 Nov 21."
+            },
+            {
+              "pmid": "31190937",
+              "type": "BACKGROUND",
+              "citation": "Puviani M, Campione E, Offidani AM, De Grandi R, Bianchi L, Bobyr I, Giannoni M, Campanati A, Bottagisio M, Bidossi A, De Vecchi E, Eisendle K, Milani M. Effects of a cream containing 5% hyaluronic acid mixed with a bacterial-wall-derived glycoprotein, glycyrretinic acid, piroctone olamine and climbazole on signs, symptoms and skin bacterial microbiota in subjects with seborrheic dermatitis of the face. Clin Cosmet Investig Dermatol. 2019 May 2;12:285-293. doi: 10.2147/CCID.S205904. eCollection 2019."
+            },
+            {
+              "pmid": "31396944",
+              "type": "BACKGROUND",
+              "citation": "Piquero-Casals J, Hexsel D, Mir-Bonafe JF, Rozas-Munoz E. Topical Non-Pharmacological Treatment for Facial Seborrheic Dermatitis. Dermatol Ther (Heidelb). 2019 Sep;9(3):469-477. doi: 10.1007/s13555-019-00319-0. Epub 2019 Aug 8."
+            },
+            {
+              "pmid": "18498517",
+              "type": "BACKGROUND",
+              "citation": "Pierard-Franchimont C, Goffin V, Henry F, Uhoda I, Braham C, Pierard GE. Nudging hair shedding by antidandruff shampoos. A comparison of 1% ketoconazole, 1% piroctone olamine and 1% zinc pyrithione formulations. Int J Cosmet Sci. 2002 Oct;24(5):249-56. doi: 10.1046/j.1467-2494.2002.00145.x."
+            },
+            {
+              "pmid": "27377141",
+              "type": "BACKGROUND",
+              "citation": "Fabbrocini G, Panariello L, DE Padova MP, Lorenzi S, Caro G, Marasca C, Russo G. Efficacy and tolerability of a spray product containing hydroxypropyl chitosan, climbazole and piroctone olamine, applied twice weekly for the treatment of the pitiriasis versicolor. G Ital Dermatol Venereol. 2017 Dec;152(6):565-568. doi: 10.23736/S0392-0488.16.05299-8. Epub 2016 Jul 5."
+            }
+          ],
+          "seeAlsoLinks": [
+            {
+              "label": "Results of the pilot study conducted with Blue Cap Foam in paediatric patients previously in Slovakia.",
+              "url": "https://www.kosmetischemedizin-online.de/case-study/abschlussbericht-ueber-die-pilotstudie-zur-ueberpruefung-der-wirkung-von-activated-piroctone-olamine-etikett-100ml-bei-der-behandlung-von-psoriasis-und-seborrhoischer-dermatitis-bei-patienten-im-alt/"
+            },
+            {
+              "label": "Results of the pilot study conducted with Blue Cap Foam in paediatric patients previously in St. Petersburg.",
+              "url": "https://pediatria.orscience.ru/2658-6630/article/view/111070"
+            }
+          ]
+        },
+        "ipdSharingStatementModule": {
+          "ipdSharing": "YES",
+          "infoTypes": [
+            "CSR"
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003876",
+              "term": "Dermatitis, Atopic"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D012873",
+              "term": "Skin Diseases, Genetic"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D003872",
+              "term": "Dermatitis"
+            },
+            {
+              "id": "D012871",
+              "term": "Skin Diseases"
+            },
+            {
+              "id": "D017437",
+              "term": "Skin and Connective Tissue Diseases"
+            },
+            {
+              "id": "D017443",
+              "term": "Skin Diseases, Eczematous"
+            },
+            {
+              "id": "D006969",
+              "term": "Hypersensitivity, Immediate"
+            },
+            {
+              "id": "D006967",
+              "term": "Hypersensitivity"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT06085521",
+          "orgStudyIdInfo": {
+            "id": "LK001202"
+          },
+          "organization": {
+            "fullName": "Lynk Pharmaceuticals Co., Ltd",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "A Study of LNK01001 Capsule in Patients With Moderate to Severe Atopic Dermatitis",
+          "officialTitle": "A Phase 2, Randomized, Double-Blind, Placebo-Controlled Study to Evaluate the Efficiency and Safety of LNK01001 Capsule in Patients With Moderate to Severe Atopic Dermatitis"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2023-10",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2022-01-26",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2023-06-14",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2023-06-14",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2023-10-10",
+          "studyFirstSubmitQcDate": "2023-10-10",
+          "studyFirstPostDateStruct": {
+            "date": "2023-10-17",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2023-10-25",
+          "lastUpdatePostDateStruct": {
+            "date": "2023-10-27",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "Lynk Pharmaceuticals Co., Ltd",
+            "class": "INDUSTRY"
+          }
+        },
+        "oversightModule": {
+          "isFdaRegulatedDrug": false,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "Participants who meet eligibility criteria will be randomized in a 1:1:1 ratio to receive a twice daily oral LNK01001 dose A or LNK01001 dose B or matching placebo for 12 weeks.",
+          "detailedDescription": "The study was to include a 12-week double-blind treatment period. Participants who met eligibility criteria were to be randomized in a 1:1:1 ratio to one of the three treatment groups.\n\nGroup 1:LNK01001 dose A (Day 1 to Week 12) Group 2:LNK01001 dose B (Day 1 to Week 12) Group 3: Matching placebo (Day 1 to Week 12)"
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Atopic Dermatitis"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE2"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "PARALLEL",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "DOUBLE",
+              "whoMasked": [
+                "PARTICIPANT",
+                "INVESTIGATOR"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 150,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "LNK01001 Dose A",
+              "type": "EXPERIMENTAL",
+              "description": "Participants will receive LNK01001capsule Dose A BID orally for 12 weeks.",
+              "interventionNames": [
+                "Drug: LNK01001 Dose A"
+              ]
+            },
+            {
+              "label": "LNK01001 Dose B",
+              "type": "EXPERIMENTAL",
+              "description": "Participants will receive LNK01001capsule Dose B BID orally for 12 weeks.",
+              "interventionNames": [
+                "Drug: LNK01001 Dose B"
+              ]
+            },
+            {
+              "label": "placebo",
+              "type": "PLACEBO_COMPARATOR",
+              "description": "Participants will receive a Placebo capsule BID orally for 12 weeks.",
+              "interventionNames": [
+                "Drug: placebo"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "LNK01001 Dose A",
+              "description": "Capsules taken orally",
+              "armGroupLabels": [
+                "LNK01001 Dose A"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "LNK01001 Dose B",
+              "description": "Capsules taken orally",
+              "armGroupLabels": [
+                "LNK01001 Dose B"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "placebo",
+              "description": "Capsules taken orally",
+              "armGroupLabels": [
+                "placebo"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Percent Change from Baseline in Eczema Area and Severity Index (EASI) Score",
+              "description": "EASI is a tool used to measure the extent (area) and severity of atopic eczema based on assessments of the head/neck, trunk, upper limbs and lower limbs. For each region the area score is recorded as the percentage of skin affected by eczema. For each region, the severity score is calculated as the sum of the intensity scores (scored as none \\[0\\], mild \\[1\\], moderate \\[2\\], or severe \\[3\\]) for redness (erythema, inflammation), thickness (induration, papulation, swelling - acute eczema), scratching (excoriation), and lichenification (lined skin, prurigo nodules - chronic eczema).\n\nThe total EASI score for each region is calculated by multiplying the severity score by the area score, with adjustment for the proportion of the body region to the whole body. The final EASI score is the sum of the 4 region scores and ranges from 0 to 72 where higher scores represent worse disease.",
+              "timeFrame": "week 12"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Percentage of Participants Who Achieved a 75% Reduction in EASI Score (EASI 75)",
+              "description": "An EASI 75 response is defined as participants with at least a 75% reduction (improvement) in EASI score relative to the Baseline value",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Percentage of Participants Achieving an Investigator Global Assessment (IGA) response",
+              "description": "IGA response defined as an IGA score of 0 (clear) or 1 (almost clear) with a reduction from baseline of ≥ 2 points",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Percent Change from Baseline in EASI Score",
+              "description": "EASI is a tool used to measure the extent (area) and severity of atopic eczema based on assessments of the head/neck, trunk, upper limbs and lower limbs. For each region the area score is recorded as the percentage of skin affected by eczema. For each region, the severity score is calculated as the sum of the intensity scores (scored as none \\[0\\], mild \\[1\\], moderate \\[2\\], or severe \\[3\\]) for redness (erythema, inflammation), thickness (induration, papulation, swelling - acute eczema), scratching (excoriation), and lichenification (lined skin, prurigo nodules - chronic eczema).\n\nThe total EASI score for each region is calculated by multiplying the severity score by the area score, with adjustment for the proportion of the body region to the whole body. The final EASI score is the sum of the 4 region scores and ranges from 0 to 72 where higher scores represent worse disease.",
+              "timeFrame": "Week 4,8"
+            },
+            {
+              "measure": "Percentage of Participants Achieving a Reduction of ≥ 3 Points From Baseline in Worst Pruritus Numerical Rating Scale (NRS)",
+              "description": "Participants were asked to rate itch (pruritus) intensity at its worst during the past 24 hours on a daily basis using an 11-point scale from 0 (no itch) to 10 (worst imaginable itch). Pruritus NRS was analyzed based on weekly rolling averages of daily scores.",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Change From Baseline in Worst Pruritus Numerical Rating Scale(NRS) Score",
+              "description": "Participants were asked to rate itch (pruritus) intensity at its worst during the past 24 hours on a daily basis using an 11-point scale from 0 (no itch) to 10 (worst imaginable itch). Pruritus NRS was analyzed based on weekly rolling averages of daily scores.",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Percentage of Participants Achieving a Reduction of ≥ 2 Points From Baseline in Investigator Global Assessment (IGA)",
+              "description": "IGA is a validated assessment instrument to rate the severity of atopic dermatitis globally, based on the following scale:\n\n0 - Clear: No inflammatory signs of AD;\n\n1. \\- Almost clear: Barely perceptible erythema, induration/papulation and/or lichenification;\n2. \\- Mild: Slight but definite erythema, induration/papulation and/or minimal lichenification. No oozing or crusting;\n3. \\- Moderate: Clearly perceptible erythema, induration/papulation and/or lichenification, oozing or crusting may be present;\n4. \\- Severe: Marked erythema, induration/papulation and/or lichenification; Oozing or crusting may be present.",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Percentage of Participants Who Achieved a 90% Reduction in EASI Score (EASI 90)",
+              "description": "An EASI 90 response is defined as participants with at least a 90% reduction (improvement) in EASI score relative to the Baseline value",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Percentage of Participants Who Achieved a 50% Reduction in EASI Score (EASI 50)",
+              "description": "An EASI 50 response is defined as participants with at least a 50% reduction (improvement) in EASI score relative to the Baseline value",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Percent Change from Baseline in Scoring Atopic Dermatitis (SCORAD) Score",
+              "description": "SCORAD is a clinical tool used to assess the extent and severity of eczema (SCORing Atopic Dermatitis). The extent is assessed using the rule of 9 to calculate the affected area (A) as a percentage of the whole body (0-100%). The intensity part of the SCORAD (B) consists of 6 items: erythema, oedema/papulation, excoriations, lichenification, oozing/crusts and dryness, each graded on a scale from 0 (none) to 3 (severe), for a total score of 0 to 18. Subjective items (C) include daily pruritus and sleeplessness, each scored on a visual analogue scale (VAS) from 0 to 10 (total score 0-20). SCORAD is calculated as A/5 + 7B/2 + C, and ranges from 0 to 103 (worst). A negative change from Baseline indicates improvement.",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Change From Baseline in Dermatology Life Quality Index (DLQI) Score",
+              "description": "The DLQI is a 10-item validated questionnaire used to assess the impact of AD disease symptoms and treatment on quality of life (QoL). It consists of 10 questions evaluating impact of skin diseases on different aspects of a participant's QoL over the prior week, including symptoms and feelings, daily activities, leisure, work or school, personal relationships, and the side effects of treatment. Each item is scored on a 4-point scale (0 = not at all/not relevant; 1 = a little; 2 = a lot; and 3 = very much).\n\nItem scores are added to provide a total score, ranging from 0 to 30, with higher scores indicating greater impairment of QoL.",
+              "timeFrame": "Week 4,8,12"
+            },
+            {
+              "measure": "Change From Baseline in Patient Oriented Eczema Measure (POEM) Score",
+              "description": "The POEM is a 7-item, validated questionnaire used to assess disease symptoms in both children and adults. Participants respond to 7 questions, including dryness, itching, flaking, cracking, sleep loss, bleeding, and weeping, each scored on a 5-point scale based on frequency of occurrence during the previous week: 0 = no days, 1 = 1 to 2 days, 2 = 3 to 4 days, 3 = 5 to 6 days, and 4 = all days. Item scores are added to provide a total score ranging from 0 (clear) to 28 (very severe atopic eczema). A change in POEM score of 3.4 points is considered the minimal clinically important difference.",
+              "timeFrame": "Week 4,8,12"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* participants between ≥ 18 and ≤75 years of age.\n* subjects meet Hanifin and Rajka criteria.\n* subjects meet moderate to severe AD criteria.\n* inadequate response to topical treatment or systemic treatment for AD within 6 months before screening.\n\nExclusion Criteria:\n\n* current use of topical treatment for AD within 2 weeks before baseline visit.\n* prior exposure to Janus Kinase (JAK) inhibitor.\n* prior exposure to phototherapy, tanning bed, or any other light emitting device treatment within 4 weeks before baseline visit.\n* Prior exposure to any Biologic treatment including Dupilumab, Omalizumab within 3 months before baseline visit.\n* Any significant clinical and laboratory abnormalities, as determined by the Investigator, may affect the safety of the subjects, including but not limited to:WBC\\<3×10e9/L, neutrophil\\<1.2×10e9/L, platelet\\<100×10e9/L, hemoglobin\\<85 g/L; Aspartate aminotransferase or alanine aminotransferase\\>1.5×ULN, or total bilirubin\\>1.5×ULN; Serum creatinine\\>1.2×ULN.",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "maximumAge": "75 Years",
+          "stdAges": [
+            "ADULT",
+            "OLDER_ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "overallOfficials": [
+            {
+              "name": "Jianzhong Zhang",
+              "affiliation": "Peking University People's Hospital",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "locations": [
+            {
+              "facility": "Jianzhong Zhang",
+              "city": "Beijing",
+              "country": "China",
+              "geoPoint": {
+                "lat": 39.9075,
+                "lon": 116.39723
+              }
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003876",
+              "term": "Dermatitis, Atopic"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D012873",
+              "term": "Skin Diseases, Genetic"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D003872",
+              "term": "Dermatitis"
+            },
+            {
+              "id": "D012871",
+              "term": "Skin Diseases"
+            },
+            {
+              "id": "D017437",
+              "term": "Skin and Connective Tissue Diseases"
+            },
+            {
+              "id": "D017443",
+              "term": "Skin Diseases, Eczematous"
+            },
+            {
+              "id": "D006969",
+              "term": "Hypersensitivity, Immediate"
+            },
+            {
+              "id": "D006967",
+              "term": "Hypersensitivity"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT05763914",
+          "orgStudyIdInfo": {
+            "id": "20205100702"
+          },
+          "organization": {
+            "fullName": "Zealand University Hospital",
+            "class": "OTHER"
+          },
+          "briefTitle": "A 24-week Single-blind Trial of Prevention of Hand Eczema in Cleaners",
+          "officialTitle": "Hand Eczema in Cleaners: a Randomized Clinical Trial of Picture-based Prevention Compared to Treatment as Usual Among Professional Hospital Cleaners",
+          "acronym": "HEIC"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2023-09",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2022-11-14",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2023-06-24",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2023-06-24",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2023-02-14",
+          "studyFirstSubmitQcDate": "2023-03-08",
+          "studyFirstPostDateStruct": {
+            "date": "2023-03-10",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2023-09-09",
+          "lastUpdatePostDateStruct": {
+            "date": "2023-09-13",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "PRINCIPAL_INVESTIGATOR",
+            "investigatorFullName": "Farnam Barati Sedeh",
+            "investigatorTitle": "Principal Investigator",
+            "investigatorAffiliation": "Zealand University Hospital"
+          },
+          "leadSponsor": {
+            "name": "Zealand University Hospital",
+            "class": "OTHER"
+          },
+          "collaborators": [
+            {
+              "name": "University of Copenhagen",
+              "class": "OTHER"
+            },
+            {
+              "name": "Danish Working Environment Fund",
+              "class": "UNKNOWN"
+            }
+          ]
+        },
+        "oversightModule": {
+          "oversightHasDmc": false,
+          "isFdaRegulatedDrug": false,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "This study aims to investigate the effectiveness of picture-based prevention education among professional hospital cleaners in relation to hand eczema. This is a single-blinded randomized clinical trial including hospital cleaners at three different hospitals."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Hand Eczema"
+          ],
+          "keywords": [
+            "Prevention",
+            "Occupational",
+            "Picture",
+            "Cleaning"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "NA"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "PARALLEL",
+            "interventionModelDescription": "A cluster-randomized clinical trial, including three different hospitals. At each hospital, 78 cleaners will be included.",
+            "primaryPurpose": "PREVENTION",
+            "maskingInfo": {
+              "masking": "SINGLE",
+              "whoMasked": [
+                "PARTICIPANT"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 234,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Group 1: Picture-based prevention education and an educational course",
+              "type": "EXPERIMENTAL",
+              "description": "The participants will have access to picture-based prevention education, and at the same time, they will participate in an educational course.",
+              "interventionNames": [
+                "Behavioral: Change in the incidence of hand eczema",
+                "Behavioral: Change in severity of hand eczema",
+                "Behavioral: Change in the number of self-reported days with absence from work due to having hand eczema",
+                "Behavioral: Change in the number of participants being forced to change their job due to having hand eczema",
+                "Behavioral: Change in The Quality Of Life in in relation to hand eczema",
+                "Behavioral: Change in the level of knowledge regarding skin care and protection."
+              ]
+            },
+            {
+              "label": "Group 2: Picture-based prevention education only (no educational course)",
+              "type": "EXPERIMENTAL",
+              "description": "The participants will only have access to picture-based prevention education and will not participate in any educational course.",
+              "interventionNames": [
+                "Behavioral: Change in the incidence of hand eczema",
+                "Behavioral: Change in severity of hand eczema",
+                "Behavioral: Change in the number of self-reported days with absence from work due to having hand eczema",
+                "Behavioral: Change in the number of participants being forced to change their job due to having hand eczema",
+                "Behavioral: Change in The Quality Of Life in in relation to hand eczema",
+                "Behavioral: Change in the level of knowledge regarding skin care and protection."
+              ]
+            },
+            {
+              "label": "Group 3: Placebo (control)",
+              "type": "PLACEBO_COMPARATOR",
+              "description": "The participants will not have access to picture-based prevention education and do not participate in any educational course.",
+              "interventionNames": [
+                "Behavioral: Change in the incidence of hand eczema",
+                "Behavioral: Change in severity of hand eczema",
+                "Behavioral: Change in the number of self-reported days with absence from work due to having hand eczema",
+                "Behavioral: Change in the number of participants being forced to change their job due to having hand eczema",
+                "Behavioral: Change in The Quality Of Life in in relation to hand eczema",
+                "Behavioral: Change in the level of knowledge regarding skin care and protection."
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "BEHAVIORAL",
+              "name": "Change in the incidence of hand eczema",
+              "description": "Assessed by the self-reported cases of newly-developed hand eczema. Change between baseline and 6 months.",
+              "armGroupLabels": [
+                "Group 1: Picture-based prevention education and an educational course",
+                "Group 2: Picture-based prevention education only (no educational course)",
+                "Group 3: Placebo (control)"
+              ]
+            },
+            {
+              "type": "BEHAVIORAL",
+              "name": "Change in severity of hand eczema",
+              "description": "Assessed by using the Hand Eczema Severity Index (HECSI). HECSI score: 0-360 points (0 best, 360 worst). Change between baseline and 6 months.",
+              "armGroupLabels": [
+                "Group 1: Picture-based prevention education and an educational course",
+                "Group 2: Picture-based prevention education only (no educational course)",
+                "Group 3: Placebo (control)"
+              ]
+            },
+            {
+              "type": "BEHAVIORAL",
+              "name": "Change in the number of self-reported days with absence from work due to having hand eczema",
+              "description": "Self-reported total number of sick days due to having hand eczema. Change between baseline and 6 months.",
+              "armGroupLabels": [
+                "Group 1: Picture-based prevention education and an educational course",
+                "Group 2: Picture-based prevention education only (no educational course)",
+                "Group 3: Placebo (control)"
+              ]
+            },
+            {
+              "type": "BEHAVIORAL",
+              "name": "Change in the number of participants being forced to change their job due to having hand eczema",
+              "description": "Self-reported change of job due to having hand eczema. Change between baseline and 6 months.",
+              "armGroupLabels": [
+                "Group 1: Picture-based prevention education and an educational course",
+                "Group 2: Picture-based prevention education only (no educational course)",
+                "Group 3: Placebo (control)"
+              ]
+            },
+            {
+              "type": "BEHAVIORAL",
+              "name": "Change in The Quality Of Life in in relation to hand eczema",
+              "description": "Assessed by using Hand Eczema Questionnaire (QolHEQ). Change between baseline and 6 months.",
+              "armGroupLabels": [
+                "Group 1: Picture-based prevention education and an educational course",
+                "Group 2: Picture-based prevention education only (no educational course)",
+                "Group 3: Placebo (control)"
+              ]
+            },
+            {
+              "type": "BEHAVIORAL",
+              "name": "Change in the level of knowledge regarding skin care and protection.",
+              "description": "Self-reported level of knowledge regarding skin care and protection. Change between baseline and 6 months.",
+              "armGroupLabels": [
+                "Group 1: Picture-based prevention education and an educational course",
+                "Group 2: Picture-based prevention education only (no educational course)",
+                "Group 3: Placebo (control)"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Incidence rate of hand eczema",
+              "description": "Measured by a self-reported questionnaire",
+              "timeFrame": "Change between baseline and 6 months"
+            },
+            {
+              "measure": "Hand Eczema Severity Index (HECSI)",
+              "description": "Objective assessment of disease severity, measured by HECSI-score: 0-360 points (0 best, 360) worst)",
+              "timeFrame": "Change between baseline and 6 months"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Rate of absence from work due to having hand eczema",
+              "description": "Measured by a self-reported questionnaire",
+              "timeFrame": "Change between baseline and 6 months"
+            },
+            {
+              "measure": "Rate of participants being forced to change their job due to having hand eczema (questionnaire-based).",
+              "description": "Measured by a self-reported questionnaire",
+              "timeFrame": "Change between baseline and 6 months"
+            },
+            {
+              "measure": "The Quality Of Life in Hand Eczema Questionnaire (QqlHEQ)",
+              "description": "Subjective assessment of quality of life using QqlHEQ which contains 30 items; generally, all items are scored 0-4 (only three items differ in their scoring structure).",
+              "timeFrame": "Change between baseline and 6 months"
+            },
+            {
+              "measure": "Rate of knowledge regarding skin care and protection.",
+              "description": "Measured by a self-reported questionnaire",
+              "timeFrame": "Change between baseline and 6 months"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Professional hospital cleaners ≥ 18 years old\n* Sufficient Danish skills\n* Written informed consent\n\nExclusion Criteria:\n\n* Insufficient Danish skills\n* Pregnancy\n* Other skin diseases on the hands\n* Receiving Immunomodulatory therapies",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "stdAges": [
+            "ADULT",
+            "OLDER_ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "overallOfficials": [
+            {
+              "name": "Kristina Sophie Ibler, M.D.",
+              "affiliation": "Zealand University Hospital",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "locations": [
+            {
+              "facility": "Cleaning departments at Køge, Slagelse and Holbæk hospitals",
+              "city": "Køge",
+              "state": "Region Sjælland",
+              "country": "Denmark",
+              "geoPoint": {
+                "lat": 55.45802,
+                "lon": 12.18214
+              }
+            }
+          ]
+        },
+        "ipdSharingStatementModule": {
+          "ipdSharing": "YES",
+          "description": "The results of the project will be shared with other researchers.",
+          "infoTypes": [
+            "STUDY_PROTOCOL",
+            "SAP",
+            "ICF"
+          ],
+          "timeFrame": "Materials will be made available six months after the publication of the primary outcomes."
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT05286047",
+          "orgStudyIdInfo": {
+            "id": "CMUH-2021001"
+          },
+          "organization": {
+            "fullName": "Glac Biotech Co., Ltd",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "Probiotic on Atopic Dermatitis in Infant",
+          "officialTitle": "Effects of Oral Bifidobacterium Longum CCFM1029 on Atopic Dermatitis in Infant"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2026-01",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2022-09-23",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2025-05-28",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2025-05-28",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2022-03-09",
+          "studyFirstSubmitQcDate": "2022-03-17",
+          "studyFirstPostDateStruct": {
+            "date": "2022-03-18",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2026-01-08",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-01-12",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "PRINCIPAL_INVESTIGATOR",
+            "investigatorFullName": "Hsieh-Hsun Ho",
+            "investigatorTitle": "R&D Director",
+            "investigatorAffiliation": "Glac Biotech Co., Ltd"
+          },
+          "leadSponsor": {
+            "name": "Glac Biotech Co., Ltd",
+            "class": "INDUSTRY"
+          }
+        },
+        "oversightModule": {
+          "oversightHasDmc": false,
+          "isFdaRegulatedDrug": false,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "The clinical trial will be carried out in China Medical University Hospital. The overall plan is a double-blind trial. All recruited 3 months-3 years old atopic dermatitis (AD) patients are divided into two groups, 50 in each group and 100 in two groups. The two groups are placebo and Bifidobacterium longum CCFM1029. The entire evaluation plan lasts for 3 months. The number of probiotic bacteria is 5 billion per capsule, and the number of bacteria taken by the subjects is 5 billion per day (one capsule before bed each day). During the planning period, the eczema area and severity index (EASI) score of the patient's dermatitis was evaluated every month, and the score differences of dermatitis before and after taking probiotics was observed. In addition, subjects must perform two fecal samplings before and after the trial, and the isolated DNA was analyzed using the next-generation high-throughput sequencing method (NGS) for subject fecal flora changes. Comparing the two groups before and after taking the capsule, whether the intestinal flora changed. Statistical analysis of the relationship between changes in intestinal flora and the degree of AD. Through the above test, the investigators evaluated whether Bifidobacterium longum CCFM1029 can regulate the pediatric intestinal flora and relieve the inflammatory response in the body, thereby regulating atopic dermatitis."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Atopic Dermatitis"
+          ],
+          "keywords": [
+            "Atopic dermatitis",
+            "Probiotics",
+            "Intestinal flora",
+            "Allergic diseases"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "NA"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "PARALLEL",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "DOUBLE",
+              "whoMasked": [
+                "PARTICIPANT",
+                "INVESTIGATOR"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 100,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Bifidobacterium longum CCFM1029",
+              "type": "EXPERIMENTAL",
+              "interventionNames": [
+                "Dietary Supplement: Bifidobacterium longum CCFM1029"
+              ]
+            },
+            {
+              "label": "Placebo",
+              "type": "PLACEBO_COMPARATOR",
+              "interventionNames": [
+                "Dietary Supplement: Placebo"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DIETARY_SUPPLEMENT",
+              "name": "Bifidobacterium longum CCFM1029",
+              "description": "Subjects take one capsule containing Bifidobacterium longum CCFM1029 daily at bedtime.",
+              "armGroupLabels": [
+                "Bifidobacterium longum CCFM1029"
+              ]
+            },
+            {
+              "type": "DIETARY_SUPPLEMENT",
+              "name": "Placebo",
+              "description": "Subjects take one capsule containing maltodextrin daily at bedtime.",
+              "armGroupLabels": [
+                "Placebo"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Changes in eczema area and severity index (EASI) scores.",
+              "description": "Changes in eczema area and severity index (EASI) scores were assessed before and 3 months of intervention. The minimum value is \"0\" and maximum value is \"72\", higher scores mean a worse outcome.",
+              "timeFrame": "Before and 3-month intervention."
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Changes in eczema area and severity index (EASI) scores.",
+              "description": "Changes in eczema area and severity index (EASI) scores were assessed after 1 month and 2 months of intervention. The minimum value is \"0\" and maximum value is \"72\", higher scores mean a worse outcome.",
+              "timeFrame": "After 1 month and 2 months of intervention."
+            },
+            {
+              "measure": "Changes in gut microbiota ratios.",
+              "description": "Changes in gut microbiota ratios were assessed by NGS before and 3 months of intervention.",
+              "timeFrame": "Before and 3 months of intervention."
+            },
+            {
+              "measure": "Changes in infants' dermatitis quality of life (IDQOL) index.",
+              "description": "Changes in infants' dermatitis quality of life (IDQOL) index were assessed by questionnaire before and 1-, 2- and 3-month intervention. The minimum value is \"0\" and maximum value is \"30\", higher scores mean a worse outcome.",
+              "timeFrame": "Before and 1-, 2- and 3-month intervention."
+            },
+            {
+              "measure": "Changes in dermatitis family impact (DFI) scores.",
+              "description": "Changes in dermatitis family impact (DFI) scores were assessed by questionnaire before and 1-, 2- and 3-months intervention. The minimum value is \"0\" and maximum value is \"30\", higher scores mean a worse outcome.",
+              "timeFrame": "Before and 1-, 2- and 3-month intervention."
+            },
+            {
+              "measure": "Changes in subjects' frequency of medicine use from questionnaires.",
+              "description": "Changes in subjects' frequency of medicine use were assessed from questionnaire before and 1-, 2- and 3-months intervention. When subjects returned to the clinic, the average daily medicine use over the past month is asked by a professional physician.",
+              "timeFrame": "Before and 1-, 2- and 3-month intervention."
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Subjects were between 3 months and 3 years old.\n* For patients diagnosed with atopic dermatitis by a professional physician and the EASI score is greater than 5, the type and frequency of drugs used during the experiment should be recorded.\n* The subject's parents agree to join the trial and sign the informed consent form.\n\nExclusion Criteria:\n\n* The patient who has a history of allergic reactions, or the use of other highly sensitive or contraindicated drugs (allergy to antibiotics or antipyretics).\n* The patient who has taken oral immunosuppressants and systemic steroids within the past 2 weeks.\n* The patient who has consumed probiotic-related products (including drops, lozenges, capsules, powder or yogurt) within the past 1 month.\n* The patient who has participated in other clinical studies within the past 1 month.\n* The patient who has received immunotherapy within the past 1 year.\n* The patient who suffering from major diseases (with a IC card for severe illness), congenital diseases.\n* The patient who is not suitable to participate in the trial as assessed by the professional physician.",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "3 Months",
+          "maximumAge": "3 Years",
+          "stdAges": [
+            "CHILD"
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Glac Biotech Co., Ltd.",
+              "city": "Tainan",
+              "zip": "74442",
+              "country": "Taiwan",
+              "geoPoint": {
+                "lat": 22.99083,
+                "lon": 120.21333
+              }
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003876",
+              "term": "Dermatitis, Atopic"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D012873",
+              "term": "Skin Diseases, Genetic"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D003872",
+              "term": "Dermatitis"
+            },
+            {
+              "id": "D012871",
+              "term": "Skin Diseases"
+            },
+            {
+              "id": "D017437",
+              "term": "Skin and Connective Tissue Diseases"
+            },
+            {
+              "id": "D017443",
+              "term": "Skin Diseases, Eczematous"
+            },
+            {
+              "id": "D006969",
+              "term": "Hypersensitivity, Immediate"
+            },
+            {
+              "id": "D006967",
+              "term": "Hypersensitivity"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT02627989",
+          "orgStudyIdInfo": {
+            "id": "18690"
+          },
+          "organization": {
+            "fullName": "LEO Pharma",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "An Observational Study Investigating the Treatment Satisfaction of Atopic Dermatitis Patients Who Have Switched to Ointment (W/O Emulsion) Formulation of Very Strong Class Topical Corticosteroids",
+          "officialTitle": "An Observational Study Investigating the Treatment Satisfaction of Atopic Dermatitis Patients Who Have Switched to Ointment (W/O Emulsion) Formulation of Very Strong Class Topical Corticosteroids",
+          "acronym": "Ointment TS-AD"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2018-01",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2015-12-10",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2016-11-17",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2017-01-17",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2015-12-09",
+          "studyFirstSubmitQcDate": "2015-12-09",
+          "studyFirstPostDateStruct": {
+            "date": "2015-12-11",
+            "type": "ESTIMATED"
+          },
+          "lastUpdateSubmitDate": "2020-03-30",
+          "lastUpdatePostDateStruct": {
+            "date": "2020-04-01",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "LEO Pharma",
+            "class": "INDUSTRY"
+          },
+          "collaborators": [
+            {
+              "name": "Bayer",
+              "class": "INDUSTRY"
+            }
+          ]
+        },
+        "oversightModule": {
+          "oversightHasDmc": false
+        },
+        "descriptionModule": {
+          "briefSummary": "This study intends to investigate patient satisfaction of treatment with Ointment (W/O emulsion) formulations of Potency Class II topical corticosteroids (TCs) for atopic dermatitis (AD) patients in Japan. Objectives include measuring patient satisfaction, treatment adherence, itchiness, and AD severity scores."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Dermatitis, Atopic"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "patientRegistry": false,
+          "designInfo": {
+            "observationalModel": "OTHER",
+            "timePerspective": "PROSPECTIVE"
+          },
+          "enrollmentInfo": {
+            "count": 55,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Diflucortolone valerate (Nerisona/Texmeten)",
+              "description": "Adult patients with atopic dermatitis switching from diflucortolone-valerate fatty ointment to ointment (water/oil emulsion) during autumn/ winter (Nov to Feb) or spring/ summer (May to Aug)",
+              "interventionNames": [
+                "Drug: Diflucortolone valerate (Nerisona)",
+                "Drug: Diflucortolone valerate (Texmeten)"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Diflucortolone valerate (Nerisona)",
+              "description": "Potency Class II (classified as Very Strong class in Japan) topical corticosteroids",
+              "armGroupLabels": [
+                "Diflucortolone valerate (Nerisona/Texmeten)"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Diflucortolone valerate (Texmeten)",
+              "description": "Potency Class II (classified as Very Strong class in Japan) topical corticosteroids",
+              "armGroupLabels": [
+                "Diflucortolone valerate (Nerisona/Texmeten)"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Treatment satisfaction measured by Treatment Satisfaction Questionnaire for Medication (TSQM-9)",
+              "description": "A Patient Reported Outcome questionnaire assessing treatment satisfaction by recalling the last 2-3 weeks of treatment",
+              "timeFrame": "10 months"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Treatment adherence measured by Morisky Medication Adherence Scale (MMAS-8-Item)",
+              "timeFrame": "10 months"
+            },
+            {
+              "measure": "Itchiness according to Visual Analogue Scale (VAS)",
+              "timeFrame": "10 months"
+            },
+            {
+              "measure": "Severity Scoring of Atopic Dermatitis (SCORAD)",
+              "timeFrame": "10 months"
+            },
+            {
+              "measure": "Eczema Area and Severity Index (EASI)",
+              "timeFrame": "10 months"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Female and male patients with a diagnosis of atopic dermatitis who are treated with Fatty Ointment Potency Class II (Very strong class) TCs\n* Patients who are scheduled to change the formulation of the Potency Class II TC from Fatty Ointment to Ointment (Water in Oil; Water per Oil emulsion) as per investigator's routine treatment practice\n* Patients who are aged over 20\n* Patients who are able to understand and sign a written informed consent\n\nExclusion Criteria:\n\n-Patients participating in an investigational program with interventions outside of routine clinical practice\n\n* Patients with any contraindication to TCs\n* Patients who are regarded as ineligible by the investigator\n* Patients who are pregnant or breastfeeding\n* For Period 2 (Spring-Summer), patients enrolled in the Period 1",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "20 Years",
+          "stdAges": [
+            "ADULT",
+            "OLDER_ADULT"
+          ],
+          "studyPopulation": "Patients will be recruited by the investigator who will also be the treating physician. As an observational study, only patients who the investigator plans on switching to the ointment (W/O emulsion) from fatty ointment formulation will be eligible to participate. Patients will be recruited for each seasonal phase and same patients may not necessarily be observed between the two seasonal phases.",
+          "samplingMethod": "NON_PROBABILITY_SAMPLE"
+        },
+        "contactsLocationsModule": {
+          "overallOfficials": [
+            {
+              "name": "Bayer Study Director",
+              "affiliation": "Bayer",
+              "role": "STUDY_DIRECTOR"
+            }
+          ],
+          "locations": [
+            {
+              "city": "Tsu",
+              "state": "Mie-ken",
+              "zip": "514-8507",
+              "country": "Japan",
+              "geoPoint": {
+                "lat": 34.73333,
+                "lon": 136.51667
+              }
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-08-14"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003876",
+              "term": "Dermatitis, Atopic"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D012873",
+              "term": "Skin Diseases, Genetic"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D003872",
+              "term": "Dermatitis"
+            },
+            {
+              "id": "D012871",
+              "term": "Skin Diseases"
+            },
+            {
+              "id": "D017437",
+              "term": "Skin and Connective Tissue Diseases"
+            },
+            {
+              "id": "D017443",
+              "term": "Skin Diseases, Eczematous"
+            },
+            {
+              "id": "D006969",
+              "term": "Hypersensitivity, Immediate"
+            },
+            {
+              "id": "D006967",
+              "term": "Hypersensitivity"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        },
+        "interventionBrowseModule": {
+          "meshes": [
+            {
+              "id": "C013486",
+              "term": "diflucortolone valerate"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    }
+  ],
+  "nextPageToken": "ZVt07cGHkvI2wRk2CJf6_LLqy5DbMtMod7KrgP4blD-Wv_E"
+}
