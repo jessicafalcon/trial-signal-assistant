@@ -153,9 +153,8 @@ clever way.
 
 ## Current status
 
-- Phase: 0 (foundation). Repo scaffold in progress.
-- Next: Phase 1 — capture 5 API fixtures interactively, then run SPEC-01.
-- Snowflake trial NOT yet activated (planned day 3-4). No Snowflake creds exist.
-- Nothing is deployed. Airflow not set up yet (Phase 6, needs Docker Desktop).
+- Phase 1 complete (2026-08-14); next is Phase 2 (local warehouse).
+  See PLAN.md for phases and exit criteria.
+- Snowflake trial NOT yet activated. No Snowflake creds exist.
 
 (Update this section at the end of every working day.)

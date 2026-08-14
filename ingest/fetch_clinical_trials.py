@@ -7,10 +7,14 @@ network.
 
 from __future__ import annotations
 
+import argparse
+import json
 import logging
 import re
+import shutil
 from dataclasses import dataclass
-from datetime import date
+from datetime import UTC, date, datetime
+from pathlib import Path
 
 import requests
 
@@ -105,16 +109,57 @@ def parse_page(payload: dict) -> tuple[list[dict], str | None]:
     return list(payload.get("studies") or []), payload.get("nextPageToken")
 
 
-def fetch_studies(max_pages: int = 10) -> list[dict]:
-    """Fetch raw study dicts from the live API, following nextPageToken."""
-    studies: list[dict] = []
+def fetch_pages(max_pages: int = 10) -> list[str]:
+    """Fetch raw response bodies from the live API, following nextPageToken."""
+    pages: list[str] = []
     params = dict(QUERY_PARAMS)
     for _ in range(max_pages):
         response = requests.get(BASE_URL, params=params, timeout=REQUEST_TIMEOUT_S)
         response.raise_for_status()
-        page_studies, next_token = parse_page(response.json())
-        studies.extend(page_studies)
+        pages.append(response.text)
+        _, next_token = parse_page(response.json())
         if not next_token:
             break
         params["pageToken"] = next_token
+    return pages
+
+
+def fetch_studies(max_pages: int = 10) -> list[dict]:
+    """Fetch raw study dicts from the live API, following nextPageToken."""
+    studies: list[dict] = []
+    for page in fetch_pages(max_pages):
+        page_studies, _ = parse_page(json.loads(page))
+        studies.extend(page_studies)
     return studies
+
+
+def ingest_raw(out_root: str = "data/raw", max_pages: int = 10) -> Path:
+    """Land raw pages verbatim under out_root/ingest_date=<UTC today>/.
+
+    Idempotent: a re-run overwrites its own date partition only.
+    """
+    ingest_date = datetime.now(tz=UTC).date().isoformat()
+    partition = Path(out_root) / f"ingest_date={ingest_date}"
+    if partition.exists():
+        shutil.rmtree(partition)
+    partition.mkdir(parents=True)
+    total = 0
+    for page_num, page in enumerate(fetch_pages(max_pages), start=1):
+        (partition / f"page_{page_num:02d}.json").write_text(page)
+        total += len(parse_page(json.loads(page))[0])
+    logger.info("landed %d studies in %s", total, partition)
+    return partition
+
+
+def main() -> None:
+    """CLI entry point for `make ingest`."""
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument("--out-root", default="data/raw")
+    cli.add_argument("--max-pages", type=int, default=10)
+    ingest_args = cli.parse_args()
+    ingest_raw(out_root=ingest_args.out_root, max_pages=ingest_args.max_pages)
+
+
+if __name__ == "__main__":
+    main()
