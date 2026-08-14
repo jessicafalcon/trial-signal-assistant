@@ -5,8 +5,9 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
 - [x] **0 Foundation** — scaffold, tooling, CI skeleton.
       Exit: `make setup` and `make lint` green; first commit pushed.
 - [x] **1 Ingestion** — fixtures + tested parser; corpus parses clean.
-      Exit: `make test` green in CI; full pulled corpus (1,738 studies)
-      parses with zero exceptions and zero unknown-date warnings.
+      Exit: `make test` green in CI; full pulled corpus parses clean —
+      verified ad-hoc 2026-08-14 (1,738 parsed, 0 warnings, 0 exceptions);
+      the permanent check arrives as `make parse` in phase 2.
 - [ ] **2 Local warehouse** — stg model, date macro, completeness model
       on DuckDB.
       Exit: `dbt build --target duckdb` green locally and in CI.

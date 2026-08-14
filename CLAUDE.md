@@ -60,11 +60,15 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - Endpoint: `https://clinicaltrials.gov/api/v2/studies`, no auth.
 - Params: `query.cond="Atopic Dermatitis"`, `pageSize` (≤1000), `pageToken`
   cursor pagination, `filter.overallStatus`, `filter.phase`.
-- Payload nests under `protocolSection` (identificationModule, statusModule,
-  sponsorCollaboratorsModule, descriptionModule, designModule,
-  outcomesModule, eligibilityModule); `resultsSection` only for some trials.
+- Payload nests under `protocolSection`. Modules seen in captured fixtures:
+  identificationModule*, statusModule*, sponsorCollaboratorsModule*,
+  conditionsModule*, designModule*, armsInterventionsModule*,
+  descriptionModule, eligibilityModule, oversightModule, outcomesModule,
+  contactsLocationsModule, ipdSharingStatementModule, referencesModule
+  (* = currently read by the parser); `resultsSection` only for some trials.
 - Known quirks that MUST be handled: (1) array fields (conditions,
-  interventions, locations) may be null/missing/empty — always default to [];
+  interventions, locations) may be null/missing/empty — always default to []
+  (locations not currently extracted);
   (2) dates are ISO strings at two precisions with no API-side
   normalization: "YYYY-MM-DD" (day) and "YYYY-MM" (month) — measured
   2026-08-14 across 1,738 AD studies (e.g. startDateStruct.date:
@@ -124,7 +128,7 @@ AI sits at the edges; everything in the middle is deterministic.
   (dict in, typed record out) — dbt seeds and the RAG embedder import them.
 - Dependencies: ask before adding ANY new package. Current allowlist:
   requests, pytest, dbt-core, dbt-duckdb, dbt-snowflake,
-  sentence-transformers, chromadb, anthropic, ruff, sqlfluff.
+  sentence-transformers, chromadb, anthropic, ruff, sqlfluff, pre-commit.
 - dbt naming: `stg_` staging, `mart_` marts, snapshots in `snapshots/`.
   SQL keywords lowercase, one column per line in select lists.
 - Secrets defense in depth: never commit .env, data/, *.duckdb, .terraform/,
