@@ -5,12 +5,17 @@ models:
     description: >
       Typed pass-through over the parsed Parquet source. No renames, no
       computed fields — parsing rules live only in the Python parser.
+      Grain: one row per (nct_id, ingest_date) — all ingest partitions
+      are kept as a time series (2026-08-14 grain ruling, DECISIONS.md);
+      uniqueness at that grain is asserted by the singular test
+      tests/assert_stg_clinical_trials_grain.sql.
     columns:
       - name: nct_id
         data_type: varchar
-        description: ClinicalTrials.gov registry identifier (NCTxxxxxxxx).
+        description: >
+          ClinicalTrials.gov registry identifier (NCTxxxxxxxx). Unique
+          only within one ingest_date partition, not across the model.
         data_tests:
-          - unique
           - not_null
       - name: brief_title
         data_type: varchar
@@ -24,18 +29,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values:
-                  - COMPLETED
-                  - RECRUITING
-                  - UNKNOWN
-                  - TERMINATED
-                  - ACTIVE_NOT_RECRUITING
-                  - NOT_YET_RECRUITING
-                  - WITHDRAWN
-                  - ENROLLING_BY_INVITATION
-                  - AVAILABLE
-                  - NO_LONGER_AVAILABLE
-                  - SUSPENDED
+                values: "{{ var('trial_status_enum') }}"
       - name: phase
         data_type: varchar
         description: >
@@ -86,3 +80,65 @@ models:
         description: Raw-landing partition date this row was parsed from.
         data_tests:
           - not_null
+
+  - name: stg_trials_current
+    description: >
+      stg_clinical_trials filtered to the latest ingest_date — the
+      snapshot's sole input surface. One row per nct_id (bare nct_id IS
+      unique at this grain). Adds snapshot_source='live' so rows the
+      snapshot captures from here are distinguishable from the synthetic
+      day-0 seed all the way into the marts.
+    columns:
+      - name: nct_id
+        data_type: varchar
+        description: ClinicalTrials.gov registry identifier (NCTxxxxxxxx).
+        data_tests:
+          - unique
+          - not_null
+      - name: brief_title
+        data_type: varchar
+        description: Short public title of the study.
+      - name: overall_status
+        data_type: varchar
+        description: Recruitment/lifecycle status as reported by the API.
+      - name: phase
+        data_type: varchar
+        description: Trial phase(s) joined with "/"; "NA" not applicable.
+      - name: sponsor_name
+        data_type: varchar
+        description: Lead sponsor name.
+      - name: conditions
+        data_type: varchar[]
+        description: List of condition strings; empty list when absent.
+      - name: interventions
+        data_type: varchar[]
+        description: List of intervention names; empty list when absent.
+      - name: start_date_raw
+        data_type: varchar
+        description: Start date exactly as the API sent it; null if absent.
+      - name: start_date
+        data_type: date
+        description: Normalized start date; null when absent/unparseable.
+      - name: date_precision
+        data_type: varchar
+        description: '"day" or "month"; null when absent or unrecognized.'
+      - name: why_stopped
+        data_type: varchar
+        description: Free-text stop reason; only some stopped trials.
+      - name: has_results
+        data_type: boolean
+        description: Whether the registry has posted results.
+      - name: ingest_date
+        data_type: date
+        description: The latest partition date (single value here).
+        data_tests:
+          - not_null
+      - name: snapshot_source
+        data_type: varchar
+        description: Constant 'live' — provenance label for the snapshot.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - live

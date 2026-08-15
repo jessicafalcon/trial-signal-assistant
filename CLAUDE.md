@@ -40,20 +40,41 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `ingest/` — API fetching + pure parsing functions (dict in, TrialRecord out).
 - `tests/fixtures/` — captured real API payloads. READ-ONLY ground truth.
 - `dbt_project/` — profiles.yml has two targets: `duckdb` (default), `snowflake`.
+  `models/` staging + marts, `snapshots/` SCD2, `seeds/` synthetic day-0
+  CSVs, `tests/` dbt singular tests (distinct from pytest's tests/).
 - `rag/` — embedding build, query layer, `eval/` golden questions + scorer.
 - `dags/` — Airflow DAG. `terraform/` — S3 + Snowflake infra.
-- `data/` — gitignored. `data/raw/` JSON, `data/chroma/` vector store.
+- `data/` — gitignored. `data/raw/` JSON, `data/parsed/` parquet (dbt's
+  input), `data/parsed_fixtures/` fixture-mode parquet (CI symlinks it
+  to data/parsed), `data/chroma/` vector store.
 - `DECISIONS.md` — why-not-X log. Add an entry for every non-obvious choice.
 
 ## Commands (macOS, pip + venv)
 
 - `make setup` — create .venv, pip install -r requirements.txt, pre-commit install
-- `make test` — pytest (parser suite; no network calls allowed in tests)
+- `make test` — pytest over tests/ (parser + parquet bridge; no network
+  calls allowed in tests)
 - `make ingest` — live fetch AD trials → data/raw/ (network; never run in CI)
-- `make dbt` — dbt build --target duckdb (default local/CI definition of green)
-- `make dbt-snowflake` — dbt build --target snowflake (needs .env credentials)
-- `make eval` — run rag/eval/run_eval.py against golden questions
+- `make parse` — parser → parquet bridge into data/parsed/; FIXTURES=1
+  parses tests/fixtures/ into data/parsed_fixtures/ (CI mode)
+- `make dbt` — dbt build --target duckdb (default local/CI definition of
+  green; dbt build INCLUDES the snapshot — see ordering below)
+- `make snapshot-day0` — seed + snapshot the labeled synthetic day-0
+  state; FIXTURES=1 selects the fixture-scoped seed variant (CI)
+- `make snapshot` — live snapshot (builds the staging views first)
+- `make verify-idempotent` — re-runs the live snapshot; fails if row
+  count or dbt_scd_id fingerprint changed
+- `make verify-day0-count` — fails unless the mart holds exactly the 4
+  seeded day-0 transitions (CI runs it after the fixture sequence)
+- `make reset` — delete the local DuckDB file (clean state)
+- `make dbt-snowflake` — STUB until phase 4 (dbt build --target snowflake)
+- `make eval` — STUB until phase 5 (rag/eval/run_eval.py golden questions)
 - `make lint` — ruff + sqlfluff via pre-commit run --all-files
+
+Canonical change-detection order from a clean state (any other order can
+baseline the snapshot early and corrupt the day-0 demo — see the
+2026-08-14 make-snapshot DECISIONS.md entry):
+`make reset && make snapshot-day0 && make snapshot && make dbt && make verify-idempotent`
 
 ## Data source facts (verified against live API 2026-08-14 — empirical findings supersede docs)
 
@@ -194,9 +215,11 @@ around.
 
 ## Current status
 
-- Phase 2 complete locally (2026-08-14): parquet bridge + dbt staging/
-  completeness models green on DuckDB; CI green pending PR. Next is
-  Phase 3 (change detection). See PLAN.md for phases and exit criteria.
+- Phase 3 complete locally (2026-08-14): SCD2 snapshot on overall_status,
+  labeled synthetic day-0 seed, mart_trial_status_changes; DONE sequence
+  + idempotency proof green on DuckDB from a clean state; CI green
+  pending PR review. Next is Phase 4 (cloud: Terraform S3 + Snowflake).
+  See PLAN.md for phases and exit criteria.
 - Snowflake trial NOT yet activated. No Snowflake creds exist.
 
 (Update this section at the end of every working day.)

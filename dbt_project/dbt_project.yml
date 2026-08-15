@@ -6,8 +6,25 @@ profile: trial_signal
 flags:
   send_anonymous_usage_stats: false
 
+# single source of truth for the registry status enum (2026-08-14
+# corpus); referenced by every accepted_values test on a status column
+vars:
+  trial_status_enum:
+    - COMPLETED
+    - RECRUITING
+    - UNKNOWN
+    - TERMINATED
+    - ACTIVE_NOT_RECRUITING
+    - NOT_YET_RECRUITING
+    - WITHDRAWN
+    - ENROLLING_BY_INVITATION
+    - AVAILABLE
+    - NO_LONGER_AVAILABLE
+    - SUSPENDED
+
 model-paths: ["models"]
 snapshot-paths: ["snapshots"]
+seed-paths: ["seeds"]
 test-paths: ["tests"]
 macro-paths: ["macros"]
 
