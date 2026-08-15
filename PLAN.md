@@ -26,14 +26,17 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
       s3-sync and COPY INTO idempotent for byte-identical files;
       terraform plan converged to "No changes"). Snapshot machinery
       deliberately duckdb-only this phase (DECISIONS.md 2026-08-15).
-- [ ] **5 RAG** — per-field embeddings + Chroma metadata filtering;
-      cited Claude answers. SPEC-05 must first settle the four
-      recorded input-surface requirements (DECISIONS.md 2026-08-15):
-      which store the embedder reads (no per-trial mart exists yet),
-      the incremental-rebuild change key, the array-flattening rule
-      for Chroma metadata, and the stale "dbt seeds import the
-      parsers" comment.
-      Exit: 10-question golden eval runs with reported scores.
+- [x] **5 RAG** — per-field embeddings + Chroma metadata filtering;
+      cited Claude answers. The four F8 input-surface requirements
+      settled (DECISIONS.md 2026-08-15): embedder reads
+      mart_trial_documents; change key = content_hash (md5 of
+      doc_text); arrays flatten with '; '; the seeds-import-parsers
+      comment corrected. F11 RAW.TRIALS migration executed via
+      scripts/recreate_raw_trials.sh.
+      Exit: 10-question golden eval green — verified 2026-08-15
+      (retrieval hit-rate 1.00 ≥ 0.8, citation correctness 1.00 ≥ 0.7;
+      second make rag-build embeds 0 documents; suite 60/60, make dbt
+      66/66, make dbt-snowflake 17/17 post-migration, lint green).
 - [ ] **6 Orchestration** — Astro Airflow DAG end-to-end, idempotent.
       Also owns (2026-08-15 rulings): snapshot hard-delete policy AND
       Snowflake RAW.TRIALS reset mechanics, decided together with
@@ -86,6 +89,10 @@ rounds; clear or consciously re-accept each before the repo goes public:
 - [ ] Deferred tests from the phase-4 round (ruling F16): completeness
       mart bounds singular test; dual-target source-resolution parse
       test.
+- [ ] Phase matching in the RAG CLI is exact-string only (PHASE2 does
+      not match PHASE1/PHASE2) — consider Chroma $in / substring
+      matching over decomposed phase values (phase-5 ruling C4:
+      documented in --help now, richer matching deferred here).
 - [x] .env.example lacks SNOWFLAKE_SCHEMA, which profiles.yml reads
       (defaults to 'public'); add it when Snowflake activates in phase 4,
       plus a make dbt-snowflake preflight failing fast on empty

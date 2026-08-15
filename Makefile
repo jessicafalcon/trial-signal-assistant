@@ -33,7 +33,7 @@ endef
 SNAP_STATE = $(DBT) --quiet show --inline "select count(*) as n, coalesce(md5(string_agg(dbt_scd_id, ',' order by dbt_scd_id)), '0') as fp from {{ ref('snap_trial_status') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; d = json.load(sys.stdin)['show'][0]; print(d['n'], d['fp'])"
 MART_COUNT = $(DBT) --quiet show --inline "select count(*) as n from {{ ref('mart_trial_status_changes') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; print(json.load(sys.stdin)['show'][0]['n'])"
 
-.PHONY: setup test ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot verify-idempotent verify-day0-count reset s3-sync load-snowflake
+.PHONY: setup test ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot verify-idempotent verify-day0-count reset s3-sync load-snowflake rag-build ask
 
 setup:
 	python3 -m venv $(VENV)
@@ -109,15 +109,34 @@ s3-sync:
 load-snowflake:
 	DBT=$(DBT) scripts/load_snowflake.sh
 
-# same dbt project on the snowflake target. Snapshot machinery is
-# duckdb-only this phase (DECISIONS.md): exclude the snapshot and its
-# descendants, and the day-0 seeds.
+# same dbt project on the snowflake target. Snapshot machinery and the
+# RAG documents mart are duckdb-only this phase (DECISIONS.md): exclude
+# the snapshot and its descendants, the day-0 seeds, and the doc mart
+# (+ its tests, which are its descendants).
 dbt-snowflake:
 	$(snowflake_preflight)
-	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude snap_trial_status+ resource_type:seed
+	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude snap_trial_status+ resource_type:seed mart_trial_documents+
 
+# build/refresh the Chroma vector store from mart_trial_documents.
+# Incremental by content_hash: a re-run with no mart changes embeds 0
+# documents. FULL=1 drops the collection and re-embeds everything.
+rag-build:
+	$(PY) -m rag.embed_and_store $(if $(FULL),--full,)
+
+# ask a question over the store: make ask Q="why was NCTxxx withdrawn?"
+# Optional: STATUS=WITHDRAWN PHASE=PHASE2 K=8. Needs ANTHROPIC_API_KEY
+# in the environment (never passed as an argument or echoed).
+# single-quoted interpolations so shell metacharacters in the values
+# stay inert (review ruling S3); a literal ' in Q still breaks quoting —
+# call rag.query_llm directly for questions containing apostrophes
+ask:
+	@if [ -z "$(Q)" ]; then echo "usage: make ask Q=\"your question\""; exit 2; fi
+	$(PY) -m rag.query_llm '$(Q)' $(if $(STATUS),--status '$(STATUS)',) $(if $(PHASE),--phase '$(PHASE)',) $(if $(K),--k '$(K)',)
+
+# golden-question eval. RETRIEVAL_ONLY=1 runs just the free deterministic
+# half (no API calls).
 eval:
-	@echo "not implemented until phase 5"
+	$(PY) -m rag.eval.run_eval $(if $(RETRIEVAL_ONLY),--retrieval-only,)
 
 lint:
 	$(VENV)/bin/pre-commit run --all-files

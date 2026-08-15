@@ -17,6 +17,8 @@ select
     cast(start_date as date) as start_date,
     cast(date_precision as varchar) as date_precision,
     cast(why_stopped as varchar) as why_stopped,
+    cast(brief_summary as varchar) as brief_summary,
+    cast(detailed_description as varchar) as detailed_description,
     cast(has_results as boolean) as has_results,
     cast(ingest_date as date) as ingest_date
 from {{ source('parsed', 'clinical_trials') }}

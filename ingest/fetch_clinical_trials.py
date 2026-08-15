@@ -1,8 +1,8 @@
 """Fetch and parse Atopic Dermatitis trials from ClinicalTrials.gov API v2.
 
-Fetching (network) and parsing (pure functions) are kept separate: the dbt
-seed layer and the RAG embedder import the parsers without touching the
-network.
+Fetching (network) and parsing (pure functions) are kept separate: the
+parquet bridge imports the parsers without touching the network, and
+everything downstream (dbt, the RAG embedder) reads the bridge's output.
 """
 
 from __future__ import annotations
@@ -44,6 +44,8 @@ class TrialRecord:
     start_date: str | None
     date_precision: str | None  # "day" | "month" | None
     why_stopped: str | None
+    brief_summary: str | None
+    detailed_description: str | None
     has_results: bool
 
 
@@ -80,6 +82,7 @@ def parse_study(study: dict) -> TrialRecord:
     sponsors = protocol.get("sponsorCollaboratorsModule") or {}
     conditions_module = protocol.get("conditionsModule") or {}
     arms = protocol.get("armsInterventionsModule") or {}
+    description = protocol.get("descriptionModule") or {}
 
     start_struct = status.get("startDateStruct") or {}
     start_date_raw = start_struct.get("date")
@@ -100,6 +103,8 @@ def parse_study(study: dict) -> TrialRecord:
         start_date=start_date,
         date_precision=date_precision,
         why_stopped=status.get("whyStopped"),
+        brief_summary=description.get("briefSummary"),
+        detailed_description=description.get("detailedDescription"),
         has_results=bool(study.get("hasResults")),
     )
 

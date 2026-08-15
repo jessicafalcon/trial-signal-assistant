@@ -1,5 +1,6 @@
--- Latest partition only: the snapshot's sole input surface (grain
--- ruling, DECISIONS.md 2026-08-14). Bare nct_id is unique here.
+-- Latest partition only (grain ruling, DECISIONS.md 2026-08-14): input
+-- surface for the snapshot and for mart_trial_documents (RAG). Bare
+-- nct_id is unique here.
 select
     nct_id,
     brief_title,
@@ -12,6 +13,8 @@ select
     start_date,
     date_precision,
     why_stopped,
+    brief_summary,
+    detailed_description,
     has_results,
     ingest_date,
     cast('live' as varchar) as snapshot_source

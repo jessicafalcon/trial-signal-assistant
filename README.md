@@ -88,8 +88,54 @@ pin role/warehouse/database/schema to the terraform-created objects
 
 Cost posture: X-Small warehouse, 60-second auto-suspend, created
 suspended — a full load + build run fits comfortably in trial credits.
-Snapshot machinery (change detection) runs on DuckDB only this phase;
-`make dbt-snowflake` excludes it. Snowflake is never exercised in CI —
-CI only checks `terraform fmt`/`validate` with no credentials.
+Snapshot machinery (change detection) and the RAG documents mart run on
+DuckDB only this phase; `make dbt-snowflake` excludes them. Snowflake is
+never exercised in CI — CI only checks `terraform fmt`/`validate` with
+no credentials.
 
-Status: phase 4 complete — see PLAN.md.
+**Schema migration (RAW.TRIALS):** the table's DDL is a manual mirror of
+the parser's parquet schema, and `create table if not exists` never
+alters a live table. When `TrialRecord` gains a column, recreate and
+re-load — the data is reproducible by design:
+
+    make parse && make s3-sync                # rewrite + upload the parquet
+    CONFIRM=1 scripts/recreate_raw_trials.sh  # drop + recreate from the updated DDL
+    make load-snowflake && make dbt-snowflake
+
+## Ask questions (RAG)
+
+`mart_trial_documents` turns each trial's free-text fields
+(`brief_summary`, `detailed_description`, `why_stopped`) into one
+document per field. `make rag-build` embeds them (pinned
+sentence-transformers model) into a local Chroma store with the trial's
+status/phase/sponsor as filterable metadata; re-runs re-embed only
+documents whose `content_hash` changed (a no-change re-run embeds 0).
+`make ask` retrieves the top-k documents for a question and has Claude
+(temperature 0, pinned model) write an answer grounded ONLY in that
+context, citing NCT ids — or refusing when the context is insufficient.
+
+    make rag-build                       # build/refresh the vector store (FULL=1 rebuilds)
+    make ask Q="why was the tezepelumab trial stopped?"
+    make ask Q="which phase 2 trials met futility criteria?" STATUS=TERMINATED PHASE=PHASE2
+    make eval                            # 10 golden questions, scored (RETRIEVAL_ONLY=1 = no API)
+
+`make ask` needs `ANTHROPIC_API_KEY` in the environment and prints JSON:
+
+    {
+      "answer": "The tezepelumab monotherapy trial ... did not reach the
+                 targeted efficacy level ... [NCT03809663].",
+      "cited_nct_ids": ["NCT03809663"],
+      "unverified_nct_ids": [],
+      "retrieved_ids": ["NCT03809663:why_stopped", "..."],
+      "model": "claude-sonnet-4-5-20250929"
+    }
+
+`cited_nct_ids` only ever contains ids that were actually retrieved for
+this question; any other id the model mentions is reported under
+`unverified_nct_ids` and never counts as a citation.
+
+`make eval` scores retrieval hit-rate (deterministic, free) and citation
+correctness (one API call per question) against
+`rag/eval/golden_questions.yml`, failing below 0.8 / 0.7.
+
+Status: phase 5 complete — see PLAN.md.
