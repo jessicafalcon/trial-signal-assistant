@@ -1,0 +1,13 @@
+# In-container deps for DAG tasks only — pinned to the same versions
+# as the repo's requirements.txt (drift here would make the DAG run
+# different code than pytest tests). Dev-only tools (pytest, ruff,
+# sqlfluff, pre-commit) and non-DAG deps (anthropic, pyyaml — make
+# ask / make eval are not DAG tasks) stay out of the image.
+requests==2.34.2
+pyarrow==25.0.1
+dbt-core==1.12.2
+dbt-duckdb==1.11.0
+dbt-snowflake==1.12.0
+duckdb==1.5.5
+sentence-transformers==5.7.0
+chromadb==1.5.9

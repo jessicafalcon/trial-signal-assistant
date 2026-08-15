@@ -9,7 +9,14 @@ snapshots:
       (corpus or fixtures variant per var day0_seed_scope). Any other
       value fails the run at compile time. A new row appears only when
       overall_status differs from the last captured row for that nct_id;
-      re-running against unchanged data adds zero rows.
+      re-running against unchanged data adds zero rows. Live runs set
+      hard_deletes='invalidate' (R1): a trial missing from the latest
+      partition gets dbt_valid_to stamped with no successor row; seed
+      runs use 'ignore' so the 4-trial seed can never close the live
+      corpus. Guarded by assert_latest_partition_not_collapsed (run
+      before every live snapshot). Known edge: a delisted trial that
+      reappears with an unchanged status yields a same-status row pair
+      in mart_trial_status_changes.
     columns:
       - name: nct_id
         data_type: varchar
