@@ -1,0 +1,81 @@
+version: 2
+
+seeds:
+  - name: seed_synthetic_day0
+    description: >
+      Synthetic demonstration state, not registry data. Four real AD-corpus
+      nct_ids given lifecycle-plausible PREDECESSOR statuses so the first
+      live snapshot run detects four transitions today, instead of waiting
+      months for real status changes. Every row is labeled
+      snapshot_source='synthetic_day0' and that label travels through the
+      snapshot into mart_trial_status_changes. Selection rule: lowest
+      nct_id currently in each required successor status (deterministic,
+      no judgment). See the 2026-08-14 synthetic day-0 entry in
+      DECISIONS.md.
+    config:
+      column_types:
+        nct_id: varchar
+        overall_status: varchar
+        snapshot_source: varchar
+    columns:
+      - name: nct_id
+        description: Real corpus trial id; status below is NOT its real one.
+        data_tests:
+          - unique
+          - not_null
+      - name: overall_status
+        description: Synthetic predecessor status, not current registry state.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - RECRUITING
+                  - NOT_YET_RECRUITING
+                  - ACTIVE_NOT_RECRUITING
+      - name: snapshot_source
+        description: Constant 'synthetic_day0' — provenance label.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - synthetic_day0
+
+  - name: seed_synthetic_day0_fixtures
+    description: >
+      Synthetic demonstration state, not registry data — the fixture-mode
+      (CI) variant of seed_synthetic_day0. The fixture corpus has no
+      RECRUITING trial, so the corpus seed's four transitions cannot all
+      occur there; this variant seeds four fixture nct_ids with
+      lifecycle-plausible predecessor statuses instead. Selected only when
+      the snapshot runs with day0_seed_scope=fixtures (CI).
+    config:
+      column_types:
+        nct_id: varchar
+        overall_status: varchar
+        snapshot_source: varchar
+    columns:
+      - name: nct_id
+        description: Fixture trial id; status below is NOT its real one.
+        data_tests:
+          - unique
+          - not_null
+      - name: overall_status
+        description: Synthetic predecessor status, not current registry state.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - RECRUITING
+                  - NOT_YET_RECRUITING
+                  - ACTIVE_NOT_RECRUITING
+      - name: snapshot_source
+        description: Constant 'synthetic_day0' — provenance label.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - synthetic_day0

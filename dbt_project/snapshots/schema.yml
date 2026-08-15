@@ -1,0 +1,52 @@
+version: 2
+
+snapshots:
+  - name: snap_trial_status
+    description: >
+      SCD2 history of overall_status per trial (check strategy on that one
+      column). Input switches on var snapshot_source: 'live' (default)
+      reads stg_trials_current; 'seed' reads the synthetic day-0 seed
+      (corpus or fixtures variant per var day0_seed_scope). Any other
+      value fails the run at compile time. A new row appears only when
+      overall_status differs from the last captured row for that nct_id;
+      re-running against unchanged data adds zero rows.
+    columns:
+      - name: nct_id
+        data_type: varchar
+        description: ClinicalTrials.gov registry identifier (snapshot key).
+        data_tests:
+          - not_null
+      - name: overall_status
+        data_type: varchar
+        description: Status as of this SCD2 row's validity window.
+        data_tests:
+          - not_null
+      - name: snapshot_source
+        data_type: varchar
+        description: >
+          Provenance of this row's capture — 'live' or 'synthetic_day0'.
+          Not in check_cols: a source flip alone is not a status change.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - live
+                  - synthetic_day0
+      - name: dbt_scd_id
+        data_type: varchar
+        description: dbt-generated surrogate key, unique per SCD2 row.
+        data_tests:
+          - unique
+          - not_null
+      - name: dbt_valid_from
+        data_type: timestamp
+        description: Timestamp this version was first observed (run time).
+        data_tests:
+          - not_null
+      - name: dbt_valid_to
+        data_type: timestamp
+        description: Timestamp this version was superseded; null = current.
+      - name: dbt_updated_at
+        data_type: timestamp
+        description: dbt bookkeeping timestamp for the capturing run.
