@@ -228,6 +228,10 @@ re-run already writes spurious synthetic rows; with invalidation it
 would also close the entire live corpus). Phase 6 must resolve both
 together (e.g. hard deletes only on live-mode runs, or a dedicated
 delisted-detection model instead).
+(Superseded 2026-08-15: resolved by R1 — hard_deletes='invalidate' on
+live runs only, circuit-breaker-guarded; see the R1 entry below. Note
+the config name: dbt ≥1.9 spells it hard_deletes, not
+invalidate_hard_deletes.)
 
 ## 2026-08-14 — Pre-push audit closed by human risk decision
 
@@ -260,6 +264,8 @@ allowlist. RAW.TRIALS is created by the macro (create table if not
 exists) as TRANSFORMER, so ownership covers dbt's reads with no extra
 grants. Idempotency is COPY INTO's own load history (64 days): the
 second run reports "Copy executed with 0 files processed."
+(Superseded 2026-08-15: R2's FORCE defeats load history by design —
+idempotency is now delete + reload per partition; see the R2 entry.)
 
 ## 2026-08-15 — Cross-target SQL: portable first, jinja only where forced
 
@@ -319,6 +325,8 @@ rulings applied in the phase-4 commit. Non-obvious outcomes recorded:
   the staging grain test is the loud failure. Reset mechanics are
   deferred to Phase 6, decided together with invalidate_hard_deletes
   (same entry as the 2026-08-14 hard-delete deferral).
+  (Superseded 2026-08-15: R2 replaced append-only with
+  delete-by-partition + scoped COPY FORCE — see the R2 entry below.)
 - The load macro hardcodes trial_signal.raw.trials instead of
   {{ target.database }}: profile fields are env-var-derived, and the
   SPEC-02 no-env-var-into-SQL constraint applies to run-operation
@@ -444,3 +452,167 @@ applied in the phase-5 commit. Non-obvious outcomes:
   the HF Hub even with a warm cache — offline reproducibility rests
   on the local cache + pinned revision. Deferred to the phase-7
   checklist: richer phase matching in the RAG CLI (C4).
+
+## 2026-08-15 — R1: snapshot hard deletes on, mode-gated, circuit-broken
+
+snap_trial_status now sets hard_deletes='invalidate' — but only when
+snapshot_source='live'; seed-mode runs get 'ignore'. Rationale: the
+phase-3 deferral's hazard was the seed-mode input switch (4 nct_ids
+presented → ~1,734 live rows would read as deleted), and gating the
+config on the same var that switches the input kills that class of
+accident structurally — snapshot-day0 cannot invalidate anything, and
+a day0 re-run stays exactly as (non-)hazardous as before. Live runs
+are guarded by assert_latest_partition_not_collapsed, a singular test
+run between the staging build and dbt snapshot (make snapshot, and a
+dedicated DAG task): it fails if the latest partition holds fewer than
+circuit_breaker_min_ratio (default 0.8) of the prior partition's rows.
+0.8 because the AD corpus (~1,738 trials) moves by single-digit counts
+a day and the registry essentially never removes studies — a ≥20%
+overnight drop is a collapsed ingest (truncated pagination, partial
+response), not registry reality. Verified 2026-08-15: a 100-row
+synthetic partition trips the breaker before the snapshot runs; a
+1,733-row partition passes it and closes exactly the 5 missing trials
+(dbt_valid_to stamped, no successor row, no phantom transition in
+mart_trial_status_changes). Known edge, accepted: a delisted trial
+that later reappears with an unchanged status produces a same-status
+row pair in the mart (documented in snapshots/schema.yml).
+Scope cuts, declared: (1) the delisting signal is write-only this
+phase — a closed row (dbt_valid_to set, no successor) surfaces in no
+mart, README, or RAG document; a delisted-trials mart is future scope,
+not an accident. (2) The breaker compares only the latest partition to
+its immediate prior at a fixed 0.8: an 86% single-day truncation, a
+multi-day slow drift, and an EMPTY latest partition all pass — the
+empty case is harmless only because stg_trials_current's own
+max(ingest_date) then re-reads the prior day (two independent max()es,
+recorded here so a refactor of either knows about the other).
+
+## 2026-08-15 — R2: Snowflake load is delete-by-partition + scoped COPY FORCE
+
+make load-snowflake is now per-partition: the macro deletes
+RAW.TRIALS rows for the target ingest_date, then COPYs only that
+partition's stage path with force = true. FORCE is load-bearing, not
+belt-and-braces: after the delete, an unchanged file is still in
+COPY's 64-day load history, so a re-run without FORCE would delete
+the rows and load 0 files — an emptied partition. delete + scoped
+FORCE means any same-partition re-run (byte-identical file OR a
+re-parse) converges to the file's current contents; the phase-4
+append-duplicate failure mode (grain test as the loud alarm) is gone.
+Cost accepted: an unchanged partition is rewritten on re-load (one
+partition per call; other partitions untouched). The partition value
+reaches SQL text, so it is regex-pinned to \d{4}-\d{2}-\d{2} in both
+the shell entry point and the macro (compile error otherwise) —
+SPEC-02's injection constraint applied to the one dynamic literal.
+Default partition = latest local data/parsed dir; DATE= picks one;
+ALL=1 loops all local partitions (the recreate_raw_trials re-load
+path, which previously relied on one all-files COPY).
+
+## 2026-08-15 — Airflow: Astro project layout, BashOperator-on-make, skip mechanics
+
+Phase-6 orchestration choices that the spec left open:
+
+- Layout: `astro dev init` scaffolded into airflow/ (never repo root);
+  the repo-root dags/ stub dir was RELOCATED into airflow/dags/
+  (removed, not pointered — Astro's scheduler only parses its own
+  dags/, so a root copy would be dead code). The runtime pin is
+  Astro Runtime 3.3-2 = Airflow 3.3.0; apache-airflow==3.3.0 is the
+  matching host-side test dep (owner ruling: isolated in
+  airflow/requirements-dagtest.txt, installed only by make dag-verify;
+  install verified to change zero existing pins, pip check clean).
+- Every task is a BashOperator cd-ing into the repo mount and calling
+  make: make is the tested interface (pytest + CI exercise it), so
+  provider operators (S3/Snowflake/dbt) would add a second, untested
+  connection codepath. Cost accepted: Airflow sees each step as
+  opaque.
+- No-credentials skip: a ShortCircuitOperator heads the cloud
+  TaskGroup, returning False (with the missing names, never values,
+  logged as the reason) when SNOWFLAKE_*/AWS_PROFILE are absent;
+  ignore_downstream_trigger_rules=False + none_failed on dbt_duckdb
+  lets the skip stop at the local path, and verify_parity's default
+  all_success rule inherits the skip. Chosen over a BranchOperator
+  (two explicit branches to maintain) and over failing fast (a
+  no-cloud environment is a supported demo mode, not an error).
+- Credential surface: runtime-only via docker-compose.override.yml
+  (env_file ../.env on the scheduler; ~/.aws mounted read-only).
+  Empirically verified 2026-08-15: bare `docker run ... env` on the
+  built image shows zero credential vars (the one SNOWFLAKE match is
+  AIRFLOW_SNOWFLAKE_PARTNER, Astro's provider-attribution tag) and no
+  .env file in any layer — build context is airflow/ and .dockerignore
+  excludes .env. Gotcha recorded: the astro user's HOME is /home/astro,
+  not /usr/local/airflow — the ~/.aws mount must target /home/astro/.aws
+  (first run failed on this; aws could not find the profile).
+- In-container pips mirror the repo's exact pins (requests, pyarrow,
+  dbt-core/duckdb/snowflake, duckdb, sentence-transformers, chromadb);
+  apt adds make + awscli. anthropic/pyyaml stay out — make ask/eval
+  are not DAG tasks.
+- Same-day idempotency is logical, not byte-level: the second trigger
+  re-uploaded the parquet (a re-fetch is not guaranteed byte-identical
+  — API response ordering), but R2 delete+FORCE converges the
+  partition, the snapshot fingerprint is unchanged, and rag_build
+  embeds 0. The byte-determinism of a re-fetch was never the claim.
+- Observed, expected: unpausing the DAG fires the just-completed daily
+  interval alongside a manual trigger (catchup=False only suppresses
+  older intervals); max_active_runs=1 serializes them.
+
+## 2026-08-15 — Phase 6 review round: rulings applied
+
+Four reviewer passes (code, security, functionality, coherence), owner
+rulings applied before the phase-6 commit. Non-obvious outcomes:
+
+- make circuit-breaker is a dbt build (+selector), not a bare dbt
+  test: it now builds the staging view it reads, so it is
+  self-sufficient on a clean database and as DAG task 3 (the reviewed
+  version failed on any fresh clone). make snapshot depends on it.
+- The breaker is excluded from make dbt-snowflake: it guards the
+  duckdb-only snapshot, and a thin Snowflake partition usually means
+  "not loaded yet" (R2 default = latest only), not "ingest collapsed"
+  — the alarm would name the wrong cause. Snowflake stays 17/17.
+- Credential passthrough narrowed (blast-radius ruling): compose
+  passes exactly SNOWFLAKE_ACCOUNT/USER/PASSWORD + AWS_PROFILE from
+  the astro dev start shell (no env_file — the whole .env, including
+  ANTHROPIC_API_KEY, previously entered the container), and only
+  ~/.aws/{config,credentials} are mounted. Side effect: a fresh clone
+  with no .env starts cleanly and the cloud group skips.
+- apache-airflow install is constrained: make dag-verify resolves
+  airflow/requirements-dagtest.txt against Airflow's published
+  constraints file for the venv Python and fails loudly on
+  interpreters without one (3.11-3.13 published; owner ruling — the
+  venv requirement is in README Setup). Allowlist line confirmed as
+  written: test-only, isolated.
+- The load macro fails if COPY loads 0 rows: the delete commits first,
+  so an empty stage path (never-synced partition, bad DATE=) would
+  otherwise silently empty the partition. verify_parity's mismatch
+  output names the recovery (make load-snowflake ALL=1) because a
+  skipped cloud day leaves Snowflake one partition behind by design —
+  no self-healing in the DAG (owner ruling: document, don't ALL=1
+  daily).
+- Every DAG task has an execution_timeout (30 min network / 15 min
+  local): max_active_runs=1 means one hung task otherwise blocks the
+  schedule forever.
+- Test additions (owner: "all item-26 tests"): bash_command → make
+  target map with forbidden-target assert (snapshot-day0, reset), make
+  targets must exist in the Makefile, operator types,
+  ignore_downstream_trigger_rules=False, execution timeouts,
+  start_date/depends_on_past, the creds-gate callable (names logged,
+  never values), breaker SQL boundary cases in duckdb (800/1000
+  passes, 799/1000 fires; historical dips don't re-fire), and R2
+  shell partition selection via a stubbed DBT. Suite: 73 → 98.
+- Left as-is, recorded: the creds gate treats a whitespace-only value
+  as present (fails later at Snowflake auth after retries) — behavior
+  change was not ruled, so it is documented rather than fixed.
+
+## 2026-08-15 — Local venv aligned to CI's Python 3.11
+
+The venv was rebuilt from 3.14 to 3.11 (owner ruling) so local and CI
+share one interpreter — closing the phase-0 alignment recommendation.
+3.14 had surfaced three incompatibilities: no Airflow constraints file
+exists for it (make dag-verify's loud-fail case), the Snowflake
+connector's vendored-requests version check warns on 3.14-era
+urllib3/charset pins on every invocation, and CI (3.11) and local DAG
+tests never exercised the same interpreter. README Setup names 3.11 as
+the reference version (3.12/3.13 acceptable, 3.14 unsupported for
+dag-verify). Observed during the rebuild: Airflow's constraints file
+serves Airflow's test matrix, not this repo's stack — it downgraded
+cryptography to 48.0.1 (breaking pyopenssl → snowflake-connector) and
+moved pathspec/certifi/more-itertools off dbt's ranges. make
+dag-verify now restores the ranges both stacks accept and runs
+`pip check` as a loud final gate.
