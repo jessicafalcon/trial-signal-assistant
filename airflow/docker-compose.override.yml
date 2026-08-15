@@ -1,0 +1,31 @@
+# LOCAL-ONLY. astro dev start merges this into its generated compose
+# config. CI never runs Airflow, Docker, or this file — DAG integrity
+# tests are pure-Python imports (make dag-verify).
+# LocalExecutor runs tasks as scheduler subprocesses, so the scheduler
+# is the one service that needs the repo and the credentials.
+services:
+  scheduler:
+    volumes:
+      # the repo itself: every task cd's here and calls make.
+      # Read-write on purpose — data/ partitions, the duckdb file, and
+      # data/chroma all live in the repo. While a DAG run is active,
+      # don't run dbt against the same duckdb file from the host.
+      - ../:/usr/local/airflow/repo:rw
+      # host AWS profile for make s3-sync, narrowed to the two files
+      # aws reads (never the whole ~/.aws). The astro user's HOME is
+      # /home/astro (verified in-container 2026-08-15), NOT the
+      # airflow project dir.
+      - ~/.aws/config:/home/astro/.aws/config:ro
+      - ~/.aws/credentials:/home/astro/.aws/credentials:ro
+    environment:
+      # runtime credential passthrough, scoped to exactly what DAG
+      # tasks need — never the whole .env (blast-radius ruling S2).
+      # Values come from the shell running `astro dev start`
+      # (set -a; source .env; set +a first — see README); unset vars
+      # resolve to "" and the DAG's check_cloud_creds task skips the
+      # cloud path with the reason in its log. Nothing here is baked
+      # into the image: build context is airflow/, .env dockerignored.
+      SNOWFLAKE_ACCOUNT: ${SNOWFLAKE_ACCOUNT:-}
+      SNOWFLAKE_USER: ${SNOWFLAKE_USER:-}
+      SNOWFLAKE_PASSWORD: ${SNOWFLAKE_PASSWORD:-}
+      AWS_PROFILE: ${AWS_PROFILE:-}

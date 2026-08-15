@@ -46,10 +46,18 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   CSVs, `tests/` dbt singular tests (distinct from pytest's tests/),
   `macros/` run-operation macros (the Snowflake COPY INTO load path).
 - `scripts/` — secrets_audit.sh (deterministic pre-push floor),
-  load_snowflake.sh (self-contained Snowflake load entry point), and
+  load_snowflake.sh (self-contained Snowflake load entry point),
+  verify_parity.sh (cross-target row count + completeness compare), and
   recreate_raw_trials.sh (RAW.TRIALS schema migration: drop + recreate).
 - `rag/` — embedding build, query layer, `eval/` golden questions + scorer.
-- `dags/` — Airflow DAG. `terraform/` — S3 + Snowflake infra.
+- `airflow/` — Astro project (local Docker only, never CI): Dockerfile
+  pinned to Astro Runtime 3.3-2 (= Airflow 3.3.0),
+  `dags/trial_safety_pipeline.py` (the daily DAG; every task calls a
+  make target), docker-compose.override.yml (repo mount + runtime .env
+  passthrough), requirements.txt (in-container task deps),
+  requirements-dagtest.txt (host-side DagBag test dep, isolated).
+- `terraform/` — S3 + Snowflake infra.
+- `docs/` — human-executed checklists (demo_checklist.md).
 - `data/` — gitignored. `data/raw/` JSON, `data/parsed/` parquet (dbt's
   input), `data/parsed_fixtures/` fixture-mode parquet (CI symlinks it
   to data/parsed), `data/chroma/` vector store.
@@ -67,7 +75,11 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   green; dbt build INCLUDES the snapshot — see ordering below)
 - `make snapshot-day0` — seed + snapshot the labeled synthetic day-0
   state; FIXTURES=1 selects the fixture-scoped seed variant (CI)
-- `make snapshot` — live snapshot (builds the staging views first)
+- `make snapshot` — live snapshot (builds the staging views, runs the
+  circuit breaker, then snapshots)
+- `make circuit-breaker` — fails if the latest parsed partition holds
+  < circuit_breaker_min_ratio (0.8) of the prior partition's rows;
+  guards the snapshot's hard-delete invalidation (R1)
 - `make verify-idempotent` — re-runs the live snapshot; fails if row
   count or dbt_scd_id fingerprint changed
 - `make verify-day0-count` — fails unless the mart holds exactly the 4
@@ -75,8 +87,10 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `make reset` — delete the local DuckDB file (clean state)
 - `make s3-sync` — aws s3 sync data/parsed/ to the landing bucket
   (idempotent; needs aws CLI + AWS_PROFILE from .env)
-- `make load-snowflake` — COPY INTO RAW.TRIALS from the external stage
-  via a dbt run-operation macro (idempotent via COPY load history)
+- `make load-snowflake` — per-partition load of RAW.TRIALS (R2):
+  delete the partition's rows, COPY its stage files with FORCE — a
+  same-partition re-run converges. Latest local partition by default;
+  DATE=YYYY-MM-DD picks one, ALL=1 loads every local partition
 - `make dbt-snowflake` — dbt build --target snowflake, excluding the
   snapshot subtree, seeds, and mart_trial_documents (snapshot machinery
   and the RAG doc mart are duckdb-only). Both snowflake targets
@@ -93,6 +107,12 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `make eval` — score rag/eval/golden_questions.yml: retrieval
   hit-rate ≥ 0.8 and citation correctness ≥ 0.7 or non-zero exit.
   RETRIEVAL_ONLY=1 runs just the free deterministic half.
+- `make verify-parity` — staging row count + completeness mart must be
+  value-identical across duckdb and snowflake; non-zero on mismatch.
+- `make dag-verify` — DAG integrity without Docker (DagBag import,
+  task ids/edges, schedule, trigger rules, retry policy). Installs
+  airflow/requirements-dagtest.txt into the venv first (the only path
+  that installs apache-airflow).
 - `make lint` — ruff + sqlfluff via pre-commit run --all-files
 
 Canonical change-detection order from a clean state (any other order can
@@ -177,7 +197,10 @@ AI sits at the edges; everything in the middle is deterministic.
 - Dependencies: ask before adding ANY new package. Current allowlist:
   requests, pytest, dbt-core, dbt-duckdb, dbt-snowflake, pyarrow,
   duckdb, pyyaml, sentence-transformers, chromadb, anthropic, ruff,
-  sqlfluff, pre-commit, sqlfluff-templater-dbt.
+  sqlfluff, pre-commit, sqlfluff-templater-dbt. Plus apache-airflow,
+  test-only and isolated by owner ruling: pinned in
+  airflow/requirements-dagtest.txt, installed only by make dag-verify
+  (and CI's dag-verify job) — never in requirements.txt or make setup.
 - dbt naming: `stg_` staging, `mart_` marts, snapshots in `snapshots/`.
   SQL keywords lowercase, one column per line in select lists.
 - Secrets defense in depth: never commit .env, data/, *.duckdb, .terraform/,
@@ -213,9 +236,11 @@ clever way.
 - End each loop with a summary: what changed + decisions the spec didn't
   cover, listed explicitly for human review.
 - Live network calls: only via `make ingest`, the cloud targets
-  (`make s3-sync` / `load-snowflake` / `dbt-snowflake`, terraform),
-  `make rag-build` (Hugging Face fetch of the pinned embedding model),
-  and `make ask` / `make eval` (Claude API) — never inside pytest or CI.
+  (`make s3-sync` / `load-snowflake` / `dbt-snowflake` /
+  `verify-parity`, terraform), `make rag-build` (Hugging Face fetch of
+  the pinned embedding model), `make ask` / `make eval` (Claude API),
+  and the local Airflow DAG (which wraps those same targets in
+  Docker) — never inside pytest or CI.
 
 ## Project tooling
 
@@ -247,14 +272,15 @@ around.
 
 ## Current status
 
-- Phase 5 complete locally (2026-08-15): TrialRecord grew
-  brief_summary/detailed_description (RAW.TRIALS recreated + re-loaded
-  per the F11 migration path), mart_trial_documents (2,865 docs over
-  1,738 trials), incremental Chroma build (re-run embeds 0), cited
-  Claude answers via make ask, and the 10-question golden eval green
-  at retrieval 1.00 / citation 1.00 (thresholds 0.8/0.7). Doc mart and
-  snapshot machinery are duckdb-only on the snowflake target
-  (DECISIONS.md). Next is Phase 6 (Airflow orchestration). See PLAN.md.
+- Phase 6 complete locally (2026-08-15): the daily DAG
+  trial_safety_pipeline (Astro Runtime 3.3-2, local Docker) runs
+  ingest → parse → circuit breaker → cloud load → dual dbt builds →
+  live snapshot → RAG reindex → parity, all 11 tasks green on two
+  same-day triggers with the second an end-to-end no-op. R1 (hard
+  deletes live-only + circuit breaker) and R2 (delete-by-partition +
+  scoped COPY FORCE) landed. make dag-verify covers DAG integrity
+  without Docker (own CI job). Demo capture pending after merge
+  (docs/demo_checklist.md). Next is Phase 7 (packaging). See PLAN.md.
 - Snowflake trial active; creds live only in .env (never committed).
   Terraform state is local and gitignored. ANTHROPIC_API_KEY: env/.env
   only, never CI.

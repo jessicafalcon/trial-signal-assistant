@@ -1,10 +1,17 @@
 {% snapshot snap_trial_status %}
 
+    {# hard_deletes (R1, SPEC-06): live runs close the row of any trial
+       that left the corpus (dbt_valid_to set, no successor). Seed-mode
+       runs present only 4 nct_ids, so invalidation there would close
+       the entire live corpus — hence 'ignore' for seed. Live runs are
+       guarded by the circuit-breaker test (make circuit-breaker), which
+       must pass before dbt snapshot when a prior partition exists. #}
     {{
         config(
             unique_key='nct_id',
             strategy='check',
             check_cols=['overall_status'],
+            hard_deletes='invalidate' if var('snapshot_source', 'live') == 'live' else 'ignore',
         )
     }}
 

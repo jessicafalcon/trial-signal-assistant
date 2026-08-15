@@ -9,6 +9,12 @@ flags:
 # single source of truth for the registry status enum (2026-08-14
 # corpus); referenced by every accepted_values test on a status column
 vars:
+  # circuit breaker (R1): min ratio of latest-partition rows to the
+  # prior partition's before the snapshot may run. 0.8 because the AD
+  # corpus moves by single-digit counts a day (registrations outpace
+  # delistings; the registry rarely removes studies), so a >=20%
+  # overnight drop is an ingest failure, not registry reality.
+  circuit_breaker_min_ratio: 0.8
   trial_status_enum:
     - COMPLETED
     - RECRUITING
