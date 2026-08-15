@@ -29,18 +29,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values:
-                  - COMPLETED
-                  - RECRUITING
-                  - UNKNOWN
-                  - TERMINATED
-                  - ACTIVE_NOT_RECRUITING
-                  - NOT_YET_RECRUITING
-                  - WITHDRAWN
-                  - ENROLLING_BY_INVITATION
-                  - AVAILABLE
-                  - NO_LONGER_AVAILABLE
-                  - SUSPENDED
+                values: "{{ var('trial_status_enum') }}"
       - name: phase
         data_type: varchar
         description: >

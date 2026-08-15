@@ -5,10 +5,13 @@ PIP := $(VENV)/bin/pip
 PYTEST ?= $(VENV)/bin/pytest
 DBT ?= $(VENV)/bin/dbt
 DBT_FLAGS := --project-dir dbt_project --profiles-dir dbt_project --target duckdb
-# counts SCD2 rows in the snapshot table (read-only; used by verify-idempotent)
-SNAP_COUNT = $(PY) -c "import duckdb; print(duckdb.connect('dbt_project/trial_signal.duckdb', read_only=True).sql('select count(*) from snap_trial_status').fetchone()[0])"
+# snapshot state read through dbt itself (no direct duckdb import; stdlib
+# json only): row count + fingerprint of the ordered dbt_scd_id set, so a
+# same-count churn (row closed + row opened) still fails verify-idempotent
+SNAP_STATE = $(DBT) --quiet show --inline "select count(*) as n, coalesce(md5(string_agg(dbt_scd_id, ',' order by dbt_scd_id)), '0') as fp from {{ ref('snap_trial_status') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; d = json.load(sys.stdin)['show'][0]; print(d['n'], d['fp'])"
+MART_COUNT = $(DBT) --quiet show --inline "select count(*) as n from {{ ref('mart_trial_status_changes') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; print(json.load(sys.stdin)['show'][0]['n'])"
 
-.PHONY: setup test ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot verify-idempotent reset
+.PHONY: setup test ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot verify-idempotent verify-day0-count reset
 
 setup:
 	python3 -m venv $(VENV)
@@ -44,13 +47,20 @@ snapshot:
 	$(DBT) snapshot $(DBT_FLAGS)
 
 # idempotency proof: re-run the live snapshot against unchanged data and
-# fail if the snapshot row count changed.
+# fail if the snapshot changed (row count or dbt_scd_id fingerprint).
 verify-idempotent:
-	@before=$$($(SNAP_COUNT)) && \
+	@before=$$($(SNAP_STATE)) && \
 	$(DBT) snapshot $(DBT_FLAGS) && \
-	after=$$($(SNAP_COUNT)) && \
-	echo "snapshot rows: before=$$before after=$$after" && \
-	if [ "$$before" != "$$after" ]; then echo "FAIL: snapshot re-run changed row count"; exit 1; fi
+	after=$$($(SNAP_STATE)) && \
+	echo "snapshot rows+fingerprint: before=[$$before] after=[$$after]" && \
+	if [ "$$before" != "$$after" ]; then echo "FAIL: snapshot re-run changed state"; exit 1; fi
+
+# asserts the mart holds exactly the 4 seeded day-0 transitions; run by
+# CI after the fixture-mode sequence (true locally after DONE as well)
+verify-day0-count:
+	@n=$$($(MART_COUNT)) && \
+	echo "mart_trial_status_changes rows: $$n" && \
+	if [ "$$n" != "4" ]; then echo "FAIL: expected exactly 4 day-0 transitions, got $$n"; exit 1; fi
 
 # clean state: the DONE sequence for SPEC-03 starts from `make reset`
 # (delete the local DuckDB file; dbt recreates it).

@@ -51,6 +51,7 @@ jobs:
       - run: make snapshot DBT=dbt
       - run: make dbt DBT=dbt
       - run: make verify-idempotent DBT=dbt PY=python
+      - run: make verify-day0-count DBT=dbt PY=python
 
   secrets:
     runs-on: ubuntu-latest

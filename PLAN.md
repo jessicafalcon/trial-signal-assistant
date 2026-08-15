@@ -51,6 +51,11 @@ rounds; clear or consciously re-accept each before the repo goes public:
 - [ ] CI: SHA-pin actions/checkout + actions/setup-python (mutable tags;
       now five checkout/setup instances after the phase 2 dbt job) and
       set persist-credentials: false on the secrets job.
+- [ ] Doc-blocks refactor (accepted residual from the phase 3 review,
+      ruling 2026-08-14): stg_trials_current's schema.yml repeats 13
+      column descriptions verbatim from stg_clinical_trials — move shared
+      descriptions to dbt doc blocks; also the Makefile hardcodes the
+      DuckDB path that profiles.yml declares.
 - [ ] .env.example lacks SNOWFLAKE_SCHEMA, which profiles.yml reads
       (defaults to 'public'); add it when Snowflake activates in phase 4,
       plus a make dbt-snowflake preflight failing fast on empty

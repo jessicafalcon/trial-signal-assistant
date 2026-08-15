@@ -213,6 +213,22 @@ Known hazard, accepted: running `make dbt` on a clean database BEFORE
 later day-0 seed then adds live→synthetic→live noise transitions. The
 documented order (make reset → snapshot-day0 → snapshot → dbt) avoids it.
 
+## 2026-08-14 — Snapshot hard-delete policy deferred to Phase 6
+
+snap_trial_status sets no invalidate_hard_deletes: a trial that leaves
+the corpus keeps dbt_valid_to null and reads as current forever. Ruled
+deferred to Phase 6 (Airflow wiring), where the snapshot cadence is
+decided, for a reason beyond scope: hard-delete invalidation interacts
+badly with the seed-mode input switch. A seed-mode run presents only 4
+nct_ids, so with hard-delete invalidation on, dbt would treat the other
+~1,734 live trials as deleted and close every one of their rows —
+snapshot-day0 must never run with that setting enabled, and the same
+mechanism amplifies the documented day0-rerun hazard (a snapshot-day0
+re-run already writes spurious synthetic rows; with invalidation it
+would also close the entire live corpus). Phase 6 must resolve both
+together (e.g. hard deletes only on live-mode runs, or a dedicated
+delisted-detection model instead).
+
 ## 2026-08-14 — Pre-push audit closed by human risk decision
 
 Four review rounds (one full-tree audit, three delta reviews, rulings on
