@@ -39,4 +39,20 @@ run by a local pre-push hook and in CI on pushes to main and on pull requests.
     make setup   # venv, dependencies, pre-commit hooks
     make test    # parser suite (no network)
 
-Status: phase 1 complete — see PLAN.md.
+## Change detection
+
+`dbt snapshot` keeps SCD2 history of each trial's `overall_status`: every
+run compares the current staging state (latest ingest partition only)
+against what it saw before, and writes a new dated row only when a status
+changed. `mart_trial_status_changes` pairs consecutive history rows into
+one row per transition. Re-running against unchanged data adds zero rows
+(`make verify-idempotent` proves it).
+
+Because real status changes take months to accrue, `make snapshot-day0`
+seeds a synthetic "day 0": four real trial ids with plausible predecessor
+statuses, labeled `snapshot_source='synthetic_day0'`. The four initial
+transitions in the mart are therefore seeded demonstrations — the label
+travels into the mart's `prior_source` column — and every transition
+after them is real registry change, labeled `live` on both sides.
+
+Status: phase 3 complete — see PLAN.md.

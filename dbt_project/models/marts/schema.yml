@@ -37,3 +37,82 @@ models:
           Share of studies with no start date sent at all. A raw date in
           an unrecognized format (none in the current corpus) counts in
           no pct_date_* bucket, so the three need not sum to 100.
+
+  - name: mart_trial_status_changes
+    description: >
+      One row per detected overall_status transition, read from the
+      snapshot's SCD2 history: consecutive versions of the same nct_id
+      paired into (prior, new). prior_source/new_source expose capture
+      provenance, so transitions whose prior state was the synthetic
+      day-0 seed are visibly labeled in the mart itself.
+    columns:
+      - name: nct_id
+        data_type: varchar
+        description: ClinicalTrials.gov registry identifier.
+        data_tests:
+          - not_null
+      - name: prior_status
+        data_type: varchar
+        description: overall_status before the transition.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - COMPLETED
+                  - RECRUITING
+                  - UNKNOWN
+                  - TERMINATED
+                  - ACTIVE_NOT_RECRUITING
+                  - NOT_YET_RECRUITING
+                  - WITHDRAWN
+                  - ENROLLING_BY_INVITATION
+                  - AVAILABLE
+                  - NO_LONGER_AVAILABLE
+                  - SUSPENDED
+      - name: new_status
+        data_type: varchar
+        description: overall_status after the transition.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - COMPLETED
+                  - RECRUITING
+                  - UNKNOWN
+                  - TERMINATED
+                  - ACTIVE_NOT_RECRUITING
+                  - NOT_YET_RECRUITING
+                  - WITHDRAWN
+                  - ENROLLING_BY_INVITATION
+                  - AVAILABLE
+                  - NO_LONGER_AVAILABLE
+                  - SUSPENDED
+      - name: changed_detected_at
+        data_type: timestamp
+        description: >
+          dbt_valid_from of the new SCD2 row — when the snapshot run
+          observed the change, not when the registry made it.
+        data_tests:
+          - not_null
+      - name: prior_source
+        data_type: varchar
+        description: Capture provenance of the prior state.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - live
+                  - synthetic_day0
+      - name: new_source
+        data_type: varchar
+        description: Capture provenance of the new state.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - live
+                  - synthetic_day0

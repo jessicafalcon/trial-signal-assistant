@@ -13,9 +13,11 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
       the Python parser owns all date handling — no SQL date parsing.)
       Exit: `dbt build --target duckdb` green locally (2026-08-14) and
       in CI (pending PR verification).
-- [ ] **3 Change detection** — snapshot (SCD2 on overall_status),
+- [x] **3 Change detection** — snapshot (SCD2 on overall_status),
       synthetic labeled day-0 seed, mart_trial_status_changes.
-      Exit: snapshot re-run on unchanged input yields zero new rows.
+      Exit: snapshot re-run on unchanged input yields zero new rows —
+      verified 2026-08-14 (`make verify-idempotent`: 1742 rows before and
+      after; mart shows exactly the 4 seeded transitions).
 - [ ] **4 Cloud** — Terraform S3 + Snowflake objects; COPY INTO.
       Exit: `dbt build --target snowflake` green.
 - [ ] **5 RAG** — per-field embeddings + Chroma metadata filtering;
