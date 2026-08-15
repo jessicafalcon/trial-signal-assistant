@@ -84,6 +84,10 @@ on the PR.
 - Teaching rule applies: first use of source(), materializations,
   dbt tests, ref() each gets its 2-4 sentence explanation.
 - SQL style per CLAUDE.md: keywords lowercase, one column per line.
+- profiles.yml: the duckdb target stays fully credential-free; the
+  snowflake target references env_var() only, with defaults that let
+  dbt compile succeed without any secrets present (lint and CI must
+  never need credentials).
 
 ## Out of scope (explicitly)
 
