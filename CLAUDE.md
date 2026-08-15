@@ -274,9 +274,11 @@ around.
 
 - Phase 6 complete locally (2026-08-15): the daily DAG
   trial_safety_pipeline (Astro Runtime 3.3-2, local Docker) runs
-  ingest → parse → circuit breaker → cloud load → dual dbt builds →
-  live snapshot → RAG reindex → parity, all 11 tasks green on two
-  same-day triggers with the second an end-to-end no-op. R1 (hard
+  ingest → parse → circuit breaker → local dbt (live snapshot +
+  build) → RAG reindex, then cloud load → snowflake build → parity
+  (local-first post-phase-6 ruling: a cloud outage must never cost a
+  snapshot day), all 11 tasks green on two same-day triggers with the
+  second an end-to-end no-op (recorded runs predate the reorder). R1 (hard
   deletes live-only + circuit breaker) and R2 (delete-by-partition +
   scoped COPY FORCE) landed. make dag-verify covers DAG integrity
   without Docker (own CI job). Demo capture pending after merge

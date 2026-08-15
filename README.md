@@ -162,17 +162,22 @@ Each task shells into the repo mount and calls its make target — make
 is the tested interface; the DAG orchestrates, it never reimplements:
 
     ingest → parse → circuit_breaker
-      → cloud: check_cloud_creds → s3_sync → load_snowflake → dbt_snowflake
       → dbt_duckdb (live snapshot + full build) → verify_idempotent
-      → rag_build → cloud: verify_parity
+      → rag_build ─┐
+      → cloud: check_cloud_creds → s3_sync → load_snowflake → dbt_snowflake ─┤
+                                                    cloud: verify_parity  ◄──┘
+
+Local before cloud: a missed cloud load is recoverable any time
+(`make load-snowflake ALL=1`), a missed snapshot day only by same-day
+manual intervention — so a cloud outage must never block the snapshot.
 
 - **circuit_breaker** — the snapshot invalidates hard deletes on live
   runs, so a collapsed ingest would read as mass delisting. The run
   fails if the latest partition holds under 80% of the prior one's
   rows (`circuit_breaker_min_ratio` var).
 - **check_cloud_creds** skips the cloud tasks (reason in its log) when
-  `SNOWFLAKE_*` / `AWS_PROFILE` are missing; the local path still runs
-  (`dbt_duckdb` is `none_failed`, `verify_parity` inherits the skip).
+  `SNOWFLAKE_*` / `AWS_PROFILE` are missing; the local path has already
+  run by then (`verify_parity` inherits the skip via `all_success`).
   A skipped day leaves Snowflake one partition behind — recovery is
   `make load-snowflake ALL=1` (verify_parity's failure message says so).
 - **Idempotent**: a same-day second trigger is an end-to-end no-op —

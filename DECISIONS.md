@@ -616,3 +616,28 @@ cryptography to 48.0.1 (breaking pyopenssl → snowflake-connector) and
 moved pathspec/certifi/more-itertools off dbt's ranges. make
 dag-verify now restores the ranges both stacks accept and runs
 `pip check` as a loud final gate.
+
+## 2026-08-15 — DAG runs local-first; cloud moved downstream
+
+Post-phase-6 owner ruling (external architecture review of d67fe38),
+explicitly superseding SPEC-06 deliverable 2's task chain, which put
+dbt_duckdb downstream of dbt_snowflake. That order was wrong: with
+creds present, a cloud failure (S3/Snowflake outage) marked dbt_duckdb
+upstream_failed — none_failed tolerates skips, not failures — so an
+outage cost the day's snapshot. The asymmetry decides the order: a
+missed cloud load is recoverable any time (make load-snowflake ALL=1,
+delete+FORCE converges), while a missed snapshot is recoverable only
+by same-day manual intervention (next day a new partition becomes
+stg_trials_current; the transition itself still lands on the next run,
+but its dbt_valid_from timing — and any A→B→A flip inside the gap —
+is gone). New graph: ingest → parse → breaker → dbt_duckdb →
+verify_idempotent → {rag_build, cloud chain} → verify_parity.
+Serialization of the two dbt paths is kept (they share dbt_project/'s
+target/ and logs/ — never two dbt processes at once); rag_build may
+overlap the cloud chain because it is not a dbt process. dbt_duckdb's
+none_failed rule is gone (nothing above it can skip now); the
+ShortCircuit gate's skip covers only cloud tasks + verify_parity. The
+SPEC-06 chain had no recorded rationale — it was narrative order; this
+entry is the rationale the original choice lacked. The phase-6
+verification runs on record executed the old order; the reorder
+postdates them.
