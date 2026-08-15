@@ -6,7 +6,9 @@
 -- CONFIRM=1 before it will drop):
 --   make parse && make s3-sync \
 --     && CONFIRM=1 scripts/recreate_raw_trials.sh \
---     && make load-snowflake && make dbt-snowflake
+--     && make load-snowflake ALL=1 && make dbt-snowflake
+-- (ALL=1: the fresh table needs every local partition, not just the
+-- latest — make load-snowflake is per-partition since R2.)
 {% macro recreate_raw_trials() %}
 
     {{ snowflake_only_guard('recreate_raw_trials') }}

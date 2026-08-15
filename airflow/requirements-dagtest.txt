@@ -1,0 +1,8 @@
+# Test-only, isolated (owner ruling, SPEC-06): installed exclusively
+# by make dag-verify (and CI's dag-verify job) — never by make setup,
+# never in the repo requirements.txt. Pin matches the Airflow version
+# inside the runtime image (Astro Runtime 3.3-2 = Airflow 3.3.0), so
+# the DagBag integrity tests parse the DAG with the same Airflow the
+# containers run. The bundled `standard` provider supplies
+# BashOperator / ShortCircuitOperator.
+apache-airflow==3.3.0

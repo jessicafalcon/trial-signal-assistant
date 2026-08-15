@@ -56,6 +56,21 @@ jobs:
       - run: make verify-idempotent DBT=dbt PY=python
       - run: make verify-day0-count DBT=dbt PY=python
 
+  # DAG integrity without Docker/Airflow-runtime/credentials: pure
+  # Python DagBag import + structure checks. airflow is a test-only
+  # dep isolated in airflow/requirements-dagtest.txt (owner ruling) —
+  # its own job so the fast test job's env stays unchanged.
+  dag-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pytest==9.1.1
+      # PY drives the constraints-file version probe (3.11 here)
+      - run: make dag-verify PYTEST=pytest PIP=pip PY=python
+
   terraform:
     runs-on: ubuntu-latest
     steps:

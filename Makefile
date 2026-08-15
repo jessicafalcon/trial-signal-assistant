@@ -33,7 +33,7 @@ endef
 SNAP_STATE = $(DBT) --quiet show --inline "select count(*) as n, coalesce(md5(string_agg(dbt_scd_id, ',' order by dbt_scd_id)), '0') as fp from {{ ref('snap_trial_status') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; d = json.load(sys.stdin)['show'][0]; print(d['n'], d['fp'])"
 MART_COUNT = $(DBT) --quiet show --inline "select count(*) as n from {{ ref('mart_trial_status_changes') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; print(json.load(sys.stdin)['show'][0]['n'])"
 
-.PHONY: setup test ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot verify-idempotent verify-day0-count reset s3-sync load-snowflake rag-build ask
+.PHONY: setup test dag-verify ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot circuit-breaker verify-idempotent verify-day0-count verify-parity reset s3-sync load-snowflake rag-build ask
 
 setup:
 	python3 -m venv $(VENV)
@@ -46,6 +46,33 @@ setup:
 
 test:
 	$(PYTEST) tests -v
+
+# DAG integrity without Docker (DagBag import + structure). airflow is
+# a test-only dep, isolated in airflow/requirements-dagtest.txt (owner
+# ruling): installed here explicitly, never by make setup, and pinned
+# transitively via Airflow's published constraints file for the venv's
+# Python. Airflow 3.3.0 publishes constraints for 3.11-3.13 only —
+# other interpreters fail loudly here (owner ruling; README "Setup"
+# states the venv requirement). DAG_TESTS_REQUIRED=1 turns the
+# no-airflow skip into a loud failure.
+dag-verify:
+	@pyver=$$($(PY) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")') && \
+	case "$$pyver" in \
+		3.11|3.12|3.13) ;; \
+		*) echo "ERROR: no Airflow 3.3.0 constraints file for Python $$pyver (published: 3.11-3.13)."; \
+		   echo "Recreate the venv with a supported Python (README Setup), then re-run."; \
+		   exit 1;; \
+	esac && \
+	$(PIP) install --quiet -r airflow/requirements-dagtest.txt \
+		--constraint "https://raw.githubusercontent.com/apache/airflow/constraints-3.3.0/constraints-$$pyver.txt"
+	@# the constraints file serves Airflow's test matrix, not this
+	@# repo's stack: it can move shared transitive deps (observed
+	@# 2026-08-15: cryptography 48.0.1 broke pyopenssl/snowflake).
+	@# Restore the ranges both stacks accept, then fail loudly on any
+	@# remaining metadata conflict.
+	$(PIP) install --quiet 'cryptography>=49,<51' 'pathspec>=0.9,<1.1' 'certifi<2025.4.26' 'more-itertools>=10.0.0,<11.0'
+	$(PIP) check
+	DAG_TESTS_REQUIRED=1 $(PYTEST) tests/test_dag_integrity.py -v
 
 ingest:
 	$(PY) -m ingest.fetch_clinical_trials
@@ -63,10 +90,19 @@ snapshot-day0:
 	$(DBT) seed $(DBT_FLAGS)
 	$(DBT) snapshot $(DBT_FLAGS) --vars '{snapshot_source: seed, day0_seed_scope: $(if $(FIXTURES),fixtures,corpus)}'
 
-# live snapshot (snapshot_source defaults to 'live'). The dbt run first
-# builds the staging views the snapshot reads — from a clean database,
-# dbt snapshot alone would fail because they don't exist yet.
-snapshot:
+# circuit breaker (R1): the snapshot invalidates hard deletes on live
+# runs, so a collapsed ingest must never reach it. Fails if the latest
+# partition holds < circuit_breaker_min_ratio of the prior one's rows.
+# dbt build (not test): +selector builds the staging view first, so
+# this is self-sufficient on a clean database and as the DAG task.
+circuit-breaker:
+	$(DBT) build --select +assert_latest_partition_not_collapsed $(DBT_FLAGS)
+
+# live snapshot (snapshot_source defaults to 'live'). circuit-breaker
+# runs first (never snapshot a collapsed ingest) and builds the
+# snapshot's staging ancestors as a side effect; the dbt run then
+# builds the rest of the snapshot's input (stg_trials_current).
+snapshot: circuit-breaker
 	$(DBT) run --select +snap_trial_status $(DBT_FLAGS)
 	$(DBT) snapshot $(DBT_FLAGS)
 
@@ -102,20 +138,30 @@ s3-sync:
 	aws s3 sync data/parsed/ s3://$(S3_BUCKET)/$(S3_PREFIX)/
 
 # COPY INTO RAW.TRIALS from the external stage (dbt macro
-# load_raw_trials). Idempotent for byte-identical files via COPY's
-# load history; re-parsed files re-load (see the macro header).
-# preflight + pinned connection facts live in the script itself, so a
-# direct invocation behaves identically to this target.
+# load_raw_trials). Idempotent per partition (R2): delete the
+# partition's rows, then COPY its files with FORCE — a same-partition
+# re-run lands identical state. Default = latest local partition;
+# DATE=YYYY-MM-DD picks one; ALL=1 re-loads every local partition
+# (post-recreate path). preflight + pinned connection facts live in
+# the script itself, so a direct invocation behaves identically.
 load-snowflake:
-	DBT=$(DBT) scripts/load_snowflake.sh
+	DBT='$(DBT)' DATE='$(DATE)' ALL='$(ALL)' scripts/load_snowflake.sh
 
 # same dbt project on the snowflake target. Snapshot machinery and the
 # RAG documents mart are duckdb-only this phase (DECISIONS.md): exclude
 # the snapshot and its descendants, the day-0 seeds, and the doc mart
-# (+ its tests, which are its descendants).
+# (+ its tests, which are its descendants). The circuit breaker is
+# excluded too: it guards the duckdb-only snapshot, and on snowflake a
+# thin partition usually means "not loaded yet" (R2 loads latest by
+# default), not "ingest collapsed" — it would alarm on the wrong cause.
 dbt-snowflake:
 	$(snowflake_preflight)
-	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude snap_trial_status+ resource_type:seed mart_trial_documents+
+	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude snap_trial_status+ resource_type:seed mart_trial_documents+ assert_latest_partition_not_collapsed
+
+# cross-target parity: staging row count + completeness mart must be
+# value-identical on duckdb and snowflake; non-zero exit on mismatch.
+verify-parity:
+	DBT=$(DBT) PY=$(PY) scripts/verify_parity.sh
 
 # build/refresh the Chroma vector store from mart_trial_documents.
 # Incremental by content_hash: a re-run with no mart changes embeds 0

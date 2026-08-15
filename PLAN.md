@@ -37,13 +37,20 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
       (retrieval hit-rate 1.00 ≥ 0.8, citation correctness 1.00 ≥ 0.7;
       second make rag-build embeds 0 documents; suite 60/60, make dbt
       66/66, make dbt-snowflake 17/17 post-migration, lint green).
-- [ ] **6 Orchestration** — Astro Airflow DAG end-to-end, idempotent.
-      Also owns (2026-08-15 rulings): snapshot hard-delete policy AND
-      Snowflake RAW.TRIALS reset mechanics, decided together with
-      invalidate_hard_deletes (see DECISIONS.md 2026-08-14 deferral);
-      an on-demand cross-target parity script.
-      Exit: full DAG run succeeds twice in a row with identical results;
-      demo assets captured.
+- [x] **6 Orchestration** — Astro Airflow DAG end-to-end, idempotent.
+      Also owned (2026-08-15 rulings, both landed): R1 snapshot hard
+      deletes (live-only, circuit-breaker-guarded) and R2 RAW.TRIALS
+      delete-by-partition + scoped COPY FORCE; make verify-parity.
+      Exit: verified 2026-08-15 — two same-day triggers all-green
+      (11/11 tasks); second run an end-to-end no-op (delete 1738 /
+      reload 1738, snapshot fingerprint unchanged, rag_build embedded
+      0, parity OK on both targets); snowflake build stays 17/17 (the
+      circuit breaker is duckdb-only by ruling); make test 98 locally
+      (CI's test job skips the DAG tests — no airflow there; the
+      dag-verify job runs them under Airflow's constraints file), lint
+      and secrets floor green. Demo assets: docs/demo_checklist.md,
+      captured after merge (open phase-6 deliverable — see phase 7
+      checklist).
 - [ ] **7 Packaging** — README with screenshots, DECISIONS.md complete,
       case-study framing.
       Exit: a stranger can follow the README from clone to answer;
@@ -79,7 +86,13 @@ rounds; clear or consciously re-accept each before the repo goes public:
       output (2026-08-15 ruling F10).
 - [ ] S3: add a noncurrent-version expiration lifecycle rule —
       versioning is on with no expiry, so rewritten partitions retain
-      old versions forever (cost; 2026-08-15 ruling F14 residual).
+      old versions forever. URGENCY UP since phase 6: the daily DAG
+      rewrites the same-day key on every same-day re-run (re-fetches
+      are not byte-identical), so noncurrent versions now accrue per
+      run, not per re-parse (cost; 2026-08-15 ruling F14 residual).
+- [ ] Phase-6 demo capture is an open IOU: docs/demo_checklist.md must
+      be executed (screenshots + credit-burn number) before the
+      phase-7 README case-study section can be written.
 - [ ] .terraform.lock.hcl carries darwin-only h1 hashes; record
       multi-platform hashes (terraform providers lock -platform=...)
       before the flip (2026-08-15 review note).
