@@ -37,8 +37,12 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install dbt-core==1.12.2 dbt-duckdb==1.11.0 pyarrow==25.0.1 requests==2.34.2
-      # CI has no data/raw/ — the fixtures are the corpus here
+      # CI has no data/raw/ — the fixtures are the corpus here, landed in
+      # their own root so they can never masquerade as a real partition.
+      # The symlink maps them into the source's fixed read path; the SQL
+      # itself is never parameterized (injection surface).
       - run: make parse FIXTURES=1 PY=python
+      - run: ln -s parsed_fixtures data/parsed
       - run: make dbt DBT=dbt
 
   secrets:

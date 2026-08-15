@@ -8,7 +8,10 @@ sources:
       single entry point for trial data.
     meta:
       # cwd-relative like the duckdb path in profiles.yml — dbt and
-      # sqlfluff both run from the repo root
+      # sqlfluff both run from the repo root. Deliberately a fixed
+      # literal (no env_var): a dynamic value here lands inside a SQL
+      # string and is an injection surface. CI symlinks
+      # data/parsed -> parsed_fixtures instead of parameterizing this.
       external_location: >-
         read_parquet('data/parsed/ingest_date=*/trials.parquet')
     tables:

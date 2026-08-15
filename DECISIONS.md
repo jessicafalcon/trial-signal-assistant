@@ -115,9 +115,19 @@ files share one study (NCT06361992), so fixture mode dedupes by nct_id
 (first occurrence, sorted file order) to satisfy the staging unique test;
 real partitions are deliberately NOT deduped — a duplicate there is a
 data problem the test should surface, not one the bridge silently
-repairs. Side effect: running FIXTURES=1 locally overwrites the real
-2026-08-14 parsed partition with 11 rows; accepted because data/parsed/
-is a derived artifact `make parse` regenerates in seconds.
+repairs. 2026-08-14 (phase 2 close ruling): fixtures mode originally
+wrote into data/parsed/ and could overwrite the real same-date
+partition; it now lands in data/parsed_fixtures/ (still under the
+gitignored data/). A test pins that fixtures mode leaves real
+partitions byte-identical. dbt's read path stays a FIXED literal
+(data/parsed) — a first attempt parameterized it via env_var() in the
+source's external_location, and the security probe showed the value
+lands unescaped inside a SQL string literal: a quote-bearing
+TRIALS_PARSED_ROOT injected arbitrary DuckDB SQL (verified by compile).
+A validating macro was not an option (custom macros don't render in
+source yml). So CI symlinks data/parsed -> parsed_fixtures instead:
+zero SQL dynamism, injection class gone, and a drifted path fails loud
+in CI because no real data/parsed exists there.
 
 ## 2026-08-14 — Bridge stores dates as strings; staging owns typing
 
@@ -131,6 +141,18 @@ templater opens the database during lint, and on a fresh checkout (CI's
 lint job) data/ does not exist — verified empirically; DuckDB cannot
 create parent directories. dbt_project/ always exists in a checkout, and
 *.duckdb keeps the file out of git wherever it lives.
+
+## 2026-08-14 — Staging grain ruled: (nct_id, ingest_date)
+
+The source globs every ingest_date partition while SPEC-02 mandated a
+unique test on bare nct_id — green with one partition, guaranteed red on
+the second ingest that Phase 3 snapshots require. Ruling: the staging
+grain is (nct_id, ingest_date), preserving the completeness time series
+across partitions rather than keeping only the latest. The composite
+uniqueness test and the snapshot reading only the latest partition land
+in SPEC-03; the current bare-nct_id test stays valid exactly as long as
+one partition exists, and its first failure is the signal that SPEC-03's
+test swap is due.
 
 ## 2026-08-14 — Gitleaks allowlist: OR-default near-miss
 
