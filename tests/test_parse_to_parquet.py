@@ -155,6 +155,25 @@ def test_raw_path_never_dedupes(
     assert nct_ids[0] == nct_ids[1]
 
 
+def test_fixtures_mode_never_touches_real_partitions(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # fixtures mode lands in its own root — a real partition with the
+    # same ingest_date must survive byte-identical
+    real_root = tmp_path / "parsed"
+    fixtures_root = tmp_path / "parsed_fixtures"
+    sentinel = real_root / f"ingest_date={FIXTURE_INGEST_DATE}" / "trials.parquet"
+    sentinel.parent.mkdir(parents=True)
+    sentinel.write_bytes(b"real partition, do not touch")
+    monkeypatch.setattr(bridge, "PARSED_ROOT", real_root)
+    monkeypatch.setattr(bridge, "FIXTURES_PARSED_ROOT", fixtures_root)
+    monkeypatch.setattr(sys, "argv", ["parse_to_parquet", "--fixtures"])
+    bridge.main()
+    assert sentinel.read_bytes() == b"real partition, do not touch"
+    out = fixtures_root / f"ingest_date={FIXTURE_INGEST_DATE}" / "trials.parquet"
+    assert pq.read_table(out).num_rows == 11
+
+
 def test_records_to_table_empty_lists_and_odd_date() -> None:
     # parser contract: unrecognized date keeps raw, precision None; empty
     # arrays stay [] — both must survive the bridge unchanged

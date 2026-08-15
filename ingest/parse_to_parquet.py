@@ -24,6 +24,9 @@ logger = logging.getLogger(__name__)
 
 RAW_ROOT = Path("data/raw")
 PARSED_ROOT = Path("data/parsed")
+# fixtures mode is isolated here so it can never clobber a real
+# partition; CI symlinks data/parsed -> parsed_fixtures for dbt to read
+FIXTURES_PARSED_ROOT = Path("data/parsed_fixtures")
 FIXTURES_DIR = Path("tests/fixtures")
 # capture date of tests/fixtures/ — pinned so fixture runs are deterministic
 FIXTURE_INGEST_DATE = "2026-08-14"
@@ -146,7 +149,11 @@ def main() -> None:
         action="store_true",
         help="parse tests/fixtures/ instead of data/raw/ (CI mode)",
     )
-    cli.add_argument("--out-root", default=str(PARSED_ROOT))
+    cli.add_argument(
+        "--out-root",
+        default=None,
+        help="default: data/parsed, or data/parsed_fixtures with --fixtures",
+    )
     parse_args = cli.parse_args()
     if parse_args.date and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", parse_args.date):
         cli.error(f"--date must be YYYY-MM-DD, got {parse_args.date!r}")
@@ -163,7 +170,11 @@ def main() -> None:
         studies = load_raw_studies(RAW_ROOT / f"ingest_date={ingest_date}")
         records = [parse_study(s) for s in studies]
 
-    write_partition(records, ingest_date, Path(parse_args.out_root))
+    if parse_args.out_root:
+        out_root = Path(parse_args.out_root)
+    else:
+        out_root = FIXTURES_PARSED_ROOT if parse_args.fixtures else PARSED_ROOT
+    write_partition(records, ingest_date, out_root)
 
 
 if __name__ == "__main__":
