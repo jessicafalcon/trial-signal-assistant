@@ -194,9 +194,11 @@ around.
 
 ## Current status
 
-- Phase 2 complete locally (2026-08-14): parquet bridge + dbt staging/
-  completeness models green on DuckDB; CI green pending PR. Next is
-  Phase 3 (change detection). See PLAN.md for phases and exit criteria.
+- Phase 3 complete locally (2026-08-14): SCD2 snapshot on overall_status,
+  labeled synthetic day-0 seed, mart_trial_status_changes; DONE sequence
+  + idempotency proof green on DuckDB from a clean state; CI green
+  pending PR review. Next is Phase 4 (cloud: Terraform S3 + Snowflake).
+  See PLAN.md for phases and exit criteria.
 - Snowflake trial NOT yet activated. No Snowflake creds exist.
 
 (Update this section at the end of every working day.)

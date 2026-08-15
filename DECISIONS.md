@@ -165,6 +165,54 @@ trusted. `condition = "AND"` is now explicit with a load-bearing comment.
 Standing rule: no allowlist change lands without the probe pair (planted
 random token must be caught; HEAD scan must be clean).
 
+## 2026-08-14 — Synthetic day-0 seed: labeled provenance, deterministic pick
+
+The snapshot mechanism only produces transitions when a second state
+exists, and real registry changes take months. `seed_synthetic_day0.csv`
+fakes the first state: four real AD-corpus nct_ids assigned
+lifecycle-plausible PREDECESSOR statuses, so the first live snapshot run
+detects four transitions immediately. The seed is never mistakable for
+registry data: every row carries snapshot_source='synthetic_day0', the
+column rides through the snapshot into the mart's prior_source/new_source,
+and the seed schema.yml says "synthetic demonstration state, not registry
+data" (CSV comment headers don't exist in dbt seeds). The four ids are the
+LOWEST nct_id currently in each required successor status — a deterministic
+rule reproducible from the corpus, not an editorial pick.
+changed_detected_at (dbt_valid_from) is wall-clock and differs per run by
+design: it records when the pipeline observed the change, which is the
+fact change detection exists to capture; everything derived from it is
+deterministic given the same snapshot history.
+
+## 2026-08-14 — Fixture-mode day-0: second seed + day0_seed_scope var
+
+The fixture corpus (11 studies) contains no RECRUITING trial, so SPEC-03's
+four corpus transitions cannot all occur in CI. Per the spec's fallback, a
+fixture-scoped variant seed (`seed_synthetic_day0_fixtures.csv`) seeds four
+fixture nct_ids with plausible predecessors (mirroring three of the four
+corpus transitions; the RECRUITING successor is replaced by
+NOT_YET_RECRUITING → WITHDRAWN, the canonical pre-enrollment stop). The
+snapshot picks the variant via a second var, day0_seed_scope
+('corpus' default | 'fixtures'), consulted only in seed mode and failing
+loudly on any other value — same pattern as snapshot_source. Alternatives
+rejected: filtering one seed against the current corpus (fixture ids also
+exist in the real corpus, so local runs would seed 8 rows, breaking the
+exactly-4 contract); mutating the seed CSV in CI (edits committed files).
+
+## 2026-08-14 — make snapshot pre-builds staging; dbt build includes snapshots
+
+`make snapshot` runs `dbt run --select +snap_trial_status` before
+`dbt snapshot`: from a clean database, the snapshot's input view
+(stg_trials_current) doesn't exist yet and bare `dbt snapshot` fails; the
+selector keeps the pre-build step aimed at exactly the snapshot's
+ancestors. Verified empirically (dbt 1.12): `dbt build` INCLUDES snapshots
+— SPEC-03's parenthetical guessed it excludes them. `make dbt` stays a
+plain `dbt build` anyway: a live snapshot re-run inside build is a no-op
+on unchanged data, and CI/DONE both order snapshot-day0 before any build.
+Known hazard, accepted: running `make dbt` on a clean database BEFORE
+`make snapshot-day0` baselines the snapshot with live statuses, and a
+later day-0 seed then adds live→synthetic→live noise transitions. The
+documented order (make reset → snapshot-day0 → snapshot → dbt) avoids it.
+
 ## 2026-08-14 — Pre-push audit closed by human risk decision
 
 Four review rounds (one full-tree audit, three delta reviews, rulings on
