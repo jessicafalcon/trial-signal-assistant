@@ -1,0 +1,79 @@
+# Golden eval set — human-curated at the SPEC-05 gate-1 STOP
+# (owner rulings 2026-08-15). Ten questions: 5 why-stopped, 2
+# condition/intervention lookup, 2 metadata-filtered, 1 refusal.
+#
+# Per question:
+#   id_match: all|any — how expected_nct_ids must match, applied to
+#     BOTH the retrieved set (retrieval hit-rate) and cited_nct_ids
+#     (citation correctness).
+#   expected_phrases: every phrase must appear (case-insensitive) in
+#     the answer for the citation check.
+#   expect_refusal: citation pass = the answer is exactly the refusal
+#     sentence AND cited_nct_ids is empty; retrieval passes by
+#     construction (nothing to retrieve).
+questions:
+  - id: q01_tezepelumab_why_stopped
+    question: "Why was the tezepelumab monotherapy trial in atopic dermatitis stopped?"
+    expected_nct_ids: [NCT03809663]
+    id_match: all
+    expected_phrases: ["efficacy"]
+
+  - id: q02_lack_of_efficacy_interim
+    question: "Which trial was terminated for lack of efficacy after an interim analysis?"
+    expected_nct_ids: [NCT03831191]
+    id_match: all
+    expected_phrases: ["efficacy"]
+
+  - id: q03_slow_enrollment
+    question: "Which trials were terminated because of slow enrollment or recruitment?"
+    expected_nct_ids: [NCT00996008, NCT00671528, NCT00129415]
+    id_match: any
+    expected_phrases: ["slow"]
+
+  - id: q04_safety_reasons
+    question: "Which trials were stopped for safety reasons?"
+    expected_nct_ids: [NCT03846466, NCT04220411, NCT00455429]
+    id_match: any
+    expected_phrases: ["safety"]
+
+  - id: q05_crisaborole_business
+    question: "Why was the crisaborole trial terminated by Pfizer?"
+    expected_nct_ids: [NCT03539601, NCT04498403]
+    id_match: any
+    expected_phrases: ["business"]
+
+  - id: q06_barzolvolimab_lookup
+    question: "What is barzolvolimab and in which condition was it tested?"
+    expected_nct_ids: [NCT06727552]
+    id_match: all
+    expected_phrases: ["atopic dermatitis"]
+
+  - id: q07_lebrikizumab_lookup
+    question: "What is lebrikizumab being tested for?"
+    expected_nct_ids: [NCT05369403]
+    id_match: all
+    expected_phrases: ["lebrikizumab"]
+
+  - id: q08_phase2_futility_filtered
+    question: "Which phase 2 trials met futility criteria at an interim analysis?"
+    filters:
+      status: TERMINATED
+      phase: PHASE2
+    expected_nct_ids: [NCT03055195, NCT04791319]
+    id_match: any
+    expected_phrases: ["futility"]
+
+  - id: q09_withdrawn_business_filtered
+    question: "Which study was withdrawn due to business decisions before any subjects were enrolled?"
+    filters:
+      status: WITHDRAWN
+    expected_nct_ids: [NCT00746382]
+    id_match: all
+    expected_phrases: ["business"]
+
+  - id: q10_refusal_budget
+    question: "What was the total budget in dollars for trial NCT06727552?"
+    expected_nct_ids: []
+    id_match: all
+    expected_phrases: []
+    expect_refusal: true

@@ -40,6 +40,84 @@ models:
           an unrecognized format (none in the current corpus) counts in
           no pct_date_* bucket, so the three need not sum to 100.
 
+  - name: mart_trial_documents
+    description: >
+      RAG document corpus: one row per (nct_id, doc_field) over the
+      latest ingest partition, for each non-empty text field
+      (brief_summary, detailed_description, why_stopped). The embedder's
+      sole input surface; content_hash is its incremental change key.
+      duckdb-only — excluded on the snowflake target with the snapshot
+      machinery. Grain uniqueness asserted by
+      tests/assert_mart_trial_documents_grain.sql.
+    columns:
+      - name: nct_id
+        data_type: varchar
+        description: ClinicalTrials.gov registry identifier.
+        data_tests:
+          - not_null
+      - name: doc_field
+        data_type: varchar
+        description: Which TrialRecord text field this document holds.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - brief_summary
+                  - detailed_description
+                  - why_stopped
+      - name: doc_text
+        data_type: varchar
+        description: >
+          The document text, stored trimmed; never null or
+          whitespace-only (content_hash is md5 of this trimmed text).
+        data_tests:
+          - not_null
+      - name: overall_status
+        data_type: varchar
+        description: Recruitment/lifecycle status (Chroma metadata filter).
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: "{{ var('trial_status_enum') }}"
+      - name: phase
+        data_type: varchar
+        description: >
+          Trial phase(s) joined with "/"; '' when the API sent none
+          ('NA' is a real registry value and cannot mark absence).
+        data_tests:
+          - not_null
+      - name: sponsor_name
+        data_type: varchar
+        description: Lead sponsor name; '' when absent.
+        data_tests:
+          - not_null
+      - name: has_results
+        data_type: boolean
+        description: Whether the registry has posted results.
+        data_tests:
+          - not_null
+      - name: conditions_flat
+        data_type: varchar
+        description: >
+          Conditions array joined with '; ' (F8 flattening rule — Chroma
+          metadata values must be scalars); '' for an empty array.
+        data_tests:
+          - not_null
+      - name: content_hash
+        data_type: varchar
+        description: >
+          md5 of doc_text — the F8 incremental change key the embedder
+          compares against Chroma's stored metadata.
+        data_tests:
+          - not_null
+      - name: ingest_date
+        data_type: date
+        description: The latest partition date (single value here).
+        data_tests:
+          - not_null
+
   - name: mart_trial_status_changes
     description: >
       One row per detected overall_status transition, read from the

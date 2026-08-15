@@ -47,6 +47,8 @@ SCHEMA = pa.schema(
         ("start_date", pa.string()),
         ("date_precision", pa.string()),
         ("why_stopped", pa.string()),
+        ("brief_summary", pa.string()),
+        ("detailed_description", pa.string()),
         ("has_results", pa.bool_()),
         ("ingest_date", pa.string()),
     ]
