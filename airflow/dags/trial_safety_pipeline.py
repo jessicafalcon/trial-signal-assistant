@@ -1,5 +1,14 @@
-"""Daily end-to-end pipeline: ingest -> parse -> guards -> cloud load ->
-dual dbt builds -> live snapshot -> RAG reindex -> parity proof.
+"""Daily end-to-end pipeline: ingest -> parse -> guards -> local dbt
+(live snapshot + build) -> RAG reindex, then cloud load -> snowflake
+build -> parity proof.
+
+Local before cloud (post-phase-6 owner ruling, supersedes the SPEC-06
+chain): the snapshot's daily timing is the one artifact not fully
+recoverable later (same-day manual recovery only), while a missed
+cloud load is re-loadable any time (make load-snowflake ALL=1) — so
+the recoverable step sits downstream of the unrecoverable one, and a
+cloud outage can no longer cost a snapshot day. The two dbt paths stay
+serialized regardless: they share dbt_project/'s target/ and logs/.
 
 Every task is a BashOperator cd-ing into the repo mount and calling a
 make target: make is the tested interface (pytest + CI run it), so the
@@ -92,10 +101,11 @@ with DAG(
     )
 
     with TaskGroup(group_id="cloud") as cloud:
-        # ShortCircuit: returns False -> downstream skipped. With
-        # ignore_downstream_trigger_rules=False the skip stops at
-        # dbt_duckdb's none_failed rule, so the local path still runs
-        # in a no-credentials environment.
+        # ShortCircuit: returns False -> downstream skipped. Everything
+        # downstream of this gate is cloud-only (the local path already
+        # finished upstream); ignore_downstream_trigger_rules=False
+        # lets the skip flow through trigger rules, so verify_parity
+        # inherits it via its default all_success rule.
         check_cloud_creds = ShortCircuitOperator(
             task_id="check_cloud_creds",
             python_callable=_cloud_creds_present,
@@ -135,11 +145,11 @@ with DAG(
 
     # canonical local order incl. the live snapshot: make snapshot
     # (staging build + circuit breaker + dbt snapshot), then full build.
-    # none_failed: run even when the cloud group was skipped.
+    # Runs BEFORE the cloud group — nothing upstream can skip or fail
+    # for cloud reasons, so the default trigger rule applies.
     dbt_duckdb = BashOperator(
         task_id="dbt_duckdb",
         bash_command=f"{MAKE} snapshot {OVERRIDES} && {MAKE} dbt {OVERRIDES}",
-        trigger_rule="none_failed",
     )
 
     verify_idempotent = BashOperator(
@@ -155,6 +165,7 @@ with DAG(
         **NETWORK_RETRY,
     )
 
-    ingest >> parse >> circuit_breaker >> check_cloud_creds
-    dbt_snowflake >> dbt_duckdb >> verify_idempotent >> rag_build
+    ingest >> parse >> circuit_breaker >> dbt_duckdb
+    dbt_duckdb >> verify_idempotent >> rag_build
+    verify_idempotent >> check_cloud_creds
     [rag_build, dbt_snowflake] >> verify_parity

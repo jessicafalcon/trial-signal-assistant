@@ -43,18 +43,20 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DAG_FOLDER = str(REPO_ROOT / "airflow" / "dags")
 DAG_ID = "trial_safety_pipeline"
 
-# the documented order (SPEC-06 deliverable 2): task_id -> upstream ids
+# the documented order: local chain first, then cloud (post-phase-6
+# owner ruling — supersedes the SPEC-06 deliverable-2 chain; see the
+# DECISIONS.md local-first entry). task_id -> upstream ids
 EXPECTED_UPSTREAMS: dict[str, set[str]] = {
     "ingest": set(),
     "parse": {"ingest"},
     "circuit_breaker": {"parse"},
-    "cloud.check_cloud_creds": {"circuit_breaker"},
+    "dbt_duckdb": {"circuit_breaker"},
+    "verify_idempotent": {"dbt_duckdb"},
+    "rag_build": {"verify_idempotent"},
+    "cloud.check_cloud_creds": {"verify_idempotent"},
     "cloud.s3_sync": {"cloud.check_cloud_creds"},
     "cloud.load_snowflake": {"cloud.s3_sync"},
     "cloud.dbt_snowflake": {"cloud.load_snowflake"},
-    "dbt_duckdb": {"cloud.dbt_snowflake"},
-    "verify_idempotent": {"dbt_duckdb"},
-    "rag_build": {"verify_idempotent"},
     "cloud.verify_parity": {"rag_build", "cloud.dbt_snowflake"},
 }
 
@@ -102,14 +104,12 @@ def test_no_schedule_surprises(dag) -> None:
 
 
 def test_trigger_rules(dag) -> None:
-    # dbt_duckdb must run when the cloud group is skipped (none_failed);
-    # verify_parity must inherit the skip (default all_success);
-    # everything else stays on the default rule
+    # local-first graph: nothing upstream of the local path can skip,
+    # so EVERY task keeps the default all_success rule; verify_parity
+    # inherits the no-creds skip from dbt_snowflake through it
     rules = {t.task_id: t.trigger_rule.value for t in dag.tasks}
-    assert rules["dbt_duckdb"] == "none_failed"
     for task_id, rule in rules.items():
-        if task_id != "dbt_duckdb":
-            assert rule == "all_success", f"{task_id} has surprise rule {rule}"
+        assert rule == "all_success", f"{task_id} has surprise rule {rule}"
 
 
 def test_retry_policy(dag) -> None:
@@ -187,8 +187,9 @@ def test_operator_types(dag) -> None:
 
 
 def test_short_circuit_respects_trigger_rules(dag) -> None:
-    # with the Airflow default (True) the skip would ignore
-    # dbt_duckdb's none_failed rule and kill the local path too
+    # the skip must flow through trigger rules (not flatten downstream
+    # unconditionally) so verify_parity inherits it via all_success;
+    # also keeps the gate safe if anything non-cloud ever lands below it
     gate = dag.get_task("cloud.check_cloud_creds")
     assert gate.ignore_downstream_trigger_rules is False
 
