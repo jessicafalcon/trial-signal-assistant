@@ -10,15 +10,18 @@
 -- strings everywhere the bridge writes strings (staging owns casting),
 -- lists as ARRAY, has_results as BOOLEAN. Extending TrialRecord means
 -- a manual DDL migration here — create table IF NOT EXISTS never
--- alters the live table.
-{% macro load_raw_trials() %}
+-- alters the live table; use recreate_raw_trials (drop + create from
+-- this DDL, then re-load — see macros/recreate_raw_trials.sql).
 
+{% macro snowflake_only_guard(macro_name) %}
     {% if target.type != 'snowflake' %}
         {{ exceptions.raise_compiler_error(
-            'load_raw_trials is snowflake-only; run with --target snowflake'
+            macro_name ~ ' is snowflake-only; run with --target snowflake'
         ) }}
     {% endif %}
+{% endmacro %}
 
+{% macro create_raw_trials() %}
     {% set create_sql %}
         create table if not exists trial_signal.raw.trials (
             nct_id varchar,
@@ -32,11 +35,20 @@
             start_date varchar,
             date_precision varchar,
             why_stopped varchar,
+            brief_summary varchar,
+            detailed_description varchar,
             has_results boolean,
             ingest_date varchar
         )
     {% endset %}
     {% do run_query(create_sql) %}
+{% endmacro %}
+
+{% macro load_raw_trials() %}
+
+    {{ snowflake_only_guard('load_raw_trials') }}
+
+    {{ create_raw_trials() }}
 
     {% set copy_sql %}
         copy into trial_signal.raw.trials
