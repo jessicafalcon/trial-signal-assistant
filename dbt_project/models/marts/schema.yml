@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: mart_field_completeness
+    description: >
+      One row per ingest_date: how complete the corpus is on the fields
+      the downstream RAG layer depends on. Percentages are 0-100,
+      rounded to 2 decimals.
+    columns:
+      - name: ingest_date
+        data_type: date
+        description: Raw-landing partition date.
+        data_tests:
+          - unique
+          - not_null
+      - name: total_studies
+        data_type: bigint
+        description: Studies parsed in this partition.
+      - name: pct_with_results
+        data_type: double
+        description: Share of studies with posted results.
+      - name: pct_withdrawn_or_terminated_with_why_stopped
+        data_type: double
+        description: >
+          Among WITHDRAWN or TERMINATED studies, share with a non-empty
+          why_stopped text; null if the partition has none of either
+          status.
+      - name: pct_date_precision_day
+        data_type: double
+        description: Share of studies with a day-precision start date.
+      - name: pct_date_precision_month
+        data_type: double
+        description: Share of studies with a month-precision start date.
+      - name: pct_date_absent
+        data_type: double
+        description: >
+          Share of studies with no start date sent at all. A raw date in
+          an unrecognized format (none in the current corpus) counts in
+          no pct_date_* bucket, so the three need not sum to 100.

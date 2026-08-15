@@ -1,0 +1,19 @@
+name: trial_signal
+version: "1.0.0"
+profile: trial_signal
+
+# no outbound calls from dbt runs — CI and local builds are network-free
+flags:
+  send_anonymous_usage_stats: false
+
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+models:
+  trial_signal:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
