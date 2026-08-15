@@ -40,10 +40,15 @@ models:
         description: Lead sponsor name.
       - name: conditions
         data_type: varchar[]
-        description: List of condition strings; empty list when absent.
+        description: >
+          List of condition strings; empty list when absent. data_type
+          is duckdb's; on the snowflake target this column is ARRAY
+          (COPY from parquet) — the one deliberate type divergence.
       - name: interventions
         data_type: varchar[]
-        description: List of intervention names; empty list when absent.
+        description: >
+          List of intervention names; empty list when absent. data_type
+          is duckdb's; ARRAY on the snowflake target (see conditions).
       - name: start_date_raw
         data_type: varchar
         description: Start date exactly as the API sent it; null if absent.
@@ -109,10 +114,14 @@ models:
         description: Lead sponsor name.
       - name: conditions
         data_type: varchar[]
-        description: List of condition strings; empty list when absent.
+        description: >
+          List of condition strings; empty list when absent. duckdb
+          type; ARRAY on the snowflake target.
       - name: interventions
         data_type: varchar[]
-        description: List of intervention names; empty list when absent.
+        description: >
+          List of intervention names; empty list when absent. duckdb
+          type; ARRAY on the snowflake target.
       - name: start_date_raw
         data_type: varchar
         description: Start date exactly as the API sent it; null if absent.

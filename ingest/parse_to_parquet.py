@@ -31,6 +31,9 @@ FIXTURES_DIR = Path("tests/fixtures")
 # capture date of tests/fixtures/ — pinned so fixture runs are deterministic
 FIXTURE_INGEST_DATE = "2026-08-14"
 
+# mirrored manually by the Snowflake DDL in
+# dbt_project/macros/load_raw_trials.sql — a column change here needs a
+# matching migration there (create table IF NOT EXISTS never alters)
 SCHEMA = pa.schema(
     [
         ("nct_id", pa.string()),

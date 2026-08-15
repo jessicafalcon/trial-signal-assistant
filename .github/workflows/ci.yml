@@ -53,6 +53,20 @@ jobs:
       - run: make verify-idempotent DBT=dbt PY=python
       - run: make verify-day0-count DBT=dbt PY=python
 
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.8"
+      - run: terraform -chdir=terraform fmt -check -recursive
+      # init only downloads the lock-file-pinned providers (registry
+      # mirror); no backend, NO credentials, no plan/apply — AWS and
+      # Snowflake are never touched in CI, by policy.
+      - run: terraform -chdir=terraform init -backend=false -input=false
+      - run: terraform -chdir=terraform validate
+
   secrets:
     runs-on: ubuntu-latest
     steps:

@@ -5,17 +5,27 @@ sources:
     description: >
       Parquet written by ingest/parse_to_parquet.py (the bridge from the
       tested Python parser). dbt never re-parses raw JSON; this is the
-      single entry point for trial data.
-    meta:
-      # cwd-relative like the duckdb path in profiles.yml — dbt and
-      # sqlfluff both run from the repo root. Deliberately a fixed
-      # literal (no env_var): a dynamic value here lands inside a SQL
-      # string and is an injection surface. CI symlinks
-      # data/parsed -> parsed_fixtures instead of parameterizing this.
-      external_location: >-
-        read_parquet('data/parsed/ingest_date=*/trials.parquet')
+      single entry point for trial data. Dual-target: duckdb reads the
+      parquet path via external_location (meta below); snowflake reads
+      the COPY INTO'd table RAW.TRIALS. The conditionals in THIS FILE
+      branch only on target.type — a compile-time constant from
+      profiles.yml, not an env var — so the SPEC-02 injection
+      constraint holds here; the load macro hardcodes its identifiers
+      for the same reason.
+    schema: "{{ 'raw' if target.type == 'snowflake' else 'main' }}"
+    config:
+      meta:
+        # duckdb-only (snowflake ignores meta): cwd-relative like the
+        # duckdb path in profiles.yml — dbt and sqlfluff both run from
+        # the repo root. Deliberately a fixed literal (no env_var): a
+        # dynamic value here lands inside a SQL string and is an
+        # injection surface. CI symlinks data/parsed -> parsed_fixtures
+        # instead of parameterizing this.
+        external_location: >-
+          read_parquet('data/parsed/ingest_date=*/trials.parquet')
     tables:
       - name: clinical_trials
+        identifier: "{{ 'trials' if target.type == 'snowflake' else 'clinical_trials' }}"
         description: >
           One row per study per ingest_date partition; columns mirror
           TrialRecord exactly, plus ingest_date.

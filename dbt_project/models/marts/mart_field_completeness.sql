@@ -3,19 +3,22 @@ with trials as (
     select
         ingest_date,
         count(*) as total_studies,
+        -- sum(case ...) not filter(where ...): snowflake has no FILTER
+        -- clause; this form is arithmetic-identical on both targets
         round(
-            100.0 * count(*) filter (where has_results) / count(*), 2
+            100.0 * sum(case when has_results then 1 else 0 end)
+            / count(*), 2
         ) as pct_with_results,
         round(
-            100.0 * count(*) filter (where date_precision = 'day')
+            100.0 * sum(case when date_precision = 'day' then 1 else 0 end)
             / count(*), 2
         ) as pct_date_precision_day,
         round(
-            100.0 * count(*) filter (where date_precision = 'month')
+            100.0 * sum(case when date_precision = 'month' then 1 else 0 end)
             / count(*), 2
         ) as pct_date_precision_month,
         round(
-            100.0 * count(*) filter (where start_date_raw is null)
+            100.0 * sum(case when start_date_raw is null then 1 else 0 end)
             / count(*), 2
         ) as pct_date_absent
     from {{ ref('stg_clinical_trials') }}
