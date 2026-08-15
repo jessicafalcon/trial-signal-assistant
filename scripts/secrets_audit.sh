@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deterministic pre-push secrets floor. Four mechanical checks; PASS/FAIL per
+# Deterministic pre-push secrets floor. Five mechanical checks; PASS/FAIL per
 # check, non-zero exit on any failure. The security-reviewer agent runs this
 # FIRST, then applies judgment on top — this script is the floor, not the audit.
 set -u
@@ -28,6 +28,13 @@ check_empty "(a) env files (.env* / .envrc* / *.env) never tracked (index + full
 # (b) no data/ or *.duckdb tracked
 data_hits=$(git ls-files | grep -E '^data/|\.duckdb$' || true)
 check_empty "(b) no data/ or *.duckdb tracked" "$data_hits"
+
+# (e) no terraform state, tfvars, or .terraform/ ever tracked — current
+# index and full history. State and tfvars can hold cleartext resource
+# values (external ids, account ids); .gitignore alone is one layer.
+tf_hits=$( { git ls-files; git log --all --pretty=format: --name-only --diff-filter=A; } \
+  | grep -E '\.tfstate(\.|$)|\.tfvars(\.json)?$|(^|/)\.terraform/' | sort -u || true)
+check_empty "(e) no *.tfstate / *.tfvars / .terraform ever tracked (index + full history)" "$tf_hits"
 
 # (c) known secret shapes across all history (-l: report commit:path, never the value)
 # own path excluded: the pattern literals below would otherwise self-match

@@ -5,7 +5,9 @@ models:
     description: >
       One row per ingest_date: how complete the corpus is on the fields
       the downstream RAG layer depends on. Percentages are 0-100,
-      rounded to 2 decimals.
+      rounded to 2 decimals. Numeric data_types below are duckdb's
+      (bigint/double); the snowflake target surfaces NUMBER — values
+      are identical (parity verified 2026-08-15).
     columns:
       - name: ingest_date
         data_type: date

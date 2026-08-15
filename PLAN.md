@@ -18,12 +18,27 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
       Exit: snapshot re-run on unchanged input yields zero new rows —
       verified 2026-08-14 (`make verify-idempotent`: 1742 rows before and
       after; mart shows exactly the 4 seeded transitions).
-- [ ] **4 Cloud** — Terraform S3 + Snowflake objects; COPY INTO.
-      Exit: `dbt build --target snowflake` green.
+- [x] **4 Cloud** — Terraform S3 + Snowflake objects; COPY INTO.
+      Exit: `make dbt-snowflake` green (dbt build on the snowflake
+      target; snapshot subtree + seeds excluded, role/warehouse pinned
+      by the target) — verified 2026-08-15 (17/17 PASS; staging row
+      count and completeness-mart percentages identical to duckdb;
+      s3-sync and COPY INTO idempotent for byte-identical files;
+      terraform plan converged to "No changes"). Snapshot machinery
+      deliberately duckdb-only this phase (DECISIONS.md 2026-08-15).
 - [ ] **5 RAG** — per-field embeddings + Chroma metadata filtering;
-      cited Claude answers.
+      cited Claude answers. SPEC-05 must first settle the four
+      recorded input-surface requirements (DECISIONS.md 2026-08-15):
+      which store the embedder reads (no per-trial mart exists yet),
+      the incremental-rebuild change key, the array-flattening rule
+      for Chroma metadata, and the stale "dbt seeds import the
+      parsers" comment.
       Exit: 10-question golden eval runs with reported scores.
 - [ ] **6 Orchestration** — Astro Airflow DAG end-to-end, idempotent.
+      Also owns (2026-08-15 rulings): snapshot hard-delete policy AND
+      Snowflake RAW.TRIALS reset mechanics, decided together with
+      invalidate_hard_deletes (see DECISIONS.md 2026-08-14 deferral);
+      an on-demand cross-target parity script.
       Exit: full DAG run succeeds twice in a row with identical results;
       demo assets captured.
 - [ ] **7 Packaging** — README with screenshots, DECISIONS.md complete,
@@ -48,15 +63,32 @@ rounds; clear or consciously re-accept each before the repo goes public:
 - [ ] .gitleaks.toml is self-governing — a PR widening the allowlist
       disables the check for its own diff; consider CODEOWNERS or a CI
       guard on .gitleaks.toml/.gitignore changes.
-- [ ] CI: SHA-pin actions/checkout + actions/setup-python (mutable tags;
-      now five checkout/setup instances after the phase 2 dbt job) and
-      set persist-credentials: false on the secrets job.
+- [ ] CI: SHA-pin ALL mutable action tags at flip time (currently 8
+      checkout/setup-python instances plus hashicorp/setup-terraform@v3)
+      and set persist-credentials: false on the secrets job.
 - [ ] Doc-blocks refactor (accepted residual from the phase 3 review,
       ruling 2026-08-14): stg_trials_current's schema.yml repeats 13
       column descriptions verbatim from stg_clinical_trials — move shared
       descriptions to dbt doc blocks; also the Makefile hardcodes the
       DuckDB path that profiles.yml declares.
-- [ ] .env.example lacks SNOWFLAKE_SCHEMA, which profiles.yml reads
+- [ ] Single-source the bucket name/prefix: Makefile S3_BUCKET/S3_PREFIX
+      duplicate terraform's defaults and nothing consumes terraform
+      output (2026-08-15 ruling F10).
+- [ ] S3: add a noncurrent-version expiration lifecycle rule —
+      versioning is on with no expiry, so rewritten partitions retain
+      old versions forever (cost; 2026-08-15 ruling F14 residual).
+- [ ] .terraform.lock.hcl carries darwin-only h1 hashes; record
+      multi-platform hashes (terraform providers lock -platform=...)
+      before the flip (2026-08-15 review note).
+- [ ] stg_trials_current builds on the snowflake target though its only
+      consumer (the snapshot) is duckdb-only — scope the exclusion or
+      accept (2026-08-15 review note).
+- [ ] Deferred tests from the phase-4 round (ruling F16): completeness
+      mart bounds singular test; dual-target source-resolution parse
+      test.
+- [x] .env.example lacks SNOWFLAKE_SCHEMA, which profiles.yml reads
       (defaults to 'public'); add it when Snowflake activates in phase 4,
       plus a make dbt-snowflake preflight failing fast on empty
       SNOWFLAKE_* vars (empty env_var() defaults mask missing creds).
+      Done 2026-08-15: both landed with phase 4 (preflight covers
+      account/user/password; the make targets pin the non-secret vars).

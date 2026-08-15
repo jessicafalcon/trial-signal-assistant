@@ -238,3 +238,114 @@ owner terminated further judgment review: the repo is private, the floor is
 green, and history contains zero credentials. Remaining depth is the
 phase 7 pre-public audit checklist in PLAN.md — scheduled for the public
 flip, not forgotten.
+
+## 2026-08-15 — Snapshot machinery is duckdb-only in phase 4
+
+`make dbt-snowflake` excludes `snap_trial_status+` and all seeds: the
+change-detection demo (day-0 seed, snapshot, mart_trial_status_changes,
+idempotency proofs) runs on duckdb, while snowflake proves the
+warehouse path (COPY INTO + staging + completeness mart). Running
+snapshots on two targets would mean two divergent SCD2 histories with
+wall-clock dbt_valid_from values — a second source of truth with no
+demo value. Revisit only if Phase 6 moves orchestration to Snowflake.
+
+## 2026-08-15 — Snowflake load via dbt run-operation, not a client script
+
+`make load-snowflake` wraps `dbt run-operation load_raw_trials`
+(scripts/load_snowflake.sh is a thin shim to keep the spec's script
+path). Rationale: dbt-snowflake is already pinned, so the macro reuses
+profiles.yml's env_var() credential wiring — no snowflake-connector
+import, no second connection codepath, nothing new on the dependency
+allowlist. RAW.TRIALS is created by the macro (create table if not
+exists) as TRANSFORMER, so ownership covers dbt's reads with no extra
+grants. Idempotency is COPY INTO's own load history (64 days): the
+second run reports "Copy executed with 0 files processed."
+
+## 2026-08-15 — Cross-target SQL: portable first, jinja only where forced
+
+Snowflake has no `filter (where ...)` aggregate clause, so
+mart_field_completeness moved to `sum(case when ... then 1 else 0 end)`
+— arithmetic-identical on both engines, one code path, no conditional.
+The only target conditionals are: the varchar[] cast of list columns
+(duckdb) vs ARRAY passthrough (snowflake) in stg_clinical_trials, and
+the source resolution in sources.yml (external parquet path vs
+RAW.TRIALS). All branch on `target.type` — a compile-time constant
+from profiles.yml — so the SPEC-02 no-env-var-into-SQL constraint
+holds. Parity proof: staging count 1738 on both; completeness mart
+rows byte-identical (2026-08-15).
+
+## 2026-08-15 — Terraform: one converging apply, provider quirks pinned
+
+SPEC-04 prescribed the standard two-apply flow for the storage
+integration ⇄ IAM trust handshake; provider 2.19.0 exports the minted
+IAM user ARN and external ID as computed attributes
+(describe_output), so the integration is created before the role and
+ONE apply converges — the post-apply `terraform plan` showing
+"No changes" is the spec's convergence proof (verified 2026-08-15).
+Non-obvious choices that came out of the apply sessions:
+
+- New-generation resources (snowflake_storage_integration_aws,
+  snowflake_stage_external_s3, snowflake_file_format_parquet) over the
+  deprecated classics; only file_format_parquet still needs
+  preview_features_enabled.
+- The provider reads SNOWFLAKE_ACCOUNT (legacy field, hard error) and
+  SNOWFLAKE_WAREHOUSE (session warehouse that doesn't exist pre-apply)
+  from the environment: both must be unset in the terraform shell, and
+  the account id is supplied split as SNOWFLAKE_ORGANIZATION_NAME /
+  SNOWFLAKE_ACCOUNT_NAME (documented in terraform/README.md and
+  .env.example).
+- GRANT ... TO USER is case-sensitive through the provider (it quotes
+  identifiers): TF_VAR_snowflake_admin_user must match SHOW USERS'
+  NAME column exactly.
+- The make targets pin the non-secret connection facts
+  (TRANSFORMER / TRIAL_SIGNAL_WH / TRIAL_SIGNAL / ANALYTICS) rather
+  than trusting .env: the demo must provably run least-privilege on
+  the XS warehouse regardless of the caller's environment; only
+  account/user/password come from .env.
+- .terraform.lock.hcl is committed (provider checksum pins,
+  determinism); state stays local and gitignored. The S3-scoped IAM
+  user needed an inline policy widening to manage exactly
+  role/trial-signal-snowflake-access — role-ARN-pinned, applied by
+  the owner in the console, not by terraform.
+
+## 2026-08-15 — Phase 4 review round: rulings F1-F16 applied
+
+Four reviewer passes (code, security, functionality, coherence), owner
+rulings applied in the phase-4 commit. Non-obvious outcomes recorded:
+
+- Load idempotency is scoped, not absolute: COPY INTO skips only
+  byte-identical files within its 64-day load history. A re-parse
+  rewrites the parquet and re-loads into the append-only RAW.TRIALS;
+  the staging grain test is the loud failure. Reset mechanics are
+  deferred to Phase 6, decided together with invalidate_hard_deletes
+  (same entry as the 2026-08-14 hard-delete deferral).
+- The load macro hardcodes trial_signal.raw.trials instead of
+  {{ target.database }}: profile fields are env-var-derived, and the
+  SPEC-02 no-env-var-into-SQL constraint applies to run-operation
+  macros too.
+- dbt 1.12 auto-loads .env from the cwd (load_dotenv in its CLI), so
+  any repo-root dbt invocation has .env values in-process and rendered
+  yaml lands in the gitignored target/ artifacts. The make preflights
+  guard make's env (which does NOT see .env) and fail closed; their
+  value is the explicit error, not credential discovery.
+- RAW.TRIALS DDL is a manual mirror of the bridge's parquet SCHEMA
+  (cross-referenced comments both sides): extending TrialRecord in
+  Phase 5 requires a hand migration there — create table IF NOT
+  EXISTS never alters a live table.
+- Four SPEC-05 input-surface requirements recorded (also in PLAN.md):
+  (1) the embedder's input store must be chosen — no per-trial mart
+  exists; candidates are stg_clinical_trials/stg_trials_current, the
+  parquet, or RAW.TRIALS, and only duckdb holds snapshot history;
+  (2) an incremental-rebuild change key must be defined — the only
+  change signal today is overall_status via the snapshot's check_cols;
+  (3) conditions/interventions are arrays on both targets and Chroma
+  metadata values must be scalars — a flattening rule is needed;
+  (4) the "dbt seeds and the RAG embedder import the parsers" comment
+  (CLAUDE.md, fetch_clinical_trials.py docstring) is half-false — the
+  seeds are hand-written CSVs; correct it when SPEC-05 fixes the
+  embedder import for real.
+- Standing rule added to CLAUDE.md (owner meta-ruling): security-
+  reviewer should-fixes may exceed a spec's touch-list; deviation
+  disclosed, never silent. Exercised here for .gitignore (terraform
+  plan/crash-file patterns) and the secrets floor's new check (e)
+  (no tfstate/tfvars/.terraform ever tracked).
