@@ -1,0 +1,25 @@
+# Committed on purpose: both targets are credential-free by construction.
+# duckdb holds no credentials at all; snowflake reads env_var() only, with
+# defaults so dbt compile (and sqlfluff's dbt templater) succeed with no
+# secrets present. Real values arrive via .env in phase 4 — never here.
+trial_signal:
+  target: duckdb
+  outputs:
+    duckdb:
+      type: duckdb
+      # relative to the process cwd — make dbt and sqlfluff both run from
+      # the repo root. Lives under dbt_project/ (not data/) so a fresh
+      # checkout can compile without any directory existing first;
+      # gitignored via *.duckdb.
+      path: dbt_project/trial_signal.duckdb
+      threads: 4
+    snowflake:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT', '') }}"
+      user: "{{ env_var('SNOWFLAKE_USER', '') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD', '') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', '') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', '') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', '') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'public') }}"
+      threads: 4
