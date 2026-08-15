@@ -13,13 +13,15 @@ the middle; the LLM only writes prose over retrieved context.
 ClinicalTrials.gov API v2
         │  (ingest/fetch_clinical_trials.py — tested parser)
         ▼
-S3 raw landing (JSON, partitioned by ingest date)   [Terraform, eu-west-3]
+data/raw JSON ──► parser bridge ──► data/parsed parquet (ingest_date partitions)
         │
-        ├──► DuckDB  (local dev + CI target)
-        └──► Snowflake (demo target, COPY INTO via external stage)
+        ├──► DuckDB (local dev + CI target — reads the parquet directly)
+        └──► aws s3 sync ──► S3 parsed/ landing [Terraform, eu-west-3]
+                                   └──► COPY INTO Snowflake RAW.TRIALS
+                                        (external stage; demo target)
         │
         ▼
-dbt: staging ──► snapshots (SCD2 on overall_status) ──► marts
+dbt: staging ──► snapshots (SCD2 on overall_status; duckdb only) ──► marts
         │
         ▼
 Embeddings (sentence-transformers, per-field docs) ──► Chroma (+ metadata)
@@ -32,9 +34,13 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 
 ## Setup
 
-Prerequisites: Python 3.11+, and [gitleaks](https://github.com/gitleaks/gitleaks)
+Prerequisites: Python 3.11+, [gitleaks](https://github.com/gitleaks/gitleaks)
 (`brew install gitleaks`) for the secrets audit (`scripts/secrets_audit.sh`),
 run by a local pre-push hook and in CI on pushes to main and on pull requests.
+For the cloud target only: the aws CLI (`brew install awscli`) and
+[terraform](https://developer.hashicorp.com/terraform)
+(`brew install hashicorp/tap/terraform`). `make setup` warns when any of
+the three is missing.
 
     make setup   # venv, dependencies, pre-commit hooks
     make test    # parser suite (no network)
@@ -55,4 +61,35 @@ transitions in the mart are therefore seeded demonstrations — the label
 travels into the mart's `prior_source` column — and every transition
 after them is real registry change, labeled `live` on both sides.
 
-Status: phase 3 complete — see PLAN.md.
+## Cloud target (S3 + Snowflake)
+
+The same dbt project runs on Snowflake to prove the models are
+warehouse-portable; DuckDB stays the default local/CI target and needs
+none of this. One-time provisioning (creates the S3 landing bucket, the
+Snowflake database/schemas/warehouse/role, and the storage-integration
+trust handshake) is a single converging `terraform apply` — sequence,
+required env vars, and IAM caveats in [terraform/README.md](terraform/README.md).
+
+Then the load + build flow:
+
+    make s3-sync         # parsed parquet → s3://<bucket>/parsed/ (0 files re-sent on re-run)
+    make load-snowflake  # COPY INTO RAW.TRIALS from the external stage (0 rows re-loaded on re-run)
+    make dbt-snowflake   # dbt build --target snowflake (staging + completeness mart + tests)
+
+Both load steps are idempotent for byte-identical files: `aws s3 sync`
+skips unchanged files, and `COPY INTO` skips already-loaded files via
+Snowflake's load history (64 days). A re-parse rewrites the parquet, so
+it re-uploads and re-loads into the append-only `RAW.TRIALS` — the
+staging grain test fails loudly if that produces duplicates. Snowflake
+reset mechanics are deferred to phase 6 (with invalidate_hard_deletes).
+Credentials live only in `.env` (see `.env.example`); the make targets
+pin role/warehouse/database/schema to the terraform-created objects
+(`TRANSFORMER` / `TRIAL_SIGNAL_WH` / `TRIAL_SIGNAL` / `ANALYTICS`).
+
+Cost posture: X-Small warehouse, 60-second auto-suspend, created
+suspended — a full load + build run fits comfortably in trial credits.
+Snapshot machinery (change detection) runs on DuckDB only this phase;
+`make dbt-snowflake` excludes it. Snowflake is never exercised in CI —
+CI only checks `terraform fmt`/`validate` with no credentials.
+
+Status: phase 4 complete — see PLAN.md.

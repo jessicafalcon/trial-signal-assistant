@@ -18,13 +18,15 @@ Built by a developer who is NEW to dbt and Airflow — see Teaching rule below.
 ClinicalTrials.gov API v2
         │  (ingest/fetch_clinical_trials.py — tested parser)
         ▼
-S3 raw landing (JSON, partitioned by ingest date)   [Terraform, eu-west-3]
+data/raw JSON ──► parser bridge ──► data/parsed parquet (ingest_date partitions)
         │
-        ├──► DuckDB  (local dev + CI target)
-        └──► Snowflake (demo target, COPY INTO via external stage)
+        ├──► DuckDB (local dev + CI target — reads the parquet directly)
+        └──► aws s3 sync ──► S3 parsed/ landing [Terraform, eu-west-3]
+                                   └──► COPY INTO Snowflake RAW.TRIALS
+                                        (external stage; demo target)
         │
         ▼
-dbt: staging ──► snapshots (SCD2 on overall_status) ──► marts
+dbt: staging ──► snapshots (SCD2 on overall_status; duckdb only) ──► marts
         │
         ▼
 Embeddings (sentence-transformers, per-field docs) ──► Chroma (+ metadata)
@@ -41,7 +43,10 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `tests/fixtures/` — captured real API payloads. READ-ONLY ground truth.
 - `dbt_project/` — profiles.yml has two targets: `duckdb` (default), `snowflake`.
   `models/` staging + marts, `snapshots/` SCD2, `seeds/` synthetic day-0
-  CSVs, `tests/` dbt singular tests (distinct from pytest's tests/).
+  CSVs, `tests/` dbt singular tests (distinct from pytest's tests/),
+  `macros/` run-operation macros (the Snowflake COPY INTO load path).
+- `scripts/` — secrets_audit.sh (deterministic pre-push floor) and
+  load_snowflake.sh (self-contained Snowflake load entry point).
 - `rag/` — embedding build, query layer, `eval/` golden questions + scorer.
 - `dags/` — Airflow DAG. `terraform/` — S3 + Snowflake infra.
 - `data/` — gitignored. `data/raw/` JSON, `data/parsed/` parquet (dbt's
@@ -67,7 +72,14 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `make verify-day0-count` — fails unless the mart holds exactly the 4
   seeded day-0 transitions (CI runs it after the fixture sequence)
 - `make reset` — delete the local DuckDB file (clean state)
-- `make dbt-snowflake` — STUB until phase 4 (dbt build --target snowflake)
+- `make s3-sync` — aws s3 sync data/parsed/ to the landing bucket
+  (idempotent; needs aws CLI + AWS_PROFILE from .env)
+- `make load-snowflake` — COPY INTO RAW.TRIALS from the external stage
+  via a dbt run-operation macro (idempotent via COPY load history)
+- `make dbt-snowflake` — dbt build --target snowflake, excluding the
+  snapshot subtree and seeds (snapshot machinery is duckdb-only this
+  phase). Both snowflake targets preflight-fail on missing creds and
+  pin role/warehouse/db/schema to the terraform-created objects.
 - `make eval` — STUB until phase 5 (rag/eval/run_eval.py golden questions)
 - `make lint` — ruff + sqlfluff via pre-commit run --all-files
 
@@ -180,10 +192,14 @@ clever way.
   is the only definition of done. Do not weaken failing tests. If a spec or
   fixture seems wrong, STOP and report — never silently repair.
 - Fixtures in tests/fixtures/ are captured from the live API: read-only.
+- Security-reviewer should-fixes may exceed a spec's touch-list;
+  deviation disclosed, never silent.
 - Commit at every green state with a descriptive message.
 - End each loop with a summary: what changed + decisions the spec didn't
   cover, listed explicitly for human review.
-- Live network calls: only via `make ingest`, never inside pytest or CI.
+- Live network calls: only via `make ingest` and the cloud targets
+  (`make s3-sync` / `load-snowflake` / `dbt-snowflake`, terraform) —
+  never inside pytest or CI.
 
 ## Project tooling
 
@@ -215,11 +231,14 @@ around.
 
 ## Current status
 
-- Phase 3 complete locally (2026-08-14): SCD2 snapshot on overall_status,
-  labeled synthetic day-0 seed, mart_trial_status_changes; DONE sequence
-  + idempotency proof green on DuckDB from a clean state; CI green
-  pending PR review. Next is Phase 4 (cloud: Terraform S3 + Snowflake).
-  See PLAN.md for phases and exit criteria.
-- Snowflake trial NOT yet activated. No Snowflake creds exist.
+- Phase 4 complete locally (2026-08-15): Terraform-provisioned S3
+  landing bucket + Snowflake objects (TRIAL_SIGNAL db, RAW/ANALYTICS,
+  XS warehouse, TRANSFORMER role, storage integration + external
+  stage), COPY INTO load path, and `make dbt-snowflake` green (17/17)
+  with staging row count and completeness-mart percentages identical
+  to duckdb. Snapshot machinery stays duckdb-only (DECISIONS.md).
+  Next is Phase 5 (RAG). See PLAN.md for phases and exit criteria.
+- Snowflake trial active; creds live only in .env (never committed).
+  Terraform state is local and gitignored.
 
 (Update this section at the end of every working day.)

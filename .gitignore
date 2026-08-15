@@ -17,6 +17,14 @@ __pycache__/
 *.tfstate.*
 *.tfvars
 *.tfvars.json
+# terraform plan files archive resource values (incl. sensitive outputs)
+# in cleartext; provider crash logs can contain request/response bodies
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+.terraformrc
+terraform.rc
 *.pem
 *.p8
 *.key

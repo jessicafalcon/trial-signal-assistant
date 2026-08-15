@@ -4,8 +4,15 @@ select
     cast(overall_status as varchar) as overall_status,
     cast(phase as varchar) as phase,
     cast(sponsor_name as varchar) as sponsor_name,
-    cast(conditions as varchar[]) as conditions,
-    cast(interventions as varchar[]) as interventions,
+    -- lists arrive as ARRAY on snowflake (COPY from parquet), as
+    -- varchar[] on duckdb — the only cross-target type divergence
+    {% if target.type == 'snowflake' %}
+        conditions,
+        interventions,
+    {% else %}
+        cast(conditions as varchar[]) as conditions,
+        cast(interventions as varchar[]) as interventions,
+    {% endif %}
     cast(start_date_raw as varchar) as start_date_raw,
     cast(start_date as date) as start_date,
     cast(date_precision as varchar) as date_precision,
