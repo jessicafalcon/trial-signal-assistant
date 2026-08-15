@@ -82,7 +82,11 @@
     {% set loaded = namespace(rows=0) %}
     {% for row in result.rows %}
         {% do log(row.values() | join(' | '), info=true) %}
-        {% if row['rows_loaded'] is not none %}
+        {# 0-files COPY returns a single status row ("Copy executed
+           with 0 files processed.") with NO rows_loaded column —
+           check the key explicitly so the guard below never depends
+           on jinja's Undefined-to-0 coercion #}
+        {% if 'rows_loaded' in row.keys() and row['rows_loaded'] is not none %}
             {% set loaded.rows = loaded.rows + row['rows_loaded'] | int %}
         {% endif %}
     {% endfor %}
