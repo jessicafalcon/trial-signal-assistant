@@ -128,6 +128,35 @@ class TestWhyStopped:
         assert parse_study(complete).why_stopped is None
 
 
+class TestDescriptions:
+    def test_both_fields_present(self, complete: dict) -> None:
+        record = parse_study(complete)
+        assert record.brief_summary == (
+            "The purpose of this study is to assess the efficacy and safety "
+            "of barzolvolimab in adults with Atopic Dermatitis"
+        )
+        assert record.detailed_description is not None
+        assert record.detailed_description.startswith(
+            "This is a multicenter, randomized, double-blind, parallel group, "
+            "placebo controlled phase 2 study to assess the efficacy"
+        )
+        assert len(record.detailed_description) == 1040
+
+    def test_brief_only(self) -> None:
+        record = parse_study(load("fixture_sparse.json"))
+        assert record.brief_summary is not None
+        assert record.brief_summary.startswith(
+            "This extension study is being conducted to collect post-treatment "
+            "safety information"
+        )
+        assert record.detailed_description is None
+
+    def test_absent_module_yields_none(self) -> None:
+        record = parse_study({})
+        assert record.brief_summary is None
+        assert record.detailed_description is None
+
+
 class TestPagination:
     def test_envelope_yields_studies_and_token(self) -> None:
         studies, next_token = parse_page(load("fixture_page.json"))

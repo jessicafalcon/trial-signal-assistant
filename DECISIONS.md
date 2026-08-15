@@ -349,3 +349,98 @@ rulings applied in the phase-4 commit. Non-obvious outcomes recorded:
   disclosed, never silent. Exercised here for .gitignore (terraform
   plan/crash-file patterns) and the secrets floor's new check (e)
   (no tfstate/tfvars/.terraform ever tracked).
+
+## 2026-08-15 — RAG input surface, change key, flattening (F8 resolved)
+
+The embedder reads one store only: `mart_trial_documents`, built on
+stg_trials_current (latest partition; duckdb target). Long format — one
+row per (nct_id, doc_field) for brief_summary / detailed_description /
+why_stopped — so each field embeds as its own document and why-stopped
+questions retrieve the stop reason directly. The incremental change key
+is `content_hash` = md5(doc_text), computed in SQL: the embedder skips
+ids whose stored hash matches, so an unchanged mart re-embeds 0
+documents. Chroma metadata values must be scalars, so conditions join
+with '; ' (`conditions_flat`); nullable scalars (phase, sponsor_name)
+coalesce to '' because Chroma also rejects nulls and 'NA' is a real
+registry phase value that cannot double as the absent marker. Why not
+embedding in dbt: dbt stays deterministic SQL; the Python embedder is a
+thin consumer of the mart. Note: `make rag-build` downloads the pinned
+model from Hugging Face on first run — the third sanctioned network
+path beside `make ingest` and the cloud targets (never in CI).
+
+## 2026-08-15 — Dependencies: duckdb and pyyaml pinned (owner-approved)
+
+`duckdb==1.5.5` (the exact version dbt-duckdb already resolves) approved
+per SPEC-05 deliverable 5 so the embedder and unit tests can read the
+mart / run the mart's SQL expressions without going through dbt.
+`pyyaml==6.0.3` (already installed transitively via dbt-core) approved
+at the gate-1 ruling for `golden_questions.yml`. Both pinned in
+requirements.txt and added to the CLAUDE.md allowlist in the same
+commit; CI's test job installs both (in-memory SQL + yml validation —
+still no network).
+
+## 2026-08-15 — mart_trial_documents is duckdb-only on the demo target
+
+`make dbt-snowflake` excludes `mart_trial_documents+` alongside the
+snapshot subtree: the RAG store is built locally from duckdb, so a
+Snowflake copy would be dead weight, and the mart's array_to_string/md5
+SQL would need a cross-target rewrite for zero consumers. Same
+reasoning as the 2026-08-15 snapshot exclusion; revisit if the demo
+ever serves RAG from Snowflake (Cortex path, README production notes).
+
+## 2026-08-15 — Claude model pinned to claude-sonnet-4-5-20250929
+
+Determinism policy demands temperature 0 plus a pinned model version.
+Current-generation models (Opus 5 / Sonnet 5 / Fable 5) reject the
+temperature parameter outright, so the pin is the newest dated-snapshot
+id that still accepts temperature=0. Intent is reproducibility of the
+demo (same retrieval + same prompt → same answer as far as the API
+allows), not model-quality maximalism (owner ruling 2026-08-15).
+Revisit trigger: when this model family deprecates, or when the answer
+quality needs a newer family — accepting that newer families drop
+temperature control entirely and determinism then rests only on the
+pinned id + grounded prompt.
+
+## 2026-08-15 — Sponsor names are filterable, not semantically searchable
+
+Golden-set curation dropped sponsor-phrased questions ("the Celldex
+trial"): sponsor_name lives only in Chroma metadata, not in embedded
+text, so semantic retrieval cannot find a trial by sponsor. Sponsors
+are reachable via exact metadata filtering only; embedding a composed
+header (sponsor + title) into doc_text was rejected this phase to keep
+documents verbatim registry text. Rare drug tokens (difelikefalin,
+piroctone) also retrieve poorly with all-MiniLM-L6-v2 at k=5 — a
+reranking/hybrid-search note for the production-notes section, not a
+phase-5 fix.
+
+## 2026-08-15 — Phase 5 review round: rulings applied
+
+Three reviewer passes (code, security, functionality); owner rulings
+applied in the phase-5 commit. Non-obvious outcomes:
+
+- Citations are now verified, not scraped: cited_nct_ids is
+  intersected with the retrieved set; ids the model echoes from
+  untrusted registry text land in a separate unverified_nct_ids key
+  (S1 — extends the SPEC-05 CLI output contract by one key). Context
+  documents are structurally fenced (<document> tags, angle brackets
+  escaped out of bodies, ids trusted from attributes only) instead of
+  prose-fenced (S2).
+- The embedder deletes ids that left the mart, so stale documents
+  cannot be retrieved or cited; "store now holds" logs
+  collection.count(), not the mart count (C2/F1). doc_text is trimmed
+  before hashing so whitespace-only registry churn never re-embeds
+  (C8).
+- The refusal question is excluded from the retrieval denominator
+  (its pass was by construction); citation keeps all 10 (C5).
+- recreate_raw_trials.sh requires CONFIRM=1 before dropping the live
+  table (S4); make ask single-quotes its interpolations (S3).
+- C1 (claimed ruff-format violations) dismissed as empirically false:
+  three independent green lint runs beat a read-only reviewer
+  assertion. Lesson recorded: verify tool-behavior claims by running
+  the tool before ruling.
+- Dependency-widening provenance (S5, sufficiency confirmed): duckdb
+  was pre-approved in SPEC-05 deliverable 5; pyyaml approved in the
+  gate-1 owner reply. Accepted residual (F2): make rag-build/ask ping
+  the HF Hub even with a warm cache — offline reproducibility rests
+  on the local cache + pinned revision. Deferred to the phase-7
+  checklist: richer phase matching in the RAG CLI (C4).

@@ -59,6 +59,19 @@ def test_list_fields_round_trip(
     assert any(c for c in conditions)  # at least one non-empty list
 
 
+def test_description_fields_round_trip(
+    tmp_path: Path, fixture_records: list[TrialRecord]
+) -> None:
+    out_file = write_partition(fixture_records, FIXTURE_INGEST_DATE, tmp_path)
+    rows = pq.read_table(out_file).to_pylist()
+    by_id = {r["nct_id"]: r for r in rows}
+    assert by_id["NCT06727552"]["brief_summary"].startswith(
+        "The purpose of this study is to assess"
+    )
+    assert by_id["NCT06727552"]["detailed_description"] is not None
+    assert by_id["NCT00098150"]["detailed_description"] is None
+
+
 def test_rerun_overwrites_own_partition_only(
     tmp_path: Path, fixture_records: list[TrialRecord]
 ) -> None:
@@ -189,6 +202,8 @@ def test_records_to_table_empty_lists_and_odd_date() -> None:
         start_date=None,
         date_precision=None,
         why_stopped=None,
+        brief_summary=None,
+        detailed_description=None,
         has_results=False,
     )
     row = records_to_table([record], "2020-01-01").to_pylist()[0]

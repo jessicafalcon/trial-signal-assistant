@@ -75,6 +75,16 @@ models:
         description: >
           Free-text stop reason; present only on some withdrawn/terminated
           trials.
+      - name: brief_summary
+        data_type: varchar
+        description: >
+          descriptionModule.briefSummary — short free-text study summary;
+          null when the module or field is absent.
+      - name: detailed_description
+        data_type: varchar
+        description: >
+          descriptionModule.detailedDescription — longer free-text
+          description; absent on many studies, null then.
       - name: has_results
         data_type: boolean
         description: Whether the registry has posted results.
@@ -88,8 +98,9 @@ models:
 
   - name: stg_trials_current
     description: >
-      stg_clinical_trials filtered to the latest ingest_date — the
-      snapshot's sole input surface. One row per nct_id (bare nct_id IS
+      stg_clinical_trials filtered to the latest ingest_date — input
+      surface for the snapshot and (via mart_trial_documents) the RAG
+      embedder. One row per nct_id (bare nct_id IS
       unique at this grain). Adds snapshot_source='live' so rows the
       snapshot captures from here are distinguishable from the synthetic
       day-0 seed all the way into the marts.
@@ -134,6 +145,12 @@ models:
       - name: why_stopped
         data_type: varchar
         description: Free-text stop reason; only some stopped trials.
+      - name: brief_summary
+        data_type: varchar
+        description: Short free-text study summary; null when absent.
+      - name: detailed_description
+        data_type: varchar
+        description: Longer free-text description; null when absent.
       - name: has_results
         data_type: boolean
         description: Whether the registry has posted results.
