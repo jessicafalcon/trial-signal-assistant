@@ -127,7 +127,7 @@ AI sits at the edges; everything in the middle is deterministic.
 - Python 3.11+. Type hints everywhere. Parsing functions stay PURE
   (dict in, typed record out) — dbt seeds and the RAG embedder import them.
 - Dependencies: ask before adding ANY new package. Current allowlist:
-  requests, pytest, dbt-core, dbt-duckdb, dbt-snowflake,
+  requests, pytest, dbt-core, dbt-duckdb, dbt-snowflake, pyarrow,
   sentence-transformers, chromadb, anthropic, ruff, sqlfluff, pre-commit,
   sqlfluff-templater-dbt.
 - dbt naming: `stg_` staging, `mart_` marts, snapshots in `snapshots/`.
@@ -194,8 +194,9 @@ around.
 
 ## Current status
 
-- Phase 1 complete (2026-08-14); next is Phase 2 (local warehouse).
-  See PLAN.md for phases and exit criteria.
+- Phase 2 complete locally (2026-08-14): parquet bridge + dbt staging/
+  completeness models green on DuckDB; CI green pending PR. Next is
+  Phase 3 (change detection). See PLAN.md for phases and exit criteria.
 - Snowflake trial NOT yet activated. No Snowflake creds exist.
 
 (Update this section at the end of every working day.)
