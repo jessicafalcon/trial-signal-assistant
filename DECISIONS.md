@@ -106,6 +106,32 @@ no contact data). The prior fixture versions persist in local pre-push git
 history — accepted and documented here rather than scrubbed, since the repo
 has never been pushed and the data remains public either way.
 
+## 2026-08-14 — Fixture parquet mode: pinned capture date, scoped dedupe
+
+`make parse FIXTURES=1` (the CI path) pins ingest_date to the fixtures'
+capture date (2026-08-14) instead of "today": a fixture run must produce
+byte-identical output forever, per the determinism policy. Two fixture
+files share one study (NCT06361992), so fixture mode dedupes by nct_id
+(first occurrence, sorted file order) to satisfy the staging unique test;
+real partitions are deliberately NOT deduped — a duplicate there is a
+data problem the test should surface, not one the bridge silently
+repairs. Side effect: running FIXTURES=1 locally overwrites the real
+2026-08-14 parsed partition with 11 rows; accepted because data/parsed/
+is a derived artifact `make parse` regenerates in seconds.
+
+## 2026-08-14 — Bridge stores dates as strings; staging owns typing
+
+trials.parquet keeps start_date and ingest_date as ISO strings — exactly
+what the parser emits — and stg_clinical_trials casts them to DATE. One
+layer (staging) owns SQL types, the bridge stays a dumb serializer of
+TrialRecord, and casting an already-normalized ISO string is typing, not
+the date re-parsing SPEC-02 forbids. The DuckDB file itself lives at
+dbt_project/trial_signal.duckdb, not under data/: sqlfluff's dbt
+templater opens the database during lint, and on a fresh checkout (CI's
+lint job) data/ does not exist — verified empirically; DuckDB cannot
+create parent directories. dbt_project/ always exists in a checkout, and
+*.duckdb keeps the file out of git wherever it lives.
+
 ## 2026-08-14 — Gitleaks allowlist: OR-default near-miss
 
 Path-scoping the fixture-cursor allowlist (`paths = ^tests/`) as first
