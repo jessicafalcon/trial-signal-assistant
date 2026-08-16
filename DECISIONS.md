@@ -138,9 +138,16 @@ fixtures don't need it. SPEC-01's fixture criteria were amended (no
 `overallOfficials` remain acceptable) and both fixtures were re-captured
 from the live API: the page envelope filtered to COMPLETED studies without
 results, and the partial-date example replaced by NCT01138761 (same quirk,
-no contact data). The prior fixture versions persist in local pre-push git
-history — accepted and documented here rather than scrubbed, since the repo
-has never been pushed and the data remains public either way.
+no contact data). Resolution record (rewritten 2026-08-16 by owner ruling — this
+paragraph originally accepted the residual "since the repo has never
+been pushed"): that premise was invalidated when the repo was pushed,
+and the final pre-public audit refused to let the flip proceed on a
+justification written for a never-pushed repo. The history was
+scrubbed 2026-08-16, before the flip, via blob replacement — the two
+pre-scrub fixture blobs swapped for their scrubbed HEAD equivalents in
+every commit that carried them; the contact name, email, and phone
+grep to zero across the rewritten history (see the phase-7
+history-rewrite entry for the mechanism and hash map).
 
 ## 2026-08-14 — Fixture parquet mode: pinned capture date, scoped dedupe
 
@@ -855,3 +862,49 @@ docs/BACKLOG.md instead of blocking — see B1–B4 there — and the
 branch is push-ready. Same principle as the 2026-08-14 pre-push
 audit closure: deterministic checks green, judgment review ended by
 explicit human risk decision, residual depth parked in a named place.
+
+## 2026-08-16 — History rewrite: owner-ruled exception, one-time scrub
+
+SPEC-07 put history rewrites out of scope; the final whole-tree audit
+found the one thing that outranks that constraint — a named third
+party's direct email and phone in reachable history (pre-scrub fixture
+blobs at the phase-1 capture commit), with an acceptance whose stated
+premise ("never been pushed") had become false. Owner ruling: scrub
+before the flip; the constraint gets this single recorded exception.
+Mechanism: git-filter-repo blob replacement, NOT deletion — the two
+offending blobs were swapped for the scrubbed HEAD versions of the
+same files, so every historical commit stays internally valid.
+git-filter-repo is a one-time local tool sanctioned by the ruling; it
+is not a project dependency. Invariants verified: HEAD tree
+byte-identical before/after (f5390888…); the contact's name, email,
+and phone grep to ZERO across all rewritten history (strings derived
+locally, never written to any output or file); the pre-scrub blob
+objects are gone from the object store; floor 7/7 and the full DONE
+command green on the rewritten history. The force-push and the
+GitHub-side purge of cached unreachable objects are human gates
+(docs/public_flip_checklist.md).
+
+Load-bearing hash map (old → new; docs keep old hashes in prose as
+historical references — this table is the translation):
+
+| what | old | new |
+|---|---|---|
+| phase-1 fixture capture (carried PII) | 904b903 | dcfb2ad |
+| fixture re-capture / scrub | 4904246 | 03fa12c |
+| audit rulings (added .gitleaksignore) | b42d75f | 71bc456 |
+| value-scoped allowlist (removed it) | 561c593 | 1545546 |
+| phase-6 reorder review target | d67fe38 | 0aa6375 |
+| merge PR #2 (phase 2) | 79fef1d | c234221 |
+| merge PR #3 (phase 3) | fb52ac2 | a89efe5 |
+| merge PR #4 (phase 4) | 9b56a5d | 30c4fd8 |
+| merge PR #5 (phase 5) | 961a457 | fb0099f |
+| merge PR #6 (phase 6) | 7867af6 | 0d1d672 |
+| merge PR #7 (demo capture) | 0d9bf79 | 3f09cbf |
+| merge PR #8 (phase 7) | 9ceba92 | 1be3f36 |
+
+Also recorded here per the same ruling — the final audit's two notes
+are owner-accepted as flagged: the live S3 bucket name in
+terraform/variables.tf's default is an existence-only disclosure on a
+hardened bucket (public-access block, TLS-only policy, scoped
+read-only grant), and the $2.25 spend figure is intentional README
+evidence, not an identifier.
