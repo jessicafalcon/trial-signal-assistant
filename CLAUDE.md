@@ -91,9 +91,9 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   delete the partition's rows, COPY its stage files with FORCE — a
   same-partition re-run converges. Latest local partition by default;
   DATE=YYYY-MM-DD picks one, ALL=1 loads every local partition
-- `make dbt-snowflake` — dbt build --target snowflake, excluding the
-  snapshot subtree, seeds, and mart_trial_documents (snapshot machinery
-  and the RAG doc mart are duckdb-only). Both snowflake targets
+- `make dbt-snowflake` — dbt build --target snowflake, excluding
+  stg_trials_current+ (the view, snapshot machinery, and the RAG doc
+  mart are duckdb-only — phase-7 scoping) and seeds. Both snowflake targets
   preflight-fail on missing creds and pin role/warehouse/db/schema to
   the terraform-created objects. RAW.TRIALS schema migrations:
   scripts/recreate_raw_trials.sh (drop + recreate + re-load; README
@@ -244,16 +244,27 @@ clever way.
 
 ## Project tooling
 
-Index only — hooks fire from settings.json; agents and skills self-describe
-in their own files. All agents are report-only by contract: none carry
+Index only — hooks fire from the developer's local, gitignored
+.claude/settings.local.json (wiring is local-only by design; see the
+run-tests entry); agents and skills self-describe in their own files. All agents are report-only by contract: none carry
 Write/Edit, and their instructions forbid fixing, committing, or working
 around findings (Bash is granted for git/pytest, so the boundary is
 prompt-enforced, not a permission wall). A finding is fixed in the main
 session or explicitly accepted — never auto-fixed, ignored, or committed
 around.
 
-- `run-tests` hook — `.claude/hooks/run-tests.py`; after any .py edit inside
-  this repo, runs pytest and blocks on red. Wired in `.claude/settings.json`.
+- `run-tests` hook — `.claude/hooks/run-tests.py` (committed); after any .py
+  edit inside this repo, runs pytest and blocks on red. The WIRING is
+  local-only by design (phase-7 ruling, DECISIONS.md): a committed
+  settings.json would auto-execute an inbound PR branch's hook + pytest +
+  conftest.py for anyone opening it in Claude Code. One-time re-enable —
+  copy this block into the gitignored `.claude/settings.local.json`:
+  `{"hooks": {"PostToolUse": [{"matcher": "Write|Edit|MultiEdit|NotebookEdit",
+  "hooks": [{"type": "command", "command": "python3
+  \"$CLAUDE_PROJECT_DIR/.claude/hooks/run-tests.py\""}]}]}}`.
+  Surviving surface no config closes: running pytest on an inbound branch
+  still executes that branch's conftest.py — review conftest.py and
+  test-file changes in the GitHub UI before running pytest on it.
 - `block-secrets` hook — `~/.claude/hooks/block-secrets.py` (user-level, all
   projects); blocks writes containing secret-looking values.
 - `code-reviewer` agent — `.claude/agents/`; diff review against this file's
