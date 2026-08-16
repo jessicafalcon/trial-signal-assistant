@@ -260,11 +260,13 @@ non-obvious choice as a why-not-X entry — including the ones that
 superseded earlier decisions.
 
 Security is layered and mostly deterministic: `.gitignore`, a
-write-blocking hook, and a five-check mechanical floor
-(`scripts/secrets_audit.sh`: env files, data, terraform state, secret
-shapes, pinned-version gitleaks over full history) run before any
-judgment review — and CI re-runs gitleaks with the base branch's config
-on every PR, so an allowlist change can never mask its own diff. When
+write-blocking hook, and a seven-check mechanical floor
+(`scripts/secrets_audit.sh`: env files, data, terraform state, the
+example file's content, no gitleaks ignore-files, secret shapes,
+pinned-version gitleaks over full history with inline-allow comments
+disabled) run before any judgment review — and CI re-runs both gitleaks
+and the floor script from the base branch's copies on every PR, so a
+config or script change can never mask its own diff. When
 four rounds of pre-push audit converged, the owner closed it as a risk
 decision and parked the residuals as a pre-public checklist — every
 item of which was cleared or explicitly re-accepted before this repo

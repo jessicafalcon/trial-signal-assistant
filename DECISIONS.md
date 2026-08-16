@@ -774,3 +774,52 @@ layers. What this does NOT cover, on purpose stated: running pytest on
 an inbound branch still executes that branch's conftest.py — no
 configuration closes that; the review-before-pytest rule in CLAUDE.md
 is the only mitigation and it is a human one.
+
+## 2026-08-15 — One sanctioned gitleaks exception channel
+
+gitleaks accepts exceptions from three places: the config's
+[[allowlists]], inline `# gitleaks:allow` comments, and a
+.gitleaksignore file. Only the first is guarded (CI reruns the scan
+with the BASE branch's .gitleaks.toml on every PR), so the other two
+were a bypass a PR could ship alongside the secret they mask —
+defeating all three scan invocations at once (phase-7 scoped review,
+should-fix 1; full defeat probe-proven in a throwaway repo). Closed
+mechanically, each by the mechanism that actually works: inline
+allows by --ignore-gitleaks-allow on every gitleaks invocation
+(probe-proven — the planted allow-comment finding resurfaces);
+the ignore-file by floor check (g) at the index and the working tree
+(--gitleaks-ignore-path was probed INERT against a repo-root
+.gitleaksignore on the pinned 8.30.1 and dropped as a false control).
+Principle recorded: an exception channel is only acceptable if a
+guard the PR cannot touch reviews it — .gitleaks.toml is that
+channel; everything else is closed.
+
+## 2026-08-15 — Check (g) scope: index + working tree, not history
+
+The first cut of check (g) scanned index + full history like its
+sibling (e) — and immediately fired on genuine history: b42d75f
+(2026-08-14) added a .gitleaksignore, 561c593 removed it one commit
+later when its entries migrated to the value-scoped .gitleaks.toml;
+the content was inspected 2026-08-15 and held only the two benign
+ClinicalTrials.gov pagination-cursor fingerprints. History rewrites
+are out of scope, and on inspection history coverage guarded a
+non-mechanism anyway: gitleaks reads .gitleaksignore from the
+CHECKOUT at scan time, so a deleted historical copy cannot mute any
+scan — unlike a historical .env or tfstate blob, which stays
+readable forever and is why (a)/(e) do scan history. Ruled scope:
+the index (a PR can only ship tracked files) plus the working tree
+even untracked (a local copy still mutes a local pre-push run) —
+the two boundaries where the file can act.
+
+## 2026-08-15 — Floor check (f) accepted residuals
+
+Check (f) is index-only and shape-based, on purpose: it asserts the
+CURRENT .env.example ships bare keys (non-comment lines are exactly
+KEY=; comment lines must not contain a KEY=<nonempty> shape). Two gaps
+are accepted and assigned to other layers rather than widened here:
+a value present only in HISTORICAL .env.example blobs, and prose
+secrets in comments that carry no "=" shape — both are what checks
+(c) (secret shapes over all history) and (d) (gitleaks over all
+history, exception channels closed) exist for. Widening (f) into a
+general content scanner would duplicate (c)/(d) with a weaker,
+hand-rolled pattern set.
