@@ -841,3 +841,17 @@ gating, no pin-empty step. Same shape as dropping
 --gitleaks-ignore-path: when a control is fail-open by construction,
 remove the construction. The flag's sole legitimate caller is ci.yml's
 base-script guard.
+
+## 2026-08-16 — Phase-7 review loop terminated by owner ruling
+
+Each scoped security pass had begun reviewing the previous pass's
+fixes with falling severity, so the owner ended the regress: one final
+scoped pass over the entire unpushed delta ran 2026-08-16 and found
+0 secret / 0 critical (floor 7/7 verbatim-green, every high-entropy
+string in the delta a lock hash / action SHA / release checksum, all
+security-relevant changes hardening-direction and documented). Per
+the same ruling, its remaining should-fix and notes are recorded in
+docs/BACKLOG.md instead of blocking — see B1–B4 there — and the
+branch is push-ready. Same principle as the 2026-08-14 pre-push
+audit closure: deterministic checks green, judgment review ended by
+explicit human risk decision, residual depth parked in a named place.
