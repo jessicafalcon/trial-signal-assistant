@@ -5,6 +5,16 @@
 set -u
 cd "$(git rev-parse --show-toplevel)"
 
+# --skip-gitleaks skips ONLY check (d). Argv on purpose, not an env var
+# (2026-08-16 ruling): ambient environment cannot inject arguments, so
+# the fail-open class — any shell or workflow scope exporting a flag —
+# is removed rather than narrowed. Sole legitimate caller: ci.yml's
+# base-script guard (pin-bump deadlock; see the GITLEAKS_PIN comment).
+skip_gitleaks=0
+if [ "${1:-}" = "--skip-gitleaks" ]; then
+  skip_gitleaks=1
+fi
+
 fail=0
 
 check_empty() { # $1 label, $2 offending output (empty = pass)
@@ -64,7 +74,10 @@ fi
 
 # (g) no .gitleaksignore at either boundary where it can act: the git
 # index (a PR can only ship tracked files) or the working tree, even
-# untracked (a local copy still mutes a local scan). History is NOT
+# untracked (a local copy still mutes a local scan). Asymmetry is
+# deliberate: the worktree half is root-only/case-exact because that
+# is the only name and location gitleaks itself reads; the index half
+# stays any-depth/-i as cheap hygiene. History is NOT
 # scanned — deliberately: gitleaks reads the file from the checkout at
 # scan time, so a deleted historical copy cannot mute any scan and
 # history coverage would guard a non-mechanism (2026-08-15 ruling;
@@ -89,12 +102,12 @@ check_empty "(c) git grep over rev-list --all (sk-ant- / AKIA / private keys)" "
 # Bump procedure: GITLEAKS_PIN here, the download URL, and the sha256 in
 # ci.yml's secrets job move together in ONE PR — the pin-pair test
 # (tests/test_secrets_floor.py) enforces the first two mechanically.
-# AUDIT_SKIP_GITLEAKS=1 skips ONLY this check (CI's base-script guard sets
-# it: the base script's old pin would otherwise deadlock any version bump);
-# every other check still gates the exit code.
+# The --skip-gitleaks argv flag skips ONLY this check (CI's base-script
+# guard passes it: the base script's old pin would otherwise deadlock any
+# version bump); every other check still gates the exit code.
 GITLEAKS_PIN="8.30.1"
-if [ "${AUDIT_SKIP_GITLEAKS:-}" = "1" ]; then
-  echo "SKIP  (d) gitleaks (AUDIT_SKIP_GITLEAKS=1 — base-script guard)"
+if [ "$skip_gitleaks" = "1" ]; then
+  echo "SKIP  (d) gitleaks (--skip-gitleaks — base-script guard)"
 elif command -v gitleaks >/dev/null 2>&1; then
   gitleaks_ver=$(gitleaks version 2>/dev/null || true)
   gitleaks_ver=${gitleaks_ver#v}

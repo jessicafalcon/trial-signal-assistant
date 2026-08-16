@@ -132,7 +132,8 @@ jobs:
       # pass its own diff. Run the BASE branch's copy of the script too
       # — same pattern as the config guard above. The doubled
       # full-history scan cost is accepted (phase-7 ruling 4).
-      # AUDIT_SKIP_GITLEAKS=1 skips only the base script's check (d):
+      # --skip-gitleaks (argv, not env — ambient environment cannot
+      # inject arguments) skips only the base script's check (d):
       # without it a legitimate gitleaks version bump could never merge
       # — CI installs the NEW binary while the BASE script still pins
       # the OLD version, so its (d) would FAIL with no in-PR fix (bump
@@ -141,4 +142,4 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           git show "origin/${GITHUB_BASE_REF}:scripts/secrets_audit.sh" > "${RUNNER_TEMP}/base-secrets-audit.sh"
-          AUDIT_SKIP_GITLEAKS=1 bash "${RUNNER_TEMP}/base-secrets-audit.sh"
+          bash "${RUNNER_TEMP}/base-secrets-audit.sh" --skip-gitleaks
