@@ -822,4 +822,22 @@ secrets in comments that carry no "=" shape — both are what checks
 (c) (secret shapes over all history) and (d) (gitleaks over all
 history, exception channels closed) exist for. Widening (f) into a
 general content scanner would duplicate (c)/(d) with a weaker,
-hand-rolled pattern set.
+hand-rolled pattern set. A CRLF-committed .env.example fails closed
+(every line flags, numbers only); no CR normalization on purpose —
+stripping CRs would loosen the pattern (2026-08-16 note iii).
+
+## 2026-08-16 — Floor skip flag is argv, not environment
+
+The pin-bump skip for check (d) first shipped as an env var
+(AUDIT_SKIP_GITLEAKS=1) and was replaced by a --skip-gitleaks argument
+in the same unpushed branch (no compatibility shim — the env variant
+never reached main). Why: an env var is ambient by nature, so anything
+honoring it is fail-open to every shell and workflow scope that can
+export it — a developer's exported var silently downgraded every local
+pre-push, and a workflow-level env: block could reach the HEAD floor
+run on push-to-main. Ambient environment cannot inject argv, so both
+vectors cease to exist rather than being narrowed — no CI-marker
+gating, no pin-empty step. Same shape as dropping
+--gitleaks-ignore-path: when a control is fail-open by construction,
+remove the construction. The flag's sole legitimate caller is ci.yml's
+base-script guard.

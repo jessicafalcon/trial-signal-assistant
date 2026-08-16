@@ -150,6 +150,14 @@ warns when any of the three is missing.
     make setup   # venv, dependencies, pre-commit hooks
     make test    # parser + guard suite (no network)
 
+Troubleshooting `make dag-verify`: if pip fails during the
+constraints install with "Cannot uninstall … no RECORD file" and
+`site-packages` holds two dist-info directories for one package,
+delete that package's remnants from
+`.venv/lib/python3.11/site-packages/` and reinstall the pinned
+version. Do not use `pip install --ignore-installed` — it worsens the
+state (observed 2026-08-15 with `more_itertools`).
+
 ## Run it
 
 Local, from a clean state — this order matters (any other order can
