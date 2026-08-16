@@ -235,6 +235,10 @@ def test_cloud_creds_gate_callable(dag, monkeypatch, capsys) -> None:
     assert "SNOWFLAKE_PASSWORD" in out
     assert sentinel not in out  # names only, never values
 
+    monkeypatch.setenv("SNOWFLAKE_PASSWORD", "   ")
+    assert gate() is False  # whitespace-only counts as missing (phase 7)
+    assert "SNOWFLAKE_PASSWORD" in capsys.readouterr().out
+
     monkeypatch.setenv("SNOWFLAKE_PASSWORD", sentinel)
     assert gate() is True
     assert sentinel not in capsys.readouterr().out

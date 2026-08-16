@@ -41,6 +41,33 @@ resource "aws_s3_bucket_versioning" "raw_landing" {
   }
 }
 
+# Versioning with no expiry retained every rewrite forever, and the
+# daily DAG rewrites the same-day key on every same-day re-run
+# (re-fetches are not byte-identical), so noncurrent versions accrued
+# per run (phase-7 checklist, F14 residual). 30 days: long enough to
+# recover a bad overwrite, short enough to cap storage cost. Current
+# versions never expire — the landed data is the product.
+resource "aws_s3_bucket_lifecycle_configuration" "raw_landing" {
+  bucket = aws_s3_bucket.raw_landing.id
+
+  rule {
+    id     = "expire-noncurrent-versions"
+    status = "Enabled"
+
+    filter {} # whole bucket
+
+    noncurrent_version_expiration {
+      noncurrent_days = 30
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+
+  depends_on = [aws_s3_bucket_versioning.raw_landing]
+}
+
 # Trust policy: only Snowflake's IAM user, and only with the external ID
 # minted for this integration, may assume the role. Both values are
 # computed attributes of the storage integration, so Terraform creates

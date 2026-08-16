@@ -71,7 +71,10 @@ def _cloud_creds_present() -> bool:
         "SNOWFLAKE_PASSWORD",
         "AWS_PROFILE",
     ]
-    missing = [key for key in required if not os.environ.get(key)]
+    # .strip(): a whitespace-only value is "missing" — without it the
+    # gate passed and the run failed later at Snowflake auth, after
+    # retries (phase-6 documented residual, fixed on phase-7 ruling)
+    missing = [key for key in required if not os.environ.get(key, "").strip()]
     if missing:
         # lands in the task log as the skip reason; values never logged
         print(f"cloud tasks skipped: missing env {', '.join(missing)}")
