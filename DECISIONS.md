@@ -2,6 +2,34 @@
 
 Why-not-X log. One entry per non-obvious choice.
 
+## Index by phase
+
+- **0 Foundation / tooling**: Neutral repo name · Claude Code tooling
+  ported · Hook revs SHA-pinned; CI token read-only · Gitleaks
+  allowlist OR-default near-miss · Pre-push audit closed by human risk
+  decision
+- **1 Ingestion**: Phase list joined to a single string · Interventions
+  parsed as name strings only · Date formats corrected from corpus
+  scan · Fixture data minimization
+- **2 Local warehouse**: Dual dbt targets · Fixture parquet mode ·
+  Bridge stores dates as strings · Staging grain ruled
+- **3 Change detection**: Synthetic day-0 seed · Fixture-mode day-0 ·
+  make snapshot pre-builds staging · Snapshot hard-delete policy
+  deferred (→ superseded by R1)
+- **4 Cloud**: Snapshot machinery duckdb-only · Snowflake load via dbt
+  run-operation (→ superseded by R2) · Cross-target SQL portable
+  first · Terraform one converging apply · Phase 4 review round
+  (F1–F16)
+- **5 RAG**: RAG input surface / change key / flattening (F8) ·
+  Dependencies duckdb and pyyaml pinned · mart_trial_documents
+  duckdb-only · Claude model pinned · Sponsor names filterable, not
+  searchable · Phase 5 review round
+- **6 Orchestration**: R1 snapshot hard deletes · R2 delete-by-
+  partition + COPY FORCE · Airflow Astro layout · Phase 6 review
+  round · Local venv aligned to 3.11 · DAG runs local-first · Host and
+  container dbt artifacts split
+- **7 Packaging**: Pre-public checklist choices (below)
+
 ## 2026-08-14 — Phase list joined to a single string
 
 The API sends `phases` as a list (usually one entry, sometimes
@@ -19,6 +47,9 @@ Names are all the staging models and status-change marts need, and a flat
 `list[str]` keeps the record simple. Revisit in Phase 5: the RAG layer
 may want type and description for richer per-field embedding docs — at
 that point extend the record rather than re-parse ad hoc.
+(Revisited 2026-08-15: the F8 ruling kept embedded documents to verbatim
+registry free-text — brief_summary / detailed_description / why_stopped —
+so interventions stay name-only. Parked, not forgotten.)
 
 ## 2026-08-14 — Date formats corrected from corpus scan
 
@@ -42,6 +73,8 @@ independent build. The pattern it mirrors is described in the README and
 CLAUDE.md instead, where context can be given properly. 2026-08-14: CLAUDE.md
 now describes the pattern generically too — the named reference belongs only
 in the README case-study section (Phase 7), aligning with this decision.
+(2026-08-15 phase-7 curation ruling: the case study stays generic — no
+company is named anywhere in the repo.)
 
 ## 2026-08-14 — Dual dbt targets: DuckDB (local/CI) + Snowflake (demo)
 
@@ -72,6 +105,9 @@ adapted (see "Project tooling" in CLAUDE.md). Non-obvious choices:
   pytest and conftest.py) on .py edits, without a permission prompt. This is
   the standard Claude Code hook model; review branches that touch
   conftest.py or .claude/ before opening them.
+  (Superseded 2026-08-15: hook wiring moved to the gitignored
+  settings.local.json before the public flip — see the phase-7
+  run-tests-wiring entry.)
 - Accepted risk: on red, run-tests echoes the last 15 lines of pytest output
   into the transcript. Pytest defaults don't print environment values;
   revisit before Phase 4 introduces real Snowflake/AWS credentials. Tests
@@ -153,6 +189,9 @@ uniqueness test and the snapshot reading only the latest partition land
 in SPEC-03; the current bare-nct_id test stays valid exactly as long as
 one partition exists, and its first failure is the signal that SPEC-03's
 test swap is due.
+(Landed in phase 3: tests/assert_stg_clinical_trials_grain.sql asserts
+the composite grain; stg_trials_current carries bare-nct_id uniqueness
+at the latest-partition grain.)
 
 ## 2026-08-14 — Gitleaks allowlist: OR-default near-miss
 
@@ -661,3 +700,77 @@ the failing sequence with the fix: host dbt build, then in-container
 make dbt — 67/67 PASS with both artifact dirs coexisting. Residual,
 accepted: the duckdb FILE is still shared — host dbt must not run
 while a DAG run is active (compose comment).
+
+## 2026-08-15 — Phase 7 packaging: pre-public checklist choices
+
+Non-obvious outcomes of clearing PLAN.md's pre-public audit checklist
+(the mechanical dispositions live inline in that checklist):
+
+- Gitleaks self-governance: CI guard chosen over CODEOWNERS. A
+  sole-maintainer repo cannot require code-owner review without
+  blocking its own PRs (you cannot approve your own), so the secrets
+  job instead reruns the full-history gitleaks scan with the BASE
+  branch's .gitleaks.toml on every PR — an allowlist widening then
+  fails CI for exactly the diff it tried to mask, forcing human
+  review. .gitignore got no twin guard: floor checks (a)/(b)/(e) read
+  the git index and history directly and never consult .gitignore.
+- Bucket name/prefix: sync-enforced, not single-sourced. `terraform
+  output` cannot feed make s3-sync because the DAG container that runs
+  it has no terraform binary (and CI has no state); a pytest pins the
+  Makefile values equal to terraform's defaults instead, so drift is a
+  loud test failure rather than a silent mis-upload.
+- stg_trials_current excluded from the snowflake target
+  (stg_trials_current+ in make dbt-snowflake): its only consumers —
+  the snapshot and mart_trial_documents — are duckdb-only by earlier
+  rulings, so the view was dead weight there. Node-set diff verified
+  the exclusion drops exactly the view and its five tests; the
+  snowflake build is 12 nodes from here on (was 17).
+- S3 noncurrent-version expiry set to 30 days (plus 7-day abort of
+  incomplete multipart uploads): the daily DAG rewrites the same-day
+  key per re-run, so noncurrent versions accrue per run; 30 days keeps
+  a month of accidental-overwrite recovery while capping storage
+  growth. Current versions never expire — the landed data is the
+  product.
+- persist-credentials: false on EVERY checkout, not only the secrets
+  job the checklist named: no CI job pushes, so no job needs the token
+  on disk; the narrow reading would have left five jobs carrying it
+  for no reason.
+- Action SHA pins record the resolved tag in a trailing comment
+  (# v4.4.0 etc.); deliberate upgrades re-resolve via
+  `git ls-remote https://github.com/<owner>/<repo> refs/tags/<tag>`
+  and move pin + comment together.
+- Author-email posture: verified 2026-08-15 — every author and
+  committer email in the full history is a GitHub noreply address
+  (102609780+jessicafalcon@users.noreply.github.com, plus GitHub's own
+  noreply@github.com on web-UI merges). The public flip therefore
+  discloses no personal email; nothing to scrub, no history rewrite
+  ever needed for this.
+- LICENSE is MIT (the default for a portfolio artifact meant to be
+  read and reused); plain MIT with the GitHub handle as holder
+  (owner-confirmed at the phase-7 ruling round).
+- S3 lifecycle residuals, named and accepted (review note 6): (i) a
+  future delete marker — a manual `aws s3 rm`, or `--delete` ever added
+  to the sync — demotes the live object to noncurrent, and 30 days
+  later the expiry makes that loss permanent; accepted because data/
+  is re-derivable from the ClinicalTrials.gov API. (ii) Delete markers
+  themselves accumulate (expired_object_delete_marker unset); accepted
+  at this bucket's scale. The "current versions never expire" claim in
+  s3.tf holds only while no delete marker is written.
+
+## 2026-08-15 — run-tests hook wiring moved local-only (inbound-PR surface)
+
+The phase-0 accepted risk — committed .claude/settings.json auto-runs
+run-tests.py (hence pytest, hence conftest.py) on .py edits for anyone
+opening the repo in Claude Code — was re-reviewed before the public
+flip and re-ruled: on a public repo, checking out an inbound PR branch
+and opening it in Claude Code would auto-execute attacker-controlled
+code with no prompt. The wiring (the hooks block) moved to the
+gitignored .claude/settings.local.json; the hook script stays
+committed and documented, with the exact re-enable block in CLAUDE.md.
+Chosen over the alternative posture (keep it committed plus a written
+"review inbound branches first" rule) because a deterministic control
+beats vigilance — the same principle as the rest of the security
+layers. What this does NOT cover, on purpose stated: running pytest on
+an inbound branch still executes that branch's conftest.py — no
+configuration closes that; the review-before-pytest rule in CLAUDE.md
+is the only mitigation and it is a human one.
