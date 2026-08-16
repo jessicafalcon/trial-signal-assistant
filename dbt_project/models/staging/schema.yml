@@ -1,5 +1,8 @@
 version: 2
 
+# Shared column descriptions live in _docs.md as doc blocks — referenced
+# here via {{ doc('...') }} so the two models' copies cannot drift.
+
 models:
   - name: stg_clinical_trials
     description: >
@@ -19,12 +22,10 @@ models:
           - not_null
       - name: brief_title
         data_type: varchar
-        description: Short public title of the study.
+        description: "{{ doc('trial_brief_title') }}"
       - name: overall_status
         data_type: varchar
-        description: >
-          Recruitment/lifecycle status as reported by the API. Values
-          enumerated from the 2026-08-14 corpus (1,738 AD studies).
+        description: "{{ doc('trial_overall_status') }}"
         data_tests:
           - not_null
           - accepted_values:
@@ -32,36 +33,25 @@ models:
                 values: "{{ var('trial_status_enum') }}"
       - name: phase
         data_type: varchar
-        description: >
-          Trial phase(s) joined with "/" (e.g. PHASE1/PHASE2); "NA" means
-          not applicable; null when absent.
+        description: "{{ doc('trial_phase') }}"
       - name: sponsor_name
         data_type: varchar
-        description: Lead sponsor name.
+        description: "{{ doc('trial_sponsor_name') }}"
       - name: conditions
         data_type: varchar[]
-        description: >
-          List of condition strings; empty list when absent. data_type
-          is duckdb's; on the snowflake target this column is ARRAY
-          (COPY from parquet) — the one deliberate type divergence.
+        description: "{{ doc('trial_conditions') }}"
       - name: interventions
         data_type: varchar[]
-        description: >
-          List of intervention names; empty list when absent. data_type
-          is duckdb's; ARRAY on the snowflake target (see conditions).
+        description: "{{ doc('trial_interventions') }}"
       - name: start_date_raw
         data_type: varchar
-        description: Start date exactly as the API sent it; null if absent.
+        description: "{{ doc('trial_start_date_raw') }}"
       - name: start_date
         data_type: date
-        description: >
-          Normalized start date (month precision resolves to first of
-          month); null when absent or unparseable.
+        description: "{{ doc('trial_start_date') }}"
       - name: date_precision
         data_type: varchar
-        description: >
-          Precision of start_date_raw — "day" or "month"; null when the
-          date is absent or in an unrecognized format.
+        description: "{{ doc('trial_date_precision') }}"
         data_tests:
           - accepted_values:
               arguments:
@@ -72,22 +62,16 @@ models:
                 where: "date_precision is not null"
       - name: why_stopped
         data_type: varchar
-        description: >
-          Free-text stop reason; present only on some withdrawn/terminated
-          trials.
+        description: "{{ doc('trial_why_stopped') }}"
       - name: brief_summary
         data_type: varchar
-        description: >
-          descriptionModule.briefSummary — short free-text study summary;
-          null when the module or field is absent.
+        description: "{{ doc('trial_brief_summary') }}"
       - name: detailed_description
         data_type: varchar
-        description: >
-          descriptionModule.detailedDescription — longer free-text
-          description; absent on many studies, null then.
+        description: "{{ doc('trial_detailed_description') }}"
       - name: has_results
         data_type: boolean
-        description: Whether the registry has posted results.
+        description: "{{ doc('trial_has_results') }}"
         data_tests:
           - not_null
       - name: ingest_date
@@ -113,47 +97,43 @@ models:
           - not_null
       - name: brief_title
         data_type: varchar
-        description: Short public title of the study.
+        description: "{{ doc('trial_brief_title') }}"
       - name: overall_status
         data_type: varchar
-        description: Recruitment/lifecycle status as reported by the API.
+        description: "{{ doc('trial_overall_status') }}"
       - name: phase
         data_type: varchar
-        description: Trial phase(s) joined with "/"; "NA" not applicable.
+        description: "{{ doc('trial_phase') }}"
       - name: sponsor_name
         data_type: varchar
-        description: Lead sponsor name.
+        description: "{{ doc('trial_sponsor_name') }}"
       - name: conditions
         data_type: varchar[]
-        description: >
-          List of condition strings; empty list when absent. duckdb
-          type; ARRAY on the snowflake target.
+        description: "{{ doc('trial_conditions') }}"
       - name: interventions
         data_type: varchar[]
-        description: >
-          List of intervention names; empty list when absent. duckdb
-          type; ARRAY on the snowflake target.
+        description: "{{ doc('trial_interventions') }}"
       - name: start_date_raw
         data_type: varchar
-        description: Start date exactly as the API sent it; null if absent.
+        description: "{{ doc('trial_start_date_raw') }}"
       - name: start_date
         data_type: date
-        description: Normalized start date; null when absent/unparseable.
+        description: "{{ doc('trial_start_date') }}"
       - name: date_precision
         data_type: varchar
-        description: '"day" or "month"; null when absent or unrecognized.'
+        description: "{{ doc('trial_date_precision') }}"
       - name: why_stopped
         data_type: varchar
-        description: Free-text stop reason; only some stopped trials.
+        description: "{{ doc('trial_why_stopped') }}"
       - name: brief_summary
         data_type: varchar
-        description: Short free-text study summary; null when absent.
+        description: "{{ doc('trial_brief_summary') }}"
       - name: detailed_description
         data_type: varchar
-        description: Longer free-text description; null when absent.
+        description: "{{ doc('trial_detailed_description') }}"
       - name: has_results
         data_type: boolean
-        description: Whether the registry has posted results.
+        description: "{{ doc('trial_has_results') }}"
       - name: ingest_date
         data_type: date
         description: The latest partition date (single value here).

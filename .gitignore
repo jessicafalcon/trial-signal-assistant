@@ -1,6 +1,8 @@
 .env
 .env.*
-!.env.example
+# root file only (was any-depth): the one sanctioned exception, and the
+# floor's check (f) asserts it holds bare keys with no values
+!/.env.example
 .envrc*
 *.env
 .venv/

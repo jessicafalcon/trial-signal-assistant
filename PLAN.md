@@ -62,50 +62,116 @@ Phase / goal / exit criterion. Details and rationale live in DECISIONS.md.
 Audit notes accepted-and-deferred during the 2026-08-14 pre-push review
 rounds; clear or consciously re-accept each before the repo goes public:
 
-- [ ] .env.example exception is filename-only at any depth with no content
+- [x] .env.example exception is filename-only at any depth with no content
       assertion — add a mechanical bare-keys check (every non-comment,
       non-blank line ends in "="); consider narrowing the gitignore
       negation to the root file.
-- [ ] Floor asserts no minimum gitleaks version — have the script compare
+      Done 2026-08-15 (phase 7): floor check (f) — offenders reported by
+      line number only; negation narrowed to !/.env.example. Probe:
+      planted value caught, restored file clean.
+- [x] Floor asserts no minimum gitleaks version — have the script compare
       `gitleaks version` against CI's pin (8.30.1) and FAIL on mismatch
       (determinism: old binaries parse [[allowlists]]/condition
       differently).
-- [ ] .gitleaks.toml is self-governing — a PR widening the allowlist
+      Done 2026-08-15 (phase 7): check (d) fails on any version != the
+      GITLEAKS_PIN literal. Probe: fake 8.18.0 binary caught.
+- [x] .gitleaks.toml is self-governing — a PR widening the allowlist
       disables the check for its own diff; consider CODEOWNERS or a CI
       guard on .gitleaks.toml/.gitignore changes.
-- [ ] CI: SHA-pin ALL mutable action tags at flip time (currently 8
+      Done 2026-08-15 (phase 7): CI guard chosen over CODEOWNERS (a
+      sole-maintainer repo can't require code-owner review of its own
+      PRs) — on PRs the secrets job reruns gitleaks with the BASE
+      branch's config, so an allowlist widening can't mask its own
+      diff. .gitignore needs no twin: floor (a)/(b)/(e) don't consult
+      it. Probe: config-override behavior verified (4 findings without
+      the allowlist, 0 with).
+- [x] CI: SHA-pin ALL mutable action tags at flip time (currently 8
       checkout/setup-python instances plus hashicorp/setup-terraform@v3)
       and set persist-credentials: false on the secrets job.
-- [ ] Doc-blocks refactor (accepted residual from the phase 3 review,
+      Done 2026-08-15 (phase 7): 11 instances pinned (6 checkout →
+      v4.4.0 SHA, 4 setup-python → v5.6.0 SHA, setup-terraform →
+      v3.1.2 SHA), persist-credentials: false on every checkout (not
+      just the secrets job — no job pushes).
+- [x] Doc-blocks refactor (accepted residual from the phase 3 review,
       ruling 2026-08-14): stg_trials_current's schema.yml repeats 13
       column descriptions verbatim from stg_clinical_trials — move shared
       descriptions to dbt doc blocks; also the Makefile hardcodes the
       DuckDB path that profiles.yml declares.
-- [ ] Single-source the bucket name/prefix: Makefile S3_BUCKET/S3_PREFIX
+      Done 2026-08-15 (phase 7): 13 shared columns in staging/_docs.md,
+      referenced from both models; make reset reads the duckdb path
+      from profiles.yml (pyyaml, already pinned).
+- [x] Single-source the bucket name/prefix: Makefile S3_BUCKET/S3_PREFIX
       duplicate terraform's defaults and nothing consumes terraform
       output (2026-08-15 ruling F10).
+      Resolved 2026-08-15 (phase 7) as sync-enforcement, not
+      single-sourcing: the DAG container running make s3-sync has no
+      terraform binary, so `terraform output` can't feed it; a pytest
+      pins Makefile values == terraform defaults instead (DECISIONS.md
+      phase-7 entry).
 - [ ] S3: add a noncurrent-version expiration lifecycle rule —
       versioning is on with no expiry, so rewritten partitions retain
       old versions forever. URGENCY UP since phase 6: the daily DAG
       rewrites the same-day key on every same-day re-run (re-fetches
       are not byte-identical), so noncurrent versions now accrue per
       run, not per re-parse (cost; 2026-08-15 ruling F14 residual).
-- [ ] Phase-6 demo capture is an open IOU: docs/demo_checklist.md must
+      Code landed 2026-08-15 (phase 7): 30-day noncurrent expiry +
+      7-day multipart abort, terraform validate green. OPEN: the apply
+      is a human gate (SPEC-07).
+- [x] Phase-6 demo capture is an open IOU: docs/demo_checklist.md must
       be executed (screenshots + credit-burn number) before the
       phase-7 README case-study section can be written.
-- [ ] .terraform.lock.hcl carries darwin-only h1 hashes; record
+      Done 2026-08-15 pre-phase-7: 11 assets + INVENTORY.md in
+      docs/assets/ (leak-inspected, exif-stripped); credit figure $2.25.
+- [x] .terraform.lock.hcl carries darwin-only h1 hashes; record
       multi-platform hashes (terraform providers lock -platform=...)
       before the flip (2026-08-15 review note).
-- [ ] stg_trials_current builds on the snowflake target though its only
+      Done 2026-08-15 (phase 7): h1 recorded for darwin_arm64/amd64 +
+      linux_amd64/arm64.
+- [x] stg_trials_current builds on the snowflake target though its only
       consumer (the snapshot) is duckdb-only — scope the exclusion or
       accept (2026-08-15 review note).
-- [ ] Deferred tests from the phase-4 round (ruling F16): completeness
+      Done 2026-08-15 (phase 7): scoped — dbt-snowflake now excludes
+      stg_trials_current+ (covers the snapshot and doc-mart subtrees it
+      carried); node diff verified to drop exactly the view + its 5
+      tests. Snowflake build is 12 nodes from here on (17 before).
+- [x] Deferred tests from the phase-4 round (ruling F16): completeness
       mart bounds singular test; dual-target source-resolution parse
       test.
-- [ ] Phase matching in the RAG CLI is exact-string only (PHASE2 does
+      Done 2026-08-15 (phase 7): assert_mart_field_completeness_bounds
+      (both targets) + test_source_resolves_per_target (dbt parse per
+      target, manifest-asserted; credential-free). Suite 98 → 101.
+- [x] Phase matching in the RAG CLI is exact-string only (PHASE2 does
       not match PHASE1/PHASE2) — consider Chroma $in / substring
       matching over decomposed phase values (phase-5 ruling C4:
       documented in --help now, richer matching deferred here).
+      Re-accepted 2026-08-15 (phase 7): stays exact-string — documented
+      in --help and the README production-notes section; richer
+      matching goes to the post-public backlog, not this repo's demo
+      scope.
+Items SPEC-07 lists that this checklist lacked (added 2026-08-15 per the
+spec's "report and do it" rule):
+
+- [x] Whitespace-only cloud creds treated as present (phase-6 documented
+      residual). Done 2026-08-15 (phase 7): the DAG gate strips before
+      testing; whitespace-only now skips cleanly (test added).
+- [x] MIT LICENSE file. Done 2026-08-15 (phase 7) — copyright holder is
+      the GitHub handle; swap in a legal name at curation if preferred.
+- [x] S3 versioning cost note — landed in the README cost-posture
+      paragraph (30-day noncurrent expiry, why versions accrue per run).
+- [x] CI-skip wording — tightened in the README rewrite: the test job
+      runs the suite without airflow (DAG tests skip there); the
+      dag-verify job installs airflow under its constraints and runs
+      them; no cloud or API is ever touched in CI.
+- [x] Committed-hook inbound-PR surface review — ruled 2026-08-15
+      (option b): hook wiring moved to gitignored settings.local.json,
+      script stays committed, re-enable block + conftest.py caveat in
+      CLAUDE.md; DECISIONS.md entry.
+- [x] Author-email posture line — history verified 2026-08-15: author
+      and committer emails are exclusively the GitHub noreply address
+      (102609780+jessicafalcon@users.noreply.github.com) and
+      noreply@github.com; posture line recorded in the DECISIONS.md
+      phase-7 entry.
+
 - [x] .env.example lacks SNOWFLAKE_SCHEMA, which profiles.yml reads
       (defaults to 'public'); add it when Snowflake activates in phase 4,
       plus a make dbt-snowflake preflight failing fast on empty

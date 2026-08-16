@@ -8,9 +8,12 @@ DBT_FLAGS := --project-dir dbt_project --profiles-dir dbt_project --target duckd
 DBT_SNOWFLAKE_FLAGS := --project-dir dbt_project --profiles-dir dbt_project --target snowflake
 
 # cloud target (phase 4). Bucket/prefix duplicate terraform's
-# variables.tf s3_bucket_name default and s3.tf parsed_prefix local —
-# keep the three in sync; override here if the terraform vars were
-# overridden (single-sourcing via terraform output: phase 7 checklist).
+# variables.tf s3_bucket_name default and s3.tf parsed_prefix local;
+# tests/test_cloud_guards.py asserts the pairs stay equal (loud drift
+# instead of runtime coupling — the DAG container that runs s3-sync
+# has no terraform binary, so `terraform output` can't be the source
+# there; DECISIONS.md phase-7 entry). Override here only if the
+# terraform vars were overridden at apply time.
 S3_BUCKET ?= trial-signal-raw-landing
 S3_PREFIX ?= parsed
 # Non-secret connection facts pinned to the terraform-created objects,
@@ -123,9 +126,13 @@ verify-day0-count:
 	if [ "$$n" != "4" ]; then echo "FAIL: expected exactly 4 day-0 transitions, got $$n"; exit 1; fi
 
 # clean state: the DONE sequence for SPEC-03 starts from `make reset`
-# (delete the local DuckDB file; dbt recreates it).
+# (delete the local DuckDB file; dbt recreates it). The path is read
+# from profiles.yml — the single place it is declared (phase-7
+# checklist: the Makefile used to duplicate the literal).
+DUCKDB_PATH = $(shell $(PY) -c "import yaml; print(yaml.safe_load(open('dbt_project/profiles.yml'))['trial_signal']['outputs']['duckdb']['path'])")
 reset:
-	rm -f dbt_project/trial_signal.duckdb
+	@test -n "$(DUCKDB_PATH)" || { echo "ERROR: could not read the duckdb path from dbt_project/profiles.yml"; exit 1; }
+	rm -f "$(DUCKDB_PATH)"
 
 # push parsed parquet partitions to the S3 landing bucket. sync is
 # content-aware: a byte-identical partition transfers 0 files on
@@ -152,16 +159,18 @@ s3-sync:
 load-snowflake:
 	DBT='$(DBT)' DATE='$(DATE)' ALL='$(ALL)' scripts/load_snowflake.sh
 
-# same dbt project on the snowflake target. Snapshot machinery and the
-# RAG documents mart are duckdb-only this phase (DECISIONS.md): exclude
-# the snapshot and its descendants, the day-0 seeds, and the doc mart
-# (+ its tests, which are its descendants). The circuit breaker is
+# same dbt project on the snowflake target. Change detection and the
+# RAG documents mart are duckdb-only this phase (DECISIONS.md):
+# stg_trials_current+ excludes that whole subtree — the view itself
+# (whose only consumers are the snapshot and doc mart; phase-7
+# checklist ruling), the snapshot and its descendants, and the doc
+# mart + its tests — plus the day-0 seeds. The circuit breaker is
 # excluded too: it guards the duckdb-only snapshot, and on snowflake a
 # thin partition usually means "not loaded yet" (R2 loads latest by
 # default), not "ingest collapsed" — it would alarm on the wrong cause.
 dbt-snowflake:
 	$(snowflake_preflight)
-	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude snap_trial_status+ resource_type:seed mart_trial_documents+ assert_latest_partition_not_collapsed
+	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude stg_trials_current+ resource_type:seed assert_latest_partition_not_collapsed
 
 # cross-target parity: staging row count + completeness mart must be
 # value-identical on duckdb and snowflake; non-zero exit on mismatch.

@@ -12,8 +12,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
         with:
           python-version: "3.11"
       - run: pip install pre-commit==4.6.2
@@ -22,8 +24,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
         with:
           python-version: "3.11"
       # duckdb: the RAG unit tests execute the mart's flatten/md5 SQL
@@ -35,8 +39,10 @@ jobs:
   dbt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
         with:
           python-version: "3.11"
       - run: pip install dbt-core==1.12.2 dbt-duckdb==1.11.0 pyarrow==25.0.1 requests==2.34.2
@@ -63,8 +69,10 @@ jobs:
   dag-verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
         with:
           python-version: "3.11"
       - run: pip install pytest==9.1.1
@@ -74,8 +82,10 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd  # v3.1.2
         with:
           terraform_version: "1.15.8"
       - run: terraform -chdir=terraform fmt -check -recursive
@@ -88,13 +98,48 @@ jobs:
   secrets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
         with:
           fetch-depth: 0  # the floor scans full history
+          persist-credentials: false
       - name: install gitleaks (pinned, checksum-verified)
         run: |
           curl -sSfL -o gitleaks.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
           echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gitleaks.tgz" | sha256sum -c -
           tar -xzf gitleaks.tgz gitleaks
           sudo mv ./gitleaks /usr/local/bin/
-      - run: ./scripts/secrets_audit.sh  # all four floor checks, not just gitleaks
+      - run: ./scripts/secrets_audit.sh  # all floor checks, not just gitleaks
+      # .gitleaks.toml is otherwise self-governing: a PR widening the
+      # allowlist would disable the check for its own diff. On PRs, rerun
+      # the full-history scan with the BASE branch's config, so an
+      # allowlist change can never mask the token it was added alongside
+      # (it fails here and forces human review). .gitignore needs no
+      # twin guard: floor checks (a)/(b)/(e) scan the index and history
+      # directly and don't consult .gitignore at all.
+      # --ignore-gitleaks-allow closes the inline-comment exception
+      # channel a PR could ship alongside a secret (probe-proven). The
+      # .gitleaksignore channel is closed by floor check (g) instead —
+      # --gitleaks-ignore-path probed inert against a repo-root file on
+      # the pinned 8.30.1, so no flag carries that closure.
+      - name: gitleaks with base-branch config (self-governance guard)
+        if: github.event_name == 'pull_request'
+        run: |
+          git show "origin/${GITHUB_BASE_REF}:.gitleaks.toml" > "${RUNNER_TEMP}/base-gitleaks.toml"
+          gitleaks git . --redact --no-banner --config "${RUNNER_TEMP}/base-gitleaks.toml" \
+            --ignore-gitleaks-allow
+      # scripts/secrets_audit.sh is equally self-governing: a PR
+      # weakening its checks (path exclusions, patterns, the pin) would
+      # pass its own diff. Run the BASE branch's copy of the script too
+      # — same pattern as the config guard above. The doubled
+      # full-history scan cost is accepted (phase-7 ruling 4).
+      # --skip-gitleaks (argv, not env — ambient environment cannot
+      # inject arguments) skips only the base script's check (d):
+      # without it a legitimate gitleaks version bump could never merge
+      # — CI installs the NEW binary while the BASE script still pins
+      # the OLD version, so its (d) would FAIL with no in-PR fix (bump
+      # deadlock). The step above covers the gitleaks dimension.
+      - name: secrets floor with base-branch script (self-governance guard)
+        if: github.event_name == 'pull_request'
+        run: |
+          git show "origin/${GITHUB_BASE_REF}:scripts/secrets_audit.sh" > "${RUNNER_TEMP}/base-secrets-audit.sh"
+          bash "${RUNNER_TEMP}/base-secrets-audit.sh" --skip-gitleaks
