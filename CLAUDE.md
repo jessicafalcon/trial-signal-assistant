@@ -283,6 +283,17 @@ around.
 
 ## Current status
 
+- Phase 7 loop complete on branch phase-7-packaging (2026-08-16,
+  9 unpushed commits): pre-public checklist cleared or re-accepted
+  item-by-item (PLAN.md dispositions), secrets floor at 7 checks
+  (all probe-verified), CI self-governance guards landed, README
+  rewritten (case study generic by ruling), DECISIONS indexed +
+  complete, MIT LICENSE, hook wiring local-only. Final scoped
+  security pass over the whole delta: 0 secret / 0 critical;
+  residuals in docs/BACKLOG.md (loop-control ruling). Suite 104;
+  DONE green. Remaining are human gates only:
+  docs/public_flip_checklist.md (terraform lifecycle apply, merge,
+  flip, branch protection) and any final README curation edits.
 - Phase 6 complete locally (2026-08-15): the daily DAG
   trial_safety_pipeline (Astro Runtime 3.3-2, local Docker) runs
   ingest → parse → circuit breaker → local dbt (live snapshot +
