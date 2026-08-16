@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deterministic pre-push secrets floor. Six mechanical checks; PASS/FAIL per
+# Deterministic pre-push secrets floor. Seven mechanical checks; PASS/FAIL per
 # check, non-zero exit on any failure. The security-reviewer agent runs this
 # FIRST, then applies judgment on top — this script is the floor, not the audit.
 set -u
@@ -23,7 +23,7 @@ check_empty() { # $1 label, $2 offending output (empty = pass)
 # nested copy fails here): bare keys, no values — asserted by check (f).
 env_hits=$( { git ls-files; git log --all --pretty=format: --name-only --diff-filter=A; } \
   | grep -iE '(^|/)\.env(rc)?(\..+)?$|(^|/)[^/]+\.env$' \
-  | grep -ivE '^\.env\.example$' | sort -u || true)
+  | grep -vE '^\.env\.example$' | sort -u || true)
 check_empty "(a) env files (.env* / .envrc* / *.env) never tracked (index + full history)" "$env_hits"
 
 # (b) no data/ or *.duckdb tracked
@@ -45,15 +45,35 @@ check_empty "(e) no *.tfstate / *.tfvars / .terraform ever tracked (index + full
 # check could be bypassed silently. Offenders reported by line number
 # only, never content (a value here must never be echoed into logs).
 if envex_content=$(git show :.env.example 2>/dev/null); then
-  envex_hits=$(printf '%s\n' "$envex_content" \
-    | grep -nvE '^[[:space:]]*(#|$)' \
-    | grep -vE '^[0-9]+:[A-Za-z_][A-Za-z0-9_]*=$' \
-    | cut -d: -f1 | sed 's/^/.env.example line /' || true)
+  # two scans: non-comment lines must be bare KEY=; comment lines are
+  # exempt from that rule, so any KEY=<nonempty> shape INSIDE a comment
+  # fails too (a value must not hide behind a #). Shape-based on
+  # purpose — non-"=" prose in comments is (c)/(d)'s layer.
+  envex_hits=$( { printf '%s\n' "$envex_content" \
+      | grep -nvE '^[[:space:]]*(#|$)' \
+      | grep -vE '^[0-9]+:[A-Za-z_][A-Za-z0-9_]*=$'; \
+    printf '%s\n' "$envex_content" \
+      | grep -nE '^[[:space:]]*#' \
+      | grep -E '[A-Za-z_][A-Za-z0-9_]*=[^[:space:]]'; } \
+    | cut -d: -f1 | sort -nu | sed 's/^/.env.example line /' || true)
   check_empty "(f) .env.example (index) holds bare keys only (KEY=, no values)" "$envex_hits"
 else
   echo "FAIL  (f) .env.example absent from the git index — the sanctioned example file must exist at the repo root with bare keys only"
   fail=1
 fi
+
+# (g) no .gitleaksignore at either boundary where it can act: the git
+# index (a PR can only ship tracked files) or the working tree, even
+# untracked (a local copy still mutes a local scan). History is NOT
+# scanned — deliberately: gitleaks reads the file from the checkout at
+# scan time, so a deleted historical copy cannot mute any scan and
+# history coverage would guard a non-mechanism (2026-08-15 ruling;
+# forensic record of the one historical copy in DECISIONS.md).
+# .gitleaks.toml is the ONE sanctioned exception channel because it is
+# the only CI-guarded one.
+gli_hits=$( { git ls-files | grep -iE '(^|/)\.gitleaksignore$'; \
+  [ -e .gitleaksignore ] && echo ".gitleaksignore (working tree)"; } | sort -u || true)
+check_empty "(g) no .gitleaksignore in the index or working tree" "$gli_hits"
 
 # (c) known secret shapes across all history (-l: report commit:path, never the value)
 # own path excluded: the pattern literals below would otherwise self-match
@@ -66,14 +86,28 @@ check_empty "(c) git grep over rev-list --all (sk-ant- / AKIA / private keys)" "
 # value). Version pinned to CI's binary (ci.yml secrets job): older gitleaks
 # parses [[allowlists]]/condition differently, silently changing what a
 # green scan means — a mismatched binary FAILS instead of scanning.
+# Bump procedure: GITLEAKS_PIN here, the download URL, and the sha256 in
+# ci.yml's secrets job move together in ONE PR — the pin-pair test
+# (tests/test_secrets_floor.py) enforces the first two mechanically.
+# AUDIT_SKIP_GITLEAKS=1 skips ONLY this check (CI's base-script guard sets
+# it: the base script's old pin would otherwise deadlock any version bump);
+# every other check still gates the exit code.
 GITLEAKS_PIN="8.30.1"
-if command -v gitleaks >/dev/null 2>&1; then
+if [ "${AUDIT_SKIP_GITLEAKS:-}" = "1" ]; then
+  echo "SKIP  (d) gitleaks (AUDIT_SKIP_GITLEAKS=1 — base-script guard)"
+elif command -v gitleaks >/dev/null 2>&1; then
   gitleaks_ver=$(gitleaks version 2>/dev/null || true)
   gitleaks_ver=${gitleaks_ver#v}
+  # inline "gitleaks:allow" comments are ignored (probe-proven). The
+  # ignore-file channel is closed by check (g), not by flags:
+  # --gitleaks-ignore-path probed inert against a repo-root
+  # .gitleaksignore on the pinned 8.30.1 (2026-08-15).
+  # .gitleaks.toml stays the one sanctioned exception channel.
   if [ "$gitleaks_ver" != "$GITLEAKS_PIN" ]; then
     echo "FAIL  (d) gitleaks $gitleaks_ver != pinned $GITLEAKS_PIN (ci.yml pin) — align the binary or update both pins together"
     fail=1
-  elif gitleaks_out=$(gitleaks git . --redact --no-banner --verbose 2>&1); then
+  elif gitleaks_out=$(gitleaks git . --redact --no-banner --verbose \
+      --ignore-gitleaks-allow 2>&1); then
     echo "PASS  (d) gitleaks git ."
   else
     echo "FAIL  (d) gitleaks git ."

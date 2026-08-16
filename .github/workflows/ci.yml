@@ -116,18 +116,29 @@ jobs:
       # (it fails here and forces human review). .gitignore needs no
       # twin guard: floor checks (a)/(b)/(e) scan the index and history
       # directly and don't consult .gitignore at all.
+      # --ignore-gitleaks-allow closes the inline-comment exception
+      # channel a PR could ship alongside a secret (probe-proven). The
+      # .gitleaksignore channel is closed by floor check (g) instead —
+      # --gitleaks-ignore-path probed inert against a repo-root file on
+      # the pinned 8.30.1, so no flag carries that closure.
       - name: gitleaks with base-branch config (self-governance guard)
         if: github.event_name == 'pull_request'
         run: |
           git show "origin/${GITHUB_BASE_REF}:.gitleaks.toml" > "${RUNNER_TEMP}/base-gitleaks.toml"
-          gitleaks git . --redact --no-banner --config "${RUNNER_TEMP}/base-gitleaks.toml"
+          gitleaks git . --redact --no-banner --config "${RUNNER_TEMP}/base-gitleaks.toml" \
+            --ignore-gitleaks-allow
       # scripts/secrets_audit.sh is equally self-governing: a PR
       # weakening its checks (path exclusions, patterns, the pin) would
       # pass its own diff. Run the BASE branch's copy of the script too
       # — same pattern as the config guard above. The doubled
       # full-history scan cost is accepted (phase-7 ruling 4).
+      # AUDIT_SKIP_GITLEAKS=1 skips only the base script's check (d):
+      # without it a legitimate gitleaks version bump could never merge
+      # — CI installs the NEW binary while the BASE script still pins
+      # the OLD version, so its (d) would FAIL with no in-PR fix (bump
+      # deadlock). The step above covers the gitleaks dimension.
       - name: secrets floor with base-branch script (self-governance guard)
         if: github.event_name == 'pull_request'
         run: |
           git show "origin/${GITHUB_BASE_REF}:scripts/secrets_audit.sh" > "${RUNNER_TEMP}/base-secrets-audit.sh"
-          bash "${RUNNER_TEMP}/base-secrets-audit.sh"
+          AUDIT_SKIP_GITLEAKS=1 bash "${RUNNER_TEMP}/base-secrets-audit.sh"
