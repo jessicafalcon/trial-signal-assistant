@@ -641,3 +641,23 @@ SPEC-06 chain had no recorded rationale — it was narrative order; this
 entry is the rationale the original choice lacked. The phase-6
 verification runs on record executed the old order; the reorder
 postdates them.
+
+## 2026-08-16 — Host and container dbt artifacts split (cache poisoning fix)
+
+dbt's partial-parse cache (target/partial_parse.msgpack) stores
+absolute file paths, and host + container share the repo mount at
+different absolute paths — so whichever environment ran dbt last
+poisoned the cache for the other. Observed twice on 2026-08-15: an
+in-container seed load failed on /Users/... paths after a host-side
+make test (whose cloud-guard test invokes dbt). Fix: the DAG's make
+prefix sets DBT_TARGET_PATH/DBT_LOG_PATH to container-only dirs
+(dbt_project/{target,logs}_container/, gitignored), so the two
+environments never read each other's artifacts; the host keeps dbt's
+defaults untouched. Chosen over a dbt_project.yml target-path change
+(would move the host too and break sqlfluff's dbt templater
+expectations) and over "clear target/ before DAG runs" (a manual step
+that the overnight scheduled run can't perform). Proven by recreating
+the failing sequence with the fix: host dbt build, then in-container
+make dbt — 67/67 PASS with both artifact dirs coexisting. Residual,
+accepted: the duckdb FILE is still shared — host dbt must not run
+while a DAG run is active (compose comment).

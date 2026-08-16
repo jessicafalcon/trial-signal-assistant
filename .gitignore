@@ -8,6 +8,11 @@ data/
 *.duckdb
 dbt_project/target/
 dbt_project/logs/
+# container-side dbt artifacts (per-environment split — the DAG sets
+# DBT_TARGET_PATH/DBT_LOG_PATH so host and container never share the
+# path-bearing partial-parse cache)
+dbt_project/target_container/
+dbt_project/logs_container/
 dbt_project/dbt_packages/
 dbt_project/.user.yml
 __pycache__/
@@ -37,3 +42,7 @@ id_ecdsa
 .DS_Store
 .astro/
 .claude/settings.local.json
+
+# raw demo captures (unredacted screenshots/recordings) — assets are
+# curated into docs/assets/ after redaction; originals never committed
+demo/
