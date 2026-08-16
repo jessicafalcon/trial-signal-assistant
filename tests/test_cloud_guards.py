@@ -119,8 +119,9 @@ def test_load_fails_loudly_with_no_partitions(tmp_path: Path) -> None:
 # credential can reach the subprocess or its output (phase-7 review
 # ruling 5: "credential-free" is literal). The profile's env_var()
 # calls all carry defaults, so no SNOWFLAKE_* var is needed to parse.
-# DBT_TARGET_PATH points at tmp_path so the test neither reads nor
-# poisons the host's target/ partial-parse cache.
+# DBT_TARGET_PATH and DBT_LOG_PATH point at tmp_path so the test
+# neither reads nor poisons the host's target/ partial-parse cache and
+# writes no artifacts outside tmp_path at all.
 
 
 @pytest.mark.skipif(not DBT.exists(), reason="no venv dbt (CI test job has none)")
@@ -135,6 +136,7 @@ def test_source_resolves_per_target(
         "PATH": os.environ["PATH"],
         "HOME": os.environ["HOME"],
         "DBT_TARGET_PATH": str(tmp_path),
+        "DBT_LOG_PATH": str(tmp_path),
     }
     result = subprocess.run(
         [
