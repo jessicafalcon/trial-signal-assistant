@@ -34,9 +34,19 @@ from airflow.providers.standard.operators.python import ShortCircuitOperator
 from airflow.sdk import DAG, TaskGroup
 
 REPO = "/usr/local/airflow/repo"
+# dbt's target/ artifacts include the partial-parse cache, which stores
+# ABSOLUTE file paths. Host and container share the repo mount at
+# different absolute paths, so they must not share those dirs: a
+# host-side dbt run poisons the cache with /Users/... paths and the
+# next in-container seed load fails on them (observed 2026-08-15).
+# Container-scoped dirs, both gitignored.
+DBT_ENV = (
+    f"DBT_TARGET_PATH={REPO}/dbt_project/target_container "
+    f"DBT_LOG_PATH={REPO}/dbt_project/logs_container"
+)
 # the container has no repo venv: make's PY/DBT overrides point at the
 # runtime image's interpreters (same pinned versions via requirements)
-MAKE = f"cd {REPO} && make"
+MAKE = f"cd {REPO} && {DBT_ENV} make"
 OVERRIDES = "PY=python DBT=dbt"
 
 # network tasks get retries with exponential backoff and a longer
