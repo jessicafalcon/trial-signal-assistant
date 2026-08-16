@@ -1,0 +1,16 @@
+$ make eval
+.venv/bin/python -m rag.eval.run_eval 
+question                           retrieval  citation
+q01_tezepelumab_why_stopped        PASS       PASS
+q02_lack_of_efficacy_interim       PASS       PASS
+q03_slow_enrollment                PASS       PASS
+q04_safety_reasons                 PASS       PASS
+q05_crisaborole_business           PASS       PASS
+q06_barzolvolimab_lookup           PASS       PASS
+q07_lebrikizumab_lookup            PASS       PASS
+q08_phase2_futility_filtered       PASS       PASS
+q09_withdrawn_business_filtered    PASS       PASS
+q10_refusal_budget                 n/a        PASS
+
+retrieval hit-rate: 1.00 over 9 questions (threshold 0.8; refusal question excluded)
+citation correctness: 1.00 over 10 questions (threshold 0.7)

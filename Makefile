@@ -129,13 +129,18 @@ reset:
 
 # push parsed parquet partitions to the S3 landing bucket. sync is
 # content-aware: a byte-identical partition transfers 0 files on
-# re-run; a re-parse rewrites the file and IS re-uploaded.
+# re-run; a re-parse rewrites the file and IS re-uploaded. Uploads are
+# pinned to the bridge's exact artifact name (same class of shield as
+# dbt's read glob): stray files in data/parsed/ — e.g. the "name N.ext"
+# conflict copies a file-provider layer left during same-day overwrites
+# (2026-08-16) — never reach the bucket, where a FORCE COPY of that
+# partition would load them as duplicate rows.
 s3-sync:
 	@if [ -z "$$AWS_PROFILE" ]; then \
 		echo "ERROR: AWS_PROFILE not set. Load it first: set -a; source .env; set +a"; \
 		exit 1; \
 	fi
-	aws s3 sync data/parsed/ s3://$(S3_BUCKET)/$(S3_PREFIX)/
+	aws s3 sync data/parsed/ s3://$(S3_BUCKET)/$(S3_PREFIX)/ --exclude "*" --include "*/trials.parquet"
 
 # COPY INTO RAW.TRIALS from the external stage (dbt macro
 # load_raw_trials). Idempotent per partition (R2): delete the
