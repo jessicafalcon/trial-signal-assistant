@@ -29,3 +29,32 @@ def test_gitleaks_pin_cannot_drift_between_floor_and_ci() -> None:
         f"gitleaks/releases/download/v{version}/gitleaks_{version}_linux_x64.tar.gz"
         in ci
     ), f"ci.yml does not download gitleaks {version} (floor pin)"
+
+
+def test_every_gitleaks_scan_disables_inline_allows() -> None:
+    """Every `gitleaks git` invocation in the floor and the workflow must
+    carry --ignore-gitleaks-allow, and both self-governance guard steps
+    must be present in ci.yml.
+
+    Known limit, on purpose: a PR controls both scanned files AND this
+    test, so this catches accidental drift, not malice — malicious
+    workflow edits are the visible-in-diff class, closed by branch
+    protection at the public flip (docs/public_flip_checklist.md).
+    """
+    for rel in ("scripts/secrets_audit.sh", ".github/workflows/ci.yml"):
+        text = (REPO_ROOT / rel).read_text().replace("\\\n", " ")
+        # ` --` separates real invocations (always flag-bearing here)
+        # from the floor's "PASS (d) gitleaks git ." echo labels
+        invocations = re.findall(r"gitleaks git \. --[^\n]*", text)
+        assert invocations, f"{rel}: no gitleaks git invocation found"
+        for inv in invocations:
+            assert "--ignore-gitleaks-allow" in inv, (
+                f"{rel}: gitleaks invocation missing --ignore-gitleaks-allow: {inv}"
+            )
+
+    ci = (REPO_ROOT / ".github" / "workflows" / "ci.yml").read_text()
+    for step in (
+        "gitleaks with base-branch config (self-governance guard)",
+        "secrets floor with base-branch script (self-governance guard)",
+    ):
+        assert step in ci, f"ci.yml: guard step missing: {step}"
