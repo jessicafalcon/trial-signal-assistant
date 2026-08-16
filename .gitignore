@@ -37,3 +37,7 @@ id_ecdsa
 .DS_Store
 .astro/
 .claude/settings.local.json
+
+# raw demo captures (unredacted screenshots/recordings) — assets are
+# curated into docs/assets/ after redaction; originals never committed
+demo/

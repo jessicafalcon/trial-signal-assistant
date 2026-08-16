@@ -1,0 +1,17 @@
+$ make ask Q="Why was the tezepelumab monotherapy trial in atopic dermatitis stopped?"
+.venv/bin/python -m rag.query_llm 'Why was the tezepelumab monotherapy trial in atopic dermatitis stopped?'   
+{
+  "answer": "The tezepelumab monotherapy trial in atopic dermatitis was stopped because tezepelumab as a monotherapy in atopic dermatitis did not reach the targeted efficacy level pre-established for this patient population [NCT03809663].",
+  "cited_nct_ids": [
+    "NCT03809663"
+  ],
+  "unverified_nct_ids": [],
+  "retrieved_ids": [
+    "NCT03809663:why_stopped",
+    "NCT03809663:brief_summary",
+    "NCT00757042:brief_summary",
+    "NCT06174493:brief_summary",
+    "NCT02347176:brief_summary"
+  ],
+  "model": "claude-sonnet-4-5-20250929"
+}
