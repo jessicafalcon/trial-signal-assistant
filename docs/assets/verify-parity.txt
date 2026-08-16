@@ -1,0 +1,4 @@
+$ make verify-parity
+DBT=.venv/bin/dbt PY=.venv/bin/python scripts/verify_parity.sh
+PARITY OK: staging row count: [{"n": 3476.0}]
+PARITY OK: completeness mart: [{"ingest_date": "2026-08-14", "total_studies": 1738.0, "pct_with_results": 20.94, "pct_withdrawn_or_terminated_with_why_stopped": 93.6, "pct_date_precision_day": 68.35, "pct_date_precision_month": 31.13, "pct_date_absent": 0.52}, {"ingest_date": "2026-08-15", "total_studies": 1738.0, "pct_with_results": 20.94, "pct_withdrawn_or_terminated_with_why_stopped": 93.6, "pct_date_precision_day": 68.35, "pct_date_precision_month": 31.13, "pct_date_absent": 0.52}]
