@@ -3,9 +3,9 @@
 -- TrialRecord extension is applied by dropping and recreating from the
 -- current DDL, then re-loading — the data is reproducible by design.
 -- Full sequence (also in README "Cloud target"; the script requires
--- CONFIRM=1 before it will drop):
+-- CONFIRM_RAW_RECREATE=1 before it will drop):
 --   make parse && make s3-sync \
---     && CONFIRM=1 scripts/recreate_raw_trials.sh \
+--     && CONFIRM_RAW_RECREATE=1 scripts/recreate_raw_trials.sh \
 --     && make load-snowflake ALL=1 && make dbt-snowflake
 -- (ALL=1: the fresh table needs every local partition, not just the
 -- latest — make load-snowflake is per-partition since R2.)

@@ -11,11 +11,14 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
-# destructive-drop gate (same pattern as recreate_raw_trials.sh)
-if [ "${CONFIRM:-}" != "1" ]; then
+# destructive-drop gate. Per-gate token (DECISIONS.md 2026-08-17
+# per-gate-confirm entry): this gate answers ONLY to
+# CONFIRM_REBASELINE — a token exported for another destructive
+# operation must not arm this one.
+if [ "${CONFIRM_REBASELINE:-}" != "1" ]; then
     echo "ERROR: this drops trial_signal.analytics.snap_trial_status and replays day-0 + live." >&2
     echo "Intermediate live history, if any, is NOT reconstructable." >&2
-    echo "Re-run with CONFIRM=1 to proceed: CONFIRM=1 scripts/rebaseline_snowflake_snapshot.sh" >&2
+    echo "Re-run with CONFIRM_REBASELINE=1 to proceed: CONFIRM_REBASELINE=1 scripts/rebaseline_snowflake_snapshot.sh" >&2
     exit 1
 fi
 

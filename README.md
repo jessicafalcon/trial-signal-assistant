@@ -216,8 +216,9 @@ are each warehouse's own run times). Only the RAG document mart stays
 DuckDB-only: the embedder reads the local file. If Snowflake falls a
 partition behind (a day when the cloud tasks skipped), recovery is
 `make load-snowflake ALL=1`; a diverged or wrongly-baselined snapshot
-re-baselines via `scripts/rebaseline_snowflake_snapshot.sh` (CONFIRM=1
-gate — intermediate history is not reconstructable).
+re-baselines via `scripts/rebaseline_snowflake_snapshot.sh`
+(`CONFIRM_REBASELINE=1` gate — intermediate history is not
+reconstructable; each destructive gate answers to its own token).
 Schema migrations for RAW.TRIALS: `scripts/recreate_raw_trials.sh`
 (drop + recreate + re-load; the data is reproducible by design).
 
@@ -269,6 +270,14 @@ What changes at scale, honestly:
   and converge to identical state. At real volume the default flips
   to Snowpipe (or Snowpipe Streaming) off S3 event notifications,
   keeping the partition-scoped path as the backfill and replay tool.
+- **Two snapshot histories is a demo pattern, not a production one.**
+  Each warehouse snapshots its own state and parity proves they agree
+  — a verification pattern, chosen so the change-detection demo
+  survives either target alone. Production runs exactly one
+  authoritative SCD2 history, on the warehouse, with DuckDB demoted
+  to a dev target; the skipped-cloud-day divergence caveat and its
+  destructive re-baseline recovery (DECISIONS.md) are the cost of the
+  dual-history choice and disappear with it.
 - **The circuit breaker has declared blind spots**: it compares only
   the latest partition to its immediate prior at a fixed 0.8 ratio, so
   an 86% single-day truncation, a slow multi-day drift, and an empty
