@@ -40,6 +40,49 @@ models:
           an unrecognized format (none in the current corpus) counts in
           no pct_date_* bucket, so the three need not sum to 100.
 
+  - name: mart_ingest_history
+    description: >
+      Operational run history: one row per parsed partition. Pure SQL
+      over staging — deterministic given the same partitions (the
+      time-dependent staleness question belongs to dbt source
+      freshness, not a model). Builds on both targets. Numeric
+      data_types below are duckdb's; snowflake surfaces NUMBER.
+    columns:
+      - name: ingest_date
+        data_type: date
+        description: Raw-landing partition date.
+        data_tests:
+          - unique
+          - not_null
+      - name: rows_ingested
+        data_type: bigint
+        description: Rows parsed into this partition.
+        data_tests:
+          - not_null
+      - name: distinct_studies
+        data_type: bigint
+        description: Distinct nct_ids in the partition.
+        data_tests:
+          - not_null
+      - name: prior_rows
+        data_type: bigint
+        description: >
+          rows_ingested of the previous partition; null for the first.
+      - name: delta_rows
+        data_type: bigint
+        description: rows_ingested minus prior_rows; null for the first.
+      - name: ratio_vs_prior
+        data_type: double
+        description: >
+          rows_ingested / prior_rows — the quantity the circuit
+          breaker gates at circuit_breaker_min_ratio (0.8); null for
+          the first partition.
+      - name: days_since_prior
+        data_type: bigint
+        description: >
+          Days between this partition and the previous one; > 1 means
+          the pipeline missed at least one day.
+
   - name: mart_trial_documents
     description: >
       RAG document corpus: one row per (nct_id, doc_field) over the
