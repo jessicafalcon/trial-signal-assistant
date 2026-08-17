@@ -29,7 +29,7 @@ Why-not-X log. One entry per non-obvious choice.
   round · Local venv aligned to 3.11 · DAG runs local-first · Host and
   container dbt artifacts split
 - **7 Packaging**: Pre-public checklist choices (below) · Flip step-4
-  purge waived
+  purge waived · External review dispositions
 
 ## 2026-08-14 — Phase list joined to a single string
 
@@ -931,3 +931,36 @@ registry data may not qualify). The hash map above stays as-is — the
 residual is accepted openly, and stripping old SHAs would obscure it,
 not remove it. This amends the history-rewrite entry's closing line:
 the force-push stays a human gate; the purge gate is dropped.
+
+## 2026-08-16 — External review dispositions (pre-flip)
+
+A practitioner reviewed the repo before the public flip and raised
+five findings. Ruled item-by-item; the flip waits until the ruled
+work lands:
+
+1. **Change detection never runs on Snowflake** (snapshot machinery
+   duckdb-only; parity compares only staging + completeness) —
+   IMPLEMENT: seeds + snapshot + mart_trial_status_changes on the
+   snowflake target, circuit breaker ordered after the load, parity
+   extended to transition values (dbt_scd_id fingerprints hash
+   target-local timestamps, so parity compares mart values, never
+   fingerprints). Reverses the 2026-08-15 duckdb-only scoping; that
+   entry's premise (prove the warehouse path, not a second source of
+   truth) lost to "the flagship feature must run on the flagship
+   platform".
+2. **Hand-rolled COPY INTO where Snowpipe exists** — DOCUMENT: the
+   determinism/replayability trade stated unprompted in README
+   production notes; Snowpipe named as the at-volume default.
+3. **Airflow layer is thin** (no data-awareness, local-only) —
+   DOCUMENT: scale path (assets, Cosmos, deferrable sensors, managed
+   deployment) in production notes. The wrapper pattern itself stays —
+   one definition per task, testable without Docker.
+4. **Chroma is a second, ungoverned data platform** — DOCUMENT +
+   backlog: Cortex Search convergence path puts retrieval inside the
+   warehouse governance boundary; Chroma stays for the laptop demo.
+5. **Observability stops at exit codes** — SPLIT: dbt source
+   freshness + a deterministic ingest-history mart implemented (cheap,
+   same-warehouse, demos well); alerting path, terraform remote
+   backend, incremental fetch, and a credentialed scheduled parity job
+   stay documented answers (production notes) — "no cloud creds in
+   CI" is posture, not an accident.

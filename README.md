@@ -236,22 +236,56 @@ What changes at scale, honestly:
 - **Phase filtering is exact-string** (`PHASE2` does not match
   `PHASE1/PHASE2`) — documented in `--help`; decomposed phase values
   with `$in` matching is the fix if this grew.
+- **Retrieval governance.** Chroma is a second, ungoverned data
+  platform: the warehouse has roles, grants, and an audit trail; the
+  vector store is a local file with none of those. Right for a laptop
+  demo, wrong where it matters most — in a pharma context the
+  retrieval corpus feeding an LLM needs the same access-control and
+  lineage story as the tables it derives from. The convergence path
+  is Cortex Search over `mart_trial_documents` (see Retrieval above):
+  retrieval moves inside the warehouse's governance boundary, and a
+  whole system disappears.
 - **Auth.** Password auth in `.env` is trial-account posture. Real
   deployments use key-pair auth for the service user, secrets in a
   manager, and RBAC beyond a single TRANSFORMER role (separate loader
   and transformer roles, read-only marts for consumers).
-- **Loading.** Batch COPY INTO per partition suits a daily corpus of
-  1,738 rows. At real volume this becomes Snowpipe (or Snowpipe
-  Streaming) off S3 event notifications.
+- **Loading.** The hand-rolled load (delete the partition's rows,
+  COPY its files with FORCE) is a deliberate trade against Snowpipe,
+  not ignorance of it. A 1,738-row daily batch doesn't need
+  event-driven ingestion, and the partition-scoped delete+reload
+  buys what Snowpipe's at-least-once file semantics don't offer:
+  deterministic, replayable loads — any partition can be re-landed
+  and converge to identical state. At real volume the default flips
+  to Snowpipe (or Snowpipe Streaming) off S3 event notifications,
+  keeping the partition-scoped path as the backfill and replay tool.
 - **The circuit breaker has declared blind spots**: it compares only
   the latest partition to its immediate prior at a fixed 0.8 ratio, so
   an 86% single-day truncation, a slow multi-day drift, and an empty
   latest partition all pass (the empty case is caught downstream —
   staging re-reads the prior day). Production wants an absolute-count
   floor plus drift alerting.
-- **Operations.** No alerting/SLAs here beyond task timeouts and
-  retries; a deployed DAG (Astro cloud / MWAA) would carry SLA misses,
-  failure notifications, and data-freshness checks.
+- **Orchestration.** The DAG is deliberately thin: BashOperator over
+  make targets means every task has exactly one definition that runs
+  identically with or without Airflow, and `make dag-verify` tests
+  the DAG's structure without Docker. What the thin layer lacks is
+  data-awareness, and that's what changes at scale: Airflow assets
+  (downstream tasks trigger when the parsed partition actually
+  lands, not on a clock), Cosmos to expand the dbt graph into
+  task-level Airflow tasks (per-model retries and visibility instead
+  of one opaque `make dbt`), deferrable S3 sensors in place of fixed
+  ordering, and a managed deployment (Astro cloud / MWAA) carrying
+  SLA misses, alerting, and failure notifications — today the DAG
+  runs only in local Docker.
+- **State and drift.** Terraform state is a local gitignored file —
+  fine for one operator; a team needs a remote backend with locking
+  (S3 + DynamoDB) before a second person ever runs apply. Ingestion
+  re-fetches the full corpus daily — correct at 1.7k studies;
+  at scale it becomes an incremental fetch filtered on the
+  registry's last-update date, with the full pull kept as the
+  backfill path. Cross-target parity runs only when a human runs
+  it: CI holds no cloud credentials by design, so the production
+  answer is a scheduled job with scoped read-only credentials —
+  not credentials in CI.
 
 ## How it was built
 
