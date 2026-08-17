@@ -283,28 +283,23 @@ around.
 
 ## Current status
 
-- Phase 7 loop complete on branch phase-7-packaging (2026-08-16,
-  9 unpushed commits): pre-public checklist cleared or re-accepted
-  item-by-item (PLAN.md dispositions), secrets floor at 7 checks
-  (all probe-verified), CI self-governance guards landed, README
-  rewritten (case study generic by ruling), DECISIONS indexed +
-  complete, MIT LICENSE, hook wiring local-only. Final scoped
-  security pass over the whole delta: 0 secret / 0 critical;
-  residuals in docs/BACKLOG.md (loop-control ruling). Suite 104;
-  DONE green. Remaining are human gates only:
-  docs/public_flip_checklist.md (terraform lifecycle apply, merge,
-  flip, branch protection) and any final README curation edits.
-- Phase 6 complete locally (2026-08-15): the daily DAG
-  trial_safety_pipeline (Astro Runtime 3.3-2, local Docker) runs
-  ingest → parse → circuit breaker → local dbt (live snapshot +
-  build) → RAG reindex, then cloud load → snowflake build → parity
-  (local-first post-phase-6 ruling: a cloud outage must never cost a
-  snapshot day), all 11 tasks green on two same-day triggers with the
-  second an end-to-end no-op (recorded runs predate the reorder). R1 (hard
-  deletes live-only + circuit breaker) and R2 (delete-by-partition +
-  scoped COPY FORCE) landed. make dag-verify covers DAG integrity
-  without Docker (own CI job). Demo capture pending after merge
-  (docs/demo_checklist.md). Next is Phase 7 (packaging). See PLAN.md.
+- Public flip in progress (2026-08-16): all 7 phases complete and
+  merged to main. History PII-scrubbed via git-filter-repo blob
+  replacement and force-pushed to origin (old→new hash map in
+  DECISIONS.md); obsolete remote branches deleted; fresh-clone
+  verification clean (all greps 0, old blob absent).
+  docs/public_flip_checklist.md: steps 1–3 done (S3 lifecycle
+  applied, force-push, clone verify); step 4 cache purge WAIVED by
+  owner ruling (DECISIONS.md "Flip step 4 waived"). Remaining human
+  gates: steps 5–8 — repo description/topics, visibility flip,
+  branch protection IMMEDIATELY after (the CI self-governance guards
+  are PR-only until then), CV link. Post-public items live in
+  docs/BACKLOG.md.
+- Repo moved ~/Desktop → ~/dev (2026-08-16): iCloud sync was
+  corrupting the Desktop venv's site-packages; repair recipe in
+  README Setup. Venv is Python 3.11.16; make setup pins
+  PYTHON ?= python3.11 (bare python3 resolves to 3.14 on this
+  machine, which dag-verify rejects).
 - Snowflake trial active; creds live only in .env (never committed).
   Terraform state is local and gitignored. ANTHROPIC_API_KEY: env/.env
   only, never CI.
