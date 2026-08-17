@@ -301,18 +301,23 @@ around.
 
 ## Current status
 
-- Public flip in progress (2026-08-16): all 7 phases complete and
-  merged to main. History PII-scrubbed via git-filter-repo blob
-  replacement and force-pushed to origin (old→new hash map in
-  DECISIONS.md); obsolete remote branches deleted; fresh-clone
-  verification clean (all greps 0, old blob absent).
-  docs/public_flip_checklist.md: steps 1–3 done (S3 lifecycle
-  applied, force-push, clone verify); step 4 cache purge WAIVED by
-  owner ruling (DECISIONS.md "Flip step 4 waived"). Remaining human
-  gates: steps 5–8 — repo description/topics, visibility flip,
-  branch protection IMMEDIATELY after (the CI self-governance guards
-  are PR-only until then), CV link. Post-public items live in
-  docs/BACKLOG.md.
+- Public flip in progress: all 7 phases complete and merged. History
+  PII-scrubbed via git-filter-repo blob replacement and force-pushed
+  2026-08-16 (old→new hash map in DECISIONS.md); fresh-clone
+  verification clean; flip checklist steps 1–3 done, step 4 cache
+  purge WAIVED by owner ruling (DECISIONS.md "Flip step 4 waived").
+- Pre-flip external review implemented 2026-08-16/17 in three PRs,
+  all rulings per-finding (DECISIONS.md dispositions entry): #10
+  docs (Snowpipe / orchestration / retrieval-governance / ops
+  answers stated unprompted in README production notes), #11
+  observability slice (dbt source freshness + mart_ingest_history),
+  #12 change detection on Snowflake (day-0 bootstrap + fail-closed
+  guarded snapshot live on the warehouse, scripted re-baseline,
+  three-way parity green incl. transition values, suite 113). After
+  #12 merges, remaining human gates are flip checklist steps 5–8:
+  repo description/topics, visibility flip, branch protection
+  IMMEDIATELY after (the CI self-governance guards are PR-only until
+  then), CV link. Post-public items live in docs/BACKLOG.md.
 - Repo moved ~/Desktop → ~/dev (2026-08-16): iCloud sync was
   corrupting the Desktop venv's site-packages; repair recipe in
   README Setup. Venv is Python 3.11.16; make setup pins
