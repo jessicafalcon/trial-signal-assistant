@@ -8,10 +8,12 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
-# destructive-drop gate (review ruling S4): require explicit intent
-if [ "${CONFIRM:-}" != "1" ]; then
+# destructive-drop gate (review ruling S4; token renamed per the
+# 2026-08-17 per-gate-confirm ruling — a shared CONFIRM must not arm
+# unrelated destructive gates)
+if [ "${CONFIRM_RAW_RECREATE:-}" != "1" ]; then
     echo "ERROR: this drops trial_signal.raw.trials (contents are reproducible from data/parsed)." >&2
-    echo "Re-run with CONFIRM=1 to proceed: CONFIRM=1 scripts/recreate_raw_trials.sh" >&2
+    echo "Re-run with CONFIRM_RAW_RECREATE=1 to proceed: CONFIRM_RAW_RECREATE=1 scripts/recreate_raw_trials.sh" >&2
     exit 1
 fi
 

@@ -227,21 +227,24 @@ REBASELINE_SCRIPT = REPO_ROOT / "scripts" / "rebaseline_snowflake_snapshot.sh"
 @pytest.mark.parametrize(
     ("confirm", "expected"),
     [
-        # no CONFIRM: gate refuses before anything else runs
-        (None, "Re-run with CONFIRM=1"),
+        # no token: gate refuses before anything else runs
+        (None, "Re-run with CONFIRM_REBASELINE=1"),
         # strict =1 matching: truthy-but-not-1 must refuse too — the
         # loosening a well-meaning future edit would introduce
-        ("true", "Re-run with CONFIRM=1"),
-        # CONFIRM=1 without creds: preflight refuses before the drop
+        ("true", "Re-run with CONFIRM_REBASELINE=1"),
+        # token set without creds: preflight refuses before the drop
         ("1", "ERROR: SNOWFLAKE_ACCOUNT / SNOWFLAKE_USER / SNOWFLAKE_PASSWORD"),
     ],
     ids=["no-confirm", "confirm-true", "confirm-1-no-creds"],
 )
 def test_rebaseline_gates_fail_closed(confirm: str | None, expected: str) -> None:
     env = _env_without_creds()
-    env.pop("CONFIRM", None)
+    env.pop("CONFIRM_REBASELINE", None)
+    # the gate answers ONLY to its own token (per-gate-confirm ruling):
+    # a legacy shared CONFIRM must never satisfy it
+    env["CONFIRM"] = "1"
     if confirm is not None:
-        env["CONFIRM"] = confirm
+        env["CONFIRM_REBASELINE"] = confirm
     result = subprocess.run(
         [str(REBASELINE_SCRIPT)],
         cwd=REPO_ROOT,
@@ -256,6 +259,112 @@ def test_rebaseline_gates_fail_closed(confirm: str | None, expected: str) -> Non
     assert expected in output
     # dbt never started: no connection, no drop attempted
     assert "Running with dbt" not in output
+
+
+# --- bootstrap guard probe pair (post-merge review finding,
+# 2026-08-17): both guards' branches pinned network-free via a stub
+# dbt whose `show --inline` probe behaves per case; every other dbt
+# invocation exits 0, so a "proceeds" case runs its recipe harmlessly.
+
+STUB_DBT = """#!/bin/sh
+case "$*" in
+    *"show --inline"*) {probe} ;;
+    *) exit 0 ;;
+esac
+"""
+
+PROBE_TABLE_EXISTS = "exit 0"
+PROBE_TABLE_ABSENT = (
+    'echo "002003 (42S02): Object does not exist or not authorized."; exit 1'
+)
+PROBE_INCONCLUSIVE = 'echo "250001: network unreachable"; exit 1'
+
+
+def _run_guarded_target(
+    tmp_path: Path, target: str, probe: str, **extra_env: str
+) -> subprocess.CompletedProcess[str]:
+    stub = tmp_path / "dbt-stub"
+    stub.write_text(STUB_DBT.format(probe=probe))
+    stub.chmod(0o755)
+    # allowlist env, matching test_source_resolves_per_target's
+    # "credential-free is literal" posture (security note 4 ruling):
+    # nothing from the operator's shell — no ambient override tokens,
+    # no real credentials — can reach the make subprocess
+    env = {
+        "PATH": os.environ["PATH"],
+        "HOME": os.environ["HOME"],
+        "SNOWFLAKE_ACCOUNT": "dummy",
+        "SNOWFLAKE_USER": "dummy",
+        "SNOWFLAKE_PASSWORD": "dummy",
+        "DBT": str(stub),
+    }
+    env.update(extra_env)
+    return subprocess.run(
+        ["make", target],
+        cwd=REPO_ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+
+
+@pytest.mark.parametrize(
+    ("probe", "confirm", "ok", "expect", "runs_seed"),
+    [
+        # table exists, no override: refuse before the seed
+        (PROBE_TABLE_EXISTS, None, False, "already exists", False),
+        # reviewer-specified escape hatch: the gate's OWN token
+        # proceeds, loudly
+        (PROBE_TABLE_EXISTS, "1", True, "WARNING: CONFIRM_DAY0_OVERWRITE=1", True),
+        # absent (002003): the intended bootstrap path proceeds
+        (PROBE_TABLE_ABSENT, None, True, "", True),
+        # inconclusive probe: distinct refusal, never the seed
+        (PROBE_INCONCLUSIVE, None, False, "could not be evaluated", False),
+    ],
+    ids=["exists-refuses", "exists-confirm-1", "absent-proceeds", "inconclusive"],
+)
+def test_day0_snowflake_inverse_guard(
+    tmp_path: Path,
+    probe: str,
+    confirm: str | None,
+    ok: bool,
+    expect: str,
+    runs_seed: bool,
+) -> None:
+    # a legacy shared CONFIRM is always present and must never satisfy
+    # the gate (per-gate-confirm ruling)
+    extra = {"CONFIRM": "1"}
+    if confirm is not None:
+        extra["CONFIRM_DAY0_OVERWRITE"] = confirm
+    result = _run_guarded_target(tmp_path, "snapshot-day0-snowflake", probe, **extra)
+    output = result.stdout + result.stderr
+    assert (result.returncode == 0) is ok, output
+    assert expect in output
+    assert ("seed --select seed_synthetic_day0" in output) is runs_seed
+
+
+@pytest.mark.parametrize(
+    ("probe", "ok", "expect", "runs_snapshot"),
+    [
+        # absent/unauthorized: bootstrap-first refusal, never snapshots
+        (PROBE_TABLE_ABSENT, False, "absent OR not authorized", False),
+        # inconclusive probe: distinct refusal, never snapshots
+        (PROBE_INCONCLUSIVE, False, "could not be evaluated", False),
+        # table exists: the guarded live snapshot proceeds
+        (PROBE_TABLE_EXISTS, True, "", True),
+    ],
+    ids=["absent-refuses", "inconclusive", "exists-proceeds"],
+)
+def test_snapshot_snowflake_forward_guard(
+    tmp_path: Path, probe: str, ok: bool, expect: str, runs_snapshot: bool
+) -> None:
+    result = _run_guarded_target(tmp_path, "snapshot-snowflake", probe)
+    output = result.stdout + result.stderr
+    assert (result.returncode == 0) is ok, output
+    assert expect in output
+    assert ("run --select +snap_trial_status" in output) is runs_snapshot
 
 
 @pytest.mark.skipif(not DBT.exists(), reason="no venv dbt (CI test job has none)")

@@ -97,15 +97,20 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   mart_trial_documents (the RAG doc mart stays duckdb-only — the
   embedder reads the duckdb file) and seeds. Change detection runs on
   snowflake too (2026-08-17 external-review ruling):
-  `make snapshot-day0-snowflake` is the one-time day-0 bootstrap (same
-  corruption rule as snapshot-day0 — never re-run, never the DAG) and
+  `make snapshot-day0-snowflake` is the one-time day-0 bootstrap (never
+  the DAG; fail-closed refuses if the snapshot table already exists —
+  CONFIRM_DAY0_OVERWRITE=1 overrides, and the rebaseline script is the
+  legitimate re-run path: its own gate token does not skip this guard,
+  so the drop-first path exercises it) and
   `make snapshot-snowflake` the breaker-guarded live snapshot: it runs
   `make circuit-breaker-snowflake` first (the DAG orders it after the
   load, so a thin partition means a collapsed ingest shipped, not "not
   loaded yet"), fail-closed refuses if the snapshot table was never
   bootstrapped, and runs the snapshot's schema tests (excluded from
   the build with the node). Snapshot re-baseline:
-  scripts/rebaseline_snowflake_snapshot.sh (CONFIRM=1 gate). All snowflake targets preflight-fail
+  scripts/rebaseline_snowflake_snapshot.sh (CONFIRM_REBASELINE=1 gate;
+  every destructive gate has its own token — per-gate-confirm ruling,
+  DECISIONS.md). All snowflake targets preflight-fail
   on missing creds and pin role/warehouse/db/schema to the
   terraform-created objects. RAW.TRIALS schema migrations:
   scripts/recreate_raw_trials.sh (drop + recreate + re-load; README

@@ -182,6 +182,35 @@ dbt-snowflake:
 # fixture mode is CI-only and CI never touches snowflake.
 snapshot-day0-snowflake:
 	$(snowflake_preflight)
+	@# inverse of snapshot-snowflake's bootstrap guard (post-merge
+	@# review finding, 2026-08-17): a re-run against a healthy table
+	@# writes spurious SCD2 rows from seed values, and warehouse
+	@# history is not disposable. 002003 = absent = proceed (failing
+	@# closed there would brick every legitimate first bootstrap),
+	@# with the grants caveat echoed because 002003 also means
+	@# not-authorized; anything else inconclusive = stop. The override
+	@# token is gate-specific (per-gate-confirm ruling): the
+	@# rebaseline script's CONFIRM_REBASELINE does NOT skip this
+	@# guard, so the drop-first path genuinely exercises it.
+	@if [ "$${CONFIRM_DAY0_OVERWRITE:-}" = "1" ]; then \
+		echo "WARNING: CONFIRM_DAY0_OVERWRITE=1 — skipping the existing-table guard"; \
+	else \
+		if out=$$($(SNOWFLAKE_CONN) $(DBT) --quiet show --inline "select count(*) as n from {{ ref('snap_trial_status') }}" $(DBT_SNOWFLAKE_FLAGS) 2>&1); then \
+			echo "ERROR: snapshot table already exists — re-running the day-0 bootstrap against live history corrupts the demo transitions."; \
+			echo "Legitimate re-baseline: CONFIRM_REBASELINE=1 scripts/rebaseline_snowflake_snapshot.sh (drops the table, replays day-0 + live)."; \
+			exit 1; \
+		elif echo "$$out" | grep -qE "002003|does not exist or not authorized"; then \
+			echo "proceeding on absent-or-not-authorized (002003) — if this warehouse was previously bootstrapped, interrupt now and check TRANSFORMER's grants."; \
+		else \
+			echo "ERROR: day-0 guard probe could not be evaluated — not proceeding. Underlying dbt error:"; \
+			echo "$$out"; \
+			exit 1; \
+		fi; \
+	fi
+	@# ^ if ever redacting that echoed output, never via sed
+	@# s/$$SNOWFLAKE_ACCOUNT/.../ inside make — that puts the value in
+	@# ps-visible argv; redact in a script reading the env, or print
+	@# only the error code (security note, 2026-08-17)
 	$(SNOWFLAKE_CONN) $(DBT) seed --select seed_synthetic_day0 $(DBT_SNOWFLAKE_FLAGS)
 	$(SNOWFLAKE_CONN) $(DBT) snapshot $(DBT_SNOWFLAKE_FLAGS) --vars '{snapshot_source: seed, day0_seed_scope: corpus}'
 
@@ -219,6 +248,10 @@ snapshot-snowflake: circuit-breaker-snowflake
 		fi; \
 		exit 1; \
 	}
+	@# ^ if ever redacting that echoed output, never via sed
+	@# s/$$SNOWFLAKE_ACCOUNT/.../ inside make — that puts the value in
+	@# ps-visible argv; redact in a script reading the env, or print
+	@# only the error code (security note, 2026-08-17)
 	$(SNOWFLAKE_CONN) $(DBT) run --select +snap_trial_status $(DBT_SNOWFLAKE_FLAGS)
 	$(SNOWFLAKE_CONN) $(DBT) snapshot $(DBT_SNOWFLAKE_FLAGS)
 	$(SNOWFLAKE_CONN) $(DBT) test --select snap_trial_status $(DBT_SNOWFLAKE_FLAGS)

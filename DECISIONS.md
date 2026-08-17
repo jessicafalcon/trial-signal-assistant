@@ -32,7 +32,7 @@ Why-not-X log. One entry per non-obvious choice.
 - **7 Packaging**: Pre-public checklist choices (below) · Flip step-4
   purge waived · External review dispositions · Observability slice
   (source freshness + ingest-history mart) · Change detection on
-  Snowflake
+  Snowflake · Per-gate confirm tokens
 
 ## 2026-08-14 — Phase list joined to a single string
 
@@ -1032,8 +1032,8 @@ was already portable — the changes are operational:
   passing first parity is luck, not correctness. Divergence
   directions and recoveries: extra SNOWFLAKE history (e.g. the DAG
   baselined from live before the day-0 bootstrap) → re-baseline
-  snowflake (scripts/rebaseline_snowflake_snapshot.sh, CONFIRM=1
-  gated); extra DUCKDB history (a status change on a day the cloud
+  snowflake (scripts/rebaseline_snowflake_snapshot.sh,
+  CONFIRM_REBASELINE=1 gated); extra DUCKDB history (a status change on a day the cloud
   tasks skipped, or live transitions predating a re-bootstrap) →
   accept-and-record or re-baseline duckdb (make reset + day-0
   replay). The warehouse cannot reconstruct intermediate states it
@@ -1055,3 +1055,37 @@ was already portable — the changes are operational:
 - Still snowflake-excluded: mart_trial_documents (the embedder reads
   duckdb — phase-7 scoping, unchanged) and seeds in the daily build
   (loaded once at bootstrap; rebuilding them daily adds nothing).
+- Inverse bootstrap guard (post-merge review finding, 2026-08-17):
+  snapshot-day0-snowflake refuses when the snapshot table already
+  exists — re-running day-0 over live history writes spurious SCD2
+  rows from seed values, and warehouse history is not disposable, so
+  a comment was not enough protection (the same "documented ordering
+  alone is insufficient" logic as the forward guard).
+  CONFIRM_DAY0_OVERWRITE=1 overrides (reviewer-specified escape
+  hatch); the legitimate re-run path stays the rebaseline script,
+  which drops first — and because its gate token differs, the guard
+  genuinely runs on that path. Probe classification mirrors the
+  forward guard, except 002003 proceeds (failing closed there would
+  brick every first bootstrap) with the grants caveat echoed;
+  both guards' branches are pinned by stub-dbt regression tests. The
+  dual-history design itself is now named a demo/verification
+  pattern in README production notes — production runs one
+  authoritative warehouse history, and the divergence caveat
+  disappears with the second history.
+
+## 2026-08-17 — Per-gate confirm tokens (convention)
+
+Every destructive gate answers to its own environment token, never a
+shared one: CONFIRM_DAY0_OVERWRITE (the day-0 existing-table guard),
+CONFIRM_REBASELINE (rebaseline_snowflake_snapshot.sh),
+CONFIRM_RAW_RECREATE (recreate_raw_trials.sh — renamed from the S4
+ruling's CONFIRM). Why: a confirm gate's entire value is proving
+contemporaneous intent for THIS action; a shared token is
+consent-for-anything. The concrete accident (security finding,
+2026-08-17): an operator exporting CONFIRM=1 for a RAW.TRIALS
+migration silently pre-armed the day-0 guard and the rebaseline drop
+for every later make in that shell — and the repo's own
+`set -a; source .env` convention means one stray CONFIRM=1 line in
+.env would have armed every gate at once. Binding going forward:
+new destructive gates get a new token; reusing an existing one is a
+review-blocking defect.
