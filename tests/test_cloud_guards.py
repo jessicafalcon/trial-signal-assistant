@@ -23,10 +23,28 @@ def _env_without_creds() -> dict[str, str]:
     return {k: v for k, v in os.environ.items() if k not in CREDS}
 
 
-@pytest.mark.parametrize("target", ["dbt-snowflake", "load-snowflake"])
-def test_preflight_fails_closed_without_credentials(target: str) -> None:
+# every credentialed make target, each invoked directly. The plain
+# snapshot-snowflake case is satisfiable by either preflight layer
+# (its circuit-breaker-snowflake prerequisite runs first), so the -o
+# case assumes the prerequisite up to date and pins the recipe's OWN
+# preflight in isolation — a refactor dropping either layer fails one
+# of the two cases (security finding 2 ruling, 2026-08-17)
+@pytest.mark.parametrize(
+    "command",
+    [
+        ["make", "dbt-snowflake"],
+        ["make", "load-snowflake"],
+        ["make", "snapshot-day0-snowflake"],
+        ["make", "circuit-breaker-snowflake"],
+        ["make", "snapshot-snowflake"],
+        ["make", "-o", "circuit-breaker-snowflake", "snapshot-snowflake"],
+        ["make", "freshness-snowflake"],
+    ],
+    ids=lambda command: " ".join(command[1:]),
+)
+def test_preflight_fails_closed_without_credentials(command: list[str]) -> None:
     result = subprocess.run(
-        ["make", target],
+        command,
         cwd=REPO_ROOT,
         env=_env_without_creds(),
         capture_output=True,
@@ -162,6 +180,13 @@ def test_source_resolves_per_target(
     node = manifest["sources"][key]
     assert node["schema"] == schema
     assert node["identifier"] == identifier
+    # freshness thresholds live under the table's config: key (the dbt
+    # 1.10+ location) — a wrong nesting silently drops them and make
+    # freshness would pass with nothing to check (finding-8 ruling,
+    # 2026-08-17), so pin them in the parsed manifest on both targets
+    freshness = node["freshness"]
+    assert freshness["warn_after"] == {"count": 2, "period": "day"}
+    assert freshness["error_after"] == {"count": 7, "period": "day"}
     if target == "duckdb":
         # the read path stays the FIXED literal (injection ruling,
         # DECISIONS.md 2026-08-14) — a parameterized value here is a bug
@@ -190,6 +215,71 @@ def test_s3_bucket_and_prefix_match_terraform() -> None:
     assert mk_bucket and mk_prefix and tf_bucket and tf_prefix
     assert mk_bucket.group(1) == tf_bucket.group(1)
     assert mk_prefix.group(1) == tf_prefix.group(1)
+
+
+# --- destructive-path gates (security finding 3 ruling, 2026-08-17):
+# the reviewer's manual probes converted to regression tests — all
+# network-free, every path fails before any connection or drop.
+
+REBASELINE_SCRIPT = REPO_ROOT / "scripts" / "rebaseline_snowflake_snapshot.sh"
+
+
+@pytest.mark.parametrize(
+    ("confirm", "expected"),
+    [
+        # no CONFIRM: gate refuses before anything else runs
+        (None, "Re-run with CONFIRM=1"),
+        # strict =1 matching: truthy-but-not-1 must refuse too — the
+        # loosening a well-meaning future edit would introduce
+        ("true", "Re-run with CONFIRM=1"),
+        # CONFIRM=1 without creds: preflight refuses before the drop
+        ("1", "ERROR: SNOWFLAKE_ACCOUNT / SNOWFLAKE_USER / SNOWFLAKE_PASSWORD"),
+    ],
+    ids=["no-confirm", "confirm-true", "confirm-1-no-creds"],
+)
+def test_rebaseline_gates_fail_closed(confirm: str | None, expected: str) -> None:
+    env = _env_without_creds()
+    env.pop("CONFIRM", None)
+    if confirm is not None:
+        env["CONFIRM"] = confirm
+    result = subprocess.run(
+        [str(REBASELINE_SCRIPT)],
+        cwd=REPO_ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+    output = result.stdout + result.stderr
+    assert result.returncode != 0
+    assert expected in output
+    # dbt never started: no connection, no drop attempted
+    assert "Running with dbt" not in output
+
+
+@pytest.mark.skipif(not DBT.exists(), reason="no venv dbt (CI test job has none)")
+def test_drop_snapshot_macro_refuses_non_snowflake_target() -> None:
+    result = subprocess.run(
+        [
+            str(DBT),
+            "run-operation",
+            "drop_snapshot_table",
+            "--project-dir",
+            "dbt_project",
+            "--profiles-dir",
+            "dbt_project",
+            "--target",
+            "duckdb",
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        timeout=180,
+        check=False,
+    )
+    assert result.returncode != 0
+    assert "snowflake-only" in result.stdout + result.stderr
 
 
 @pytest.mark.skipif(not DBT.exists(), reason="no venv dbt (CI test job has none)")

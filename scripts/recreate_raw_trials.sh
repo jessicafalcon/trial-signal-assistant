@@ -6,6 +6,7 @@
 # the full sequence). Same preflight + pinned non-secret connection
 # facts as scripts/load_snowflake.sh.
 set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
 
 # destructive-drop gate (review ruling S4): require explicit intent
 if [ "${CONFIRM:-}" != "1" ]; then

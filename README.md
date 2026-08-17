@@ -23,7 +23,7 @@ data/raw JSON ──► parser bridge ──► data/parsed parquet (ingest_date
                                         (external stage; demo target)
         │
         ▼
-dbt: staging ──► snapshots (SCD2 on overall_status; duckdb only) ──► marts
+dbt: staging ──► snapshots (SCD2 on overall_status; both targets) ──► marts
         │
         ▼
 Embeddings (sentence-transformers, per-field docs) ──► Chroma (+ metadata)
@@ -94,10 +94,14 @@ the answer, and does.
 Every claim below is one command or one committed artifact.
 
 **Dual-target parity.** The same dbt project builds on DuckDB and
-Snowflake, and `make verify-parity` fails unless the staging row count
-and the full completeness mart are value-identical on both. Captured:
-[verify-parity.txt](docs/assets/verify-parity.txt) — 5,214 rows and
-byte-equal mart JSON on both engines
+Snowflake, and `make verify-parity` fails unless the staging row
+count, the full completeness mart, and the status-change transition
+values are identical on both (transition timestamps excluded — each
+warehouse records its own detection times). Captured:
+[verify-parity.txt](docs/assets/verify-parity.txt) — a phase-6 capture
+of the first two checks, 5,214 rows and byte-equal mart JSON on both
+engines; the transitions check landed with the 2026-08-17
+change-detection work
 ([the same count in Snowsight](docs/assets/snowsight-row-count.png),
 queried as the pipeline's least-privilege role).
 
@@ -194,19 +198,26 @@ One-time provisioning is a single converging `terraform apply`
 (sequence and provider caveats in
 [terraform/README.md](terraform/README.md)). Then:
 
-    make s3-sync         # parsed parquet → s3://<bucket>/parsed/
-    make load-snowflake  # per-partition: delete its rows, COPY its files with FORCE
-    make dbt-snowflake   # dbt build --target snowflake
-    make verify-parity   # cross-target row count + completeness compare
+    make s3-sync                  # parsed parquet → s3://<bucket>/parsed/
+    make load-snowflake           # per-partition: delete its rows, COPY its files with FORCE
+    make snapshot-day0-snowflake  # ONE-TIME: seed + snapshot the labeled day-0 state
+    make snapshot-snowflake       # breaker-guarded live snapshot (daily; the DAG's job)
+    make dbt-snowflake            # dbt build --target snowflake
+    make verify-parity            # cross-target compare: rows, completeness, transitions
 
 Credentials live only in `.env` (see `.env.example`); the make targets
 pin role/warehouse/database/schema to the terraform-created objects, so
 the demo provably runs as `TRANSFORMER` on the X-Small warehouse
-whatever the caller's environment says. Change detection and the RAG
-document mart stay DuckDB-only by design — Snowflake proves the
-warehouse path (COPY INTO, staging, completeness mart), not a second
-source of truth. If Snowflake falls a partition behind (a day when the
-cloud tasks skipped), recovery is `make load-snowflake ALL=1`.
+whatever the caller's environment says. Change detection — the day-0
+seed, the SCD2 snapshot, and the status-change mart — runs on both
+targets; each warehouse keeps its own snapshot history, and parity
+compares the transition values (never the detection timestamps, which
+are each warehouse's own run times). Only the RAG document mart stays
+DuckDB-only: the embedder reads the local file. If Snowflake falls a
+partition behind (a day when the cloud tasks skipped), recovery is
+`make load-snowflake ALL=1`; a diverged or wrongly-baselined snapshot
+re-baselines via `scripts/rebaseline_snowflake_snapshot.sh` (CONFIRM=1
+gate — intermediate history is not reconstructable).
 Schema migrations for RAW.TRIALS: `scripts/recreate_raw_trials.sh`
 (drop + recreate + re-load; the data is reproducible by design).
 

@@ -1,8 +1,9 @@
 -- The RAG embedder's sole input surface (F8 ruling, DECISIONS.md):
 -- one row per (nct_id, doc_field) over the latest partition, long
 -- format so each text field embeds as its own document. duckdb-only —
--- excluded on the snowflake target alongside the snapshot machinery
--- (Makefile dbt-snowflake; DECISIONS.md 2026-08-15).
+-- still excluded on the snowflake target after change detection moved
+-- there: the embedder reads the duckdb file (Makefile dbt-snowflake;
+-- DECISIONS.md 2026-08-17 change-detection entry).
 -- content_hash is the incremental change key (F8): the embedder skips
 -- ids whose stored hash still matches. conditions_flat joins the array
 -- with '; ' because Chroma metadata values must be scalars (F8).

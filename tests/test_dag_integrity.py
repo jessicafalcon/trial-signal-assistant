@@ -130,17 +130,17 @@ EXPECTED_MAKE_TARGETS: dict[str, list[str]] = {
     "circuit_breaker": ["circuit-breaker"],
     "cloud.s3_sync": ["s3-sync"],
     "cloud.load_snowflake": ["load-snowflake"],
-    "cloud.dbt_snowflake": ["dbt-snowflake"],
+    "cloud.dbt_snowflake": ["snapshot-snowflake", "dbt-snowflake"],
     "dbt_duckdb": ["snapshot", "dbt"],
     "verify_idempotent": ["verify-idempotent"],
     "rag_build": ["rag-build"],
     "cloud.verify_parity": ["verify-parity"],
 }
 
-# snapshot-day0 is a one-time bootstrap whose re-run corrupts the demo
-# transitions; reset destroys the snapshot history (DECISIONS.md
-# 2026-08-14) — neither may ever appear in the DAG
-FORBIDDEN_MAKE_TARGETS = {"snapshot-day0", "reset"}
+# the day-0 bootstraps are one-time steps whose re-run corrupts the
+# demo transitions; reset destroys the snapshot history (DECISIONS.md
+# 2026-08-14) — none may ever appear in the DAG
+FORBIDDEN_MAKE_TARGETS = {"snapshot-day0", "snapshot-day0-snowflake", "reset"}
 
 
 def _make_targets(bash_command: str) -> list[str]:

@@ -19,9 +19,9 @@ Idempotency claim: a second trigger on the same day is a no-op end to
 end — same-partition parquet overwrite, delete+FORCE reload of the same
 Snowflake partition (R2), snapshot adds 0 rows, rag-build embeds 0.
 
-snapshot-day0 (the synthetic day-0 bootstrap) is deliberately NOT here:
-it is a one-time manual step; re-running it would corrupt the demo
-transitions (DECISIONS.md 2026-08-14).
+snapshot-day0 and snapshot-day0-snowflake (the synthetic day-0
+bootstraps) are deliberately NOT here: one-time manual steps whose
+re-run would corrupt the demo transitions (DECISIONS.md 2026-08-14).
 """
 
 from __future__ import annotations
@@ -139,15 +139,25 @@ with DAG(
             **NETWORK_RETRY,
         )
 
+        # mirrors dbt_duckdb: breaker-guarded snapshot on the warehouse
+        # copy, then the full build (change detection runs on both
+        # targets — external-review ruling). Runs after load_snowflake,
+        # so a thin partition here means a collapsed ingest shipped,
+        # not "not loaded yet". A retry re-snapshots the same data: 0
+        # new rows, idempotent.
         dbt_snowflake = BashOperator(
             task_id="dbt_snowflake",
-            bash_command=f"{MAKE} dbt-snowflake {OVERRIDES}",
+            bash_command=(
+                f"{MAKE} snapshot-snowflake {OVERRIDES}"
+                f" && {MAKE} dbt-snowflake {OVERRIDES}"
+            ),
             **NETWORK_RETRY,
         )
 
-        # row count + completeness mart must match across targets;
-        # skipped (default all_success rule) whenever the cloud build
-        # skipped, runs after rag_build so it is the run's last word
+        # row count, completeness mart, and status-change transition
+        # values must match across targets; skipped (default
+        # all_success rule) whenever the cloud build skipped, runs
+        # after rag_build so it is the run's last word
         verify_parity = BashOperator(
             task_id="verify_parity",
             bash_command=f"{MAKE} verify-parity {OVERRIDES}",
