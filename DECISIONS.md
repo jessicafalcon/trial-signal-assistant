@@ -29,7 +29,8 @@ Why-not-X log. One entry per non-obvious choice.
   round · Local venv aligned to 3.11 · DAG runs local-first · Host and
   container dbt artifacts split
 - **7 Packaging**: Pre-public checklist choices (below) · Flip step-4
-  purge waived · External review dispositions
+  purge waived · External review dispositions · Observability slice
+  (source freshness + ingest-history mart)
 
 ## 2026-08-14 — Phase list joined to a single string
 
@@ -964,3 +965,25 @@ work lands:
    backend, incremental fetch, and a credentialed scheduled parity job
    stay documented answers (production notes) — "no cloud creds in
    CI" is posture, not an accident.
+
+## 2026-08-16 — Observability slice: source freshness + ingest history
+
+External-review item 5's implemented half. dbt source freshness is
+the project's one deliberately time-dependent check: staleness is a
+property of wall-clock time by definition, so it can never satisfy
+"same inputs, same outputs" — it is a monitoring gate (same family
+as the circuit breaker), and its result feeds no transform.
+Thresholds: warn at 2 days (daily cadence plus a day of grace),
+error at 7. Live/local only — CI's fixture partition is pinned to
+2026-08-14 and would be eternally stale by design. loaded_at_field
+is cast(ingest_date as timestamp) because the bridge stores dates as
+strings on both targets. mart_ingest_history stays fully
+deterministic (pure SQL over staging's partitions): rows per
+partition, delta and ratio vs the prior one (the circuit breaker's
+own quantity, kept visible after the fact), and the gap in days.
+Builds on both targets — warehouse-side observability was the
+reviewer's point. No distinct-study count: the staging grain test
+already pins it equal to the row count, and the redundant
+count(distinct) crashed duckdb 1.5.5's aggregate planner on
+linux/x64 in CI (INTERNAL Error, NumericValueUnionToValue) while
+passing on macos/arm64 — simplification and workaround in one.

@@ -109,6 +109,10 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   RETRIEVAL_ONLY=1 runs just the free deterministic half.
 - `make verify-parity` — staging row count + completeness mart must be
   value-identical across duckdb and snowflake; non-zero on mismatch.
+- `make freshness` / `make freshness-snowflake` — dbt source freshness
+  on the parsed source (warn past 2 days, error past 7; thresholds in
+  sources.yml). Live/local only — CI's fixture partition is pinned and
+  would always be stale.
 - `make dag-verify` — DAG integrity without Docker (DagBag import,
   task ids/edges, schedule, trigger rules, retry policy). Installs
   airflow/requirements-dagtest.txt into the venv first (the only path

@@ -40,7 +40,7 @@ endef
 SNAP_STATE = $(DBT) --quiet show --inline "select count(*) as n, coalesce(md5(string_agg(dbt_scd_id, ',' order by dbt_scd_id)), '0') as fp from {{ ref('snap_trial_status') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; d = json.load(sys.stdin)['show'][0]; print(d['n'], d['fp'])"
 MART_COUNT = $(DBT) --quiet show --inline "select count(*) as n from {{ ref('mart_trial_status_changes') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; print(json.load(sys.stdin)['show'][0]['n'])"
 
-.PHONY: setup test dag-verify ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot circuit-breaker verify-idempotent verify-day0-count verify-parity reset s3-sync load-snowflake rag-build ask
+.PHONY: setup test dag-verify ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot circuit-breaker verify-idempotent verify-day0-count verify-parity reset s3-sync load-snowflake rag-build ask freshness freshness-snowflake
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -175,6 +175,18 @@ load-snowflake:
 dbt-snowflake:
 	$(snowflake_preflight)
 	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude stg_trials_current+ resource_type:seed assert_latest_partition_not_collapsed
+
+# source freshness (observability): warn when the latest parsed
+# partition is older than the daily cadence allows (2 days), error at
+# a week. Thresholds live in models/staging/sources.yml. Live/local
+# only — never CI, whose fixture partition is pinned to 2026-08-14.
+freshness:
+	$(DBT) source freshness $(DBT_FLAGS)
+
+# same check against RAW.TRIALS: is the warehouse copy keeping up?
+freshness-snowflake:
+	$(snowflake_preflight)
+	$(SNOWFLAKE_CONN) $(DBT) source freshness $(DBT_SNOWFLAKE_FLAGS)
 
 # cross-target parity: staging row count + completeness mart must be
 # value-identical on duckdb and snowflake; non-zero exit on mismatch.

@@ -29,3 +29,14 @@ sources:
         description: >
           One row per study per ingest_date partition; columns mirror
           TrialRecord exactly, plus ingest_date.
+        # freshness is the one deliberately time-dependent check in
+        # the project (DECISIONS.md observability-slice entry): warn
+        # past the daily cadence + a day of grace, error at a week.
+        # Run via make freshness / freshness-snowflake — live only;
+        # CI's fixture partition is pinned to 2026-08-14 and would be
+        # eternally stale by design. The cast covers both targets
+        # (the bridge stores ingest_date as a string).
+        loaded_at_field: cast(ingest_date as timestamp)
+        freshness:
+          warn_after: {count: 2, period: day}
+          error_after: {count: 7, period: day}
