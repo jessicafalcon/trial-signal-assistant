@@ -56,12 +56,9 @@ models:
           - not_null
       - name: rows_ingested
         data_type: bigint
-        description: Rows parsed into this partition.
-        data_tests:
-          - not_null
-      - name: distinct_studies
-        data_type: bigint
-        description: Distinct nct_ids in the partition.
+        description: >
+          Rows parsed into this partition. Also the study count: the
+          staging grain test asserts one row per (nct_id, ingest_date).
         data_tests:
           - not_null
       - name: prior_rows

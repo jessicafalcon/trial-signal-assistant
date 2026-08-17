@@ -978,8 +978,12 @@ error at 7. Live/local only — CI's fixture partition is pinned to
 2026-08-14 and would be eternally stale by design. loaded_at_field
 is cast(ingest_date as timestamp) because the bridge stores dates as
 strings on both targets. mart_ingest_history stays fully
-deterministic (pure SQL over staging's partitions): rows and
-distinct studies per partition, delta and ratio vs the prior one
-(the circuit breaker's own quantity, kept visible after the fact),
-and the gap in days. Builds on both targets — warehouse-side
-observability was the reviewer's point.
+deterministic (pure SQL over staging's partitions): rows per
+partition, delta and ratio vs the prior one (the circuit breaker's
+own quantity, kept visible after the fact), and the gap in days.
+Builds on both targets — warehouse-side observability was the
+reviewer's point. No distinct-study count: the staging grain test
+already pins it equal to the row count, and the redundant
+count(distinct) crashed duckdb 1.5.5's aggregate planner on
+linux/x64 in CI (INTERNAL Error, NumericValueUnionToValue) while
+passing on macos/arm64 — simplification and workaround in one.
