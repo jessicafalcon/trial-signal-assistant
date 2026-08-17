@@ -28,7 +28,8 @@ Why-not-X log. One entry per non-obvious choice.
   partition + COPY FORCE · Airflow Astro layout · Phase 6 review
   round · Local venv aligned to 3.11 · DAG runs local-first · Host and
   container dbt artifacts split
-- **7 Packaging**: Pre-public checklist choices (below)
+- **7 Packaging**: Pre-public checklist choices (below) · Flip step-4
+  purge waived
 
 ## 2026-08-14 — Phase list joined to a single string
 
@@ -908,3 +909,25 @@ terraform/variables.tf's default is an existence-only disclosure on a
 hardened bucket (public-access block, TLS-only policy, scoped
 read-only grant), and the $2.25 spend figure is intentional README
 evidence, not an identifier.
+
+## 2026-08-16 — Flip step 4 waived: cached pre-scrub history accepted
+
+Owner ruling: the GitHub-side purge (public_flip_checklist.md step 4)
+is waived — no support request, no repo delete-and-recreate. PR
+history #1–#8 is kept and the flip proceeds directly from step 3 to
+step 5. What remains: the pre-scrub commits persist on GitHub via
+refs/pull/*/head and direct SHA URLs (rendered PR diffs included);
+they do NOT reach default clones, which don't fetch pull refs — the
+step-3 fresh-clone greps still expect zero. Why accepted: the only
+scrubbed content is one investigator's contact details, verbatim
+public ClinicalTrials.gov registry data — no secrets (floor 7/7;
+final scoped pass 0 secret / 0 critical), nothing not already public.
+The scrub's principle (don't be the indexable copy) holds for every
+clone and the browsable tree; the residual sits in PR metadata and
+takes deliberate lookup. Weighed against it: losing all PR provenance
+(delete-and-recreate), or a support path of uncertain outcome
+(GitHub's removal policy targets private information; already-public
+registry data may not qualify). The hash map above stays as-is — the
+residual is accepted openly, and stripping old SHAs would obscure it,
+not remove it. This amends the history-rewrite entry's closing line:
+the force-push stays a human gate; the purge gate is dropped.

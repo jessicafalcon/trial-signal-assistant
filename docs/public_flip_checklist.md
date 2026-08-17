@@ -31,18 +31,13 @@ the phase-7 PR is merged.
        done
        git cat-file -e a33d640c0b18d9380d43b35b959b0e201d68d34b || echo "old blob absent (good)"
 
-4. **Purge GitHub's cached copies BEFORE the flip.** A force-push
-   leaves the old commits unreachable-but-cached on GitHub (old PR
-   pages, commit URLs, and refs/pull/* can still serve them). Two
-   options — decide here:
-   - **Support request**: GitHub's sensitive-data removal process —
-     ask support to expunge the unreachable objects and cached views.
-     Keeps PR history (#1–#8) and repo metadata.
-   - **Delete and recreate the repo**: the hard guarantee — nothing
-     cached survives — at the cost of all PR history, issues, and
-     stars. Push the scrubbed history to the fresh repo.
-   The tradeoff is certainty vs. provenance; either is acceptable,
-   proceeding to step 5 before one of them completes is not.
+4. Purge of GitHub's cached copies — **WAIVED** by owner ruling
+   2026-08-16 (DECISIONS.md "Flip step 4 waived"). PR history #1–#8
+   is kept; the pre-scrub commits stay reachable on GitHub via
+   refs/pull/* and direct SHA URLs (they do not reach default
+   clones). Accepted because the only scrubbed content is
+   already-public registry contact data — no secrets. Proceed
+   directly to step 5.
 5. Set the GitHub repo description and topics (drafts below).
 6. Settings → Danger Zone → change visibility to Public.
 7. IMMEDIATELY enable branch protection on main — require the lint,

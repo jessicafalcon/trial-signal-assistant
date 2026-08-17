@@ -1,3 +1,7 @@
+# interpreter for make setup's venv creation only. Pinned because bare
+# python3 can resolve to 3.14+, and dag-verify requires a 3.11-3.13
+# venv (Airflow 3.3.0 publishes constraints for those only).
+PYTHON ?= python3.11
 VENV := .venv
 PY := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
@@ -39,7 +43,7 @@ MART_COUNT = $(DBT) --quiet show --inline "select count(*) as n from {{ ref('mar
 .PHONY: setup test dag-verify ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot circuit-breaker verify-idempotent verify-day0-count verify-parity reset s3-sync load-snowflake rag-build ask
 
 setup:
-	python3 -m venv $(VENV)
+	$(PYTHON) -m venv $(VENV)
 	$(PIP) install -r requirements.txt
 	$(VENV)/bin/pre-commit install
 	$(VENV)/bin/pre-commit install --hook-type pre-push
