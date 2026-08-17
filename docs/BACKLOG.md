@@ -47,3 +47,20 @@ already on every commit.
 - Delisted-trials mart: R1's closed rows (dbt_valid_to set, no
   successor) are write-only today — no mart, README, or RAG document
   surfaces them (R1 scope cut, DECISIONS.md).
+
+## External-review items (2026-08-16 dispositions, documented answers)
+
+Ruled DOCUMENT in the pre-flip review round (DECISIONS.md external-
+review entry); each has its unprompted answer in README production
+notes and graduates here if the project outgrows demo scope:
+
+- Snowpipe off S3 event notifications as the at-volume load path;
+  keep the partition-scoped delete+reload as backfill/replay.
+- Data-aware orchestration: Airflow assets, Cosmos for dbt-aware task
+  mapping, deferrable S3 sensors, managed deployment (Astro/MWAA).
+- Governed retrieval: Cortex Search over mart_trial_documents,
+  replacing Chroma + the local embedding path.
+- Scheduled cross-target parity job with scoped read-only creds
+  (never creds in CI); alerting/SLA path on the deployed DAG;
+  terraform remote backend + locking; incremental ingest filtered on
+  the registry's last-update date.
