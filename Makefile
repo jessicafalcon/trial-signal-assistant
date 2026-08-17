@@ -40,7 +40,7 @@ endef
 SNAP_STATE = $(DBT) --quiet show --inline "select count(*) as n, coalesce(md5(string_agg(dbt_scd_id, ',' order by dbt_scd_id)), '0') as fp from {{ ref('snap_trial_status') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; d = json.load(sys.stdin)['show'][0]; print(d['n'], d['fp'])"
 MART_COUNT = $(DBT) --quiet show --inline "select count(*) as n from {{ ref('mart_trial_status_changes') }}" --output json $(DBT_FLAGS) | $(PY) -c "import json, sys; print(json.load(sys.stdin)['show'][0]['n'])"
 
-.PHONY: setup test dag-verify ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot circuit-breaker verify-idempotent verify-day0-count verify-parity reset s3-sync load-snowflake rag-build ask freshness freshness-snowflake
+.PHONY: setup test dag-verify ingest parse dbt dbt-snowflake eval lint snapshot-day0 snapshot circuit-breaker verify-idempotent verify-day0-count verify-parity reset s3-sync load-snowflake rag-build ask freshness freshness-snowflake snapshot-day0-snowflake circuit-breaker-snowflake snapshot-snowflake
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -163,18 +163,65 @@ s3-sync:
 load-snowflake:
 	DBT='$(DBT)' DATE='$(DATE)' ALL='$(ALL)' scripts/load_snowflake.sh
 
-# same dbt project on the snowflake target. Change detection and the
-# RAG documents mart are duckdb-only this phase (DECISIONS.md):
-# stg_trials_current+ excludes that whole subtree — the view itself
-# (whose only consumers are the snapshot and doc mart; phase-7
-# checklist ruling), the snapshot and its descendants, and the doc
-# mart + its tests — plus the day-0 seeds. The circuit breaker is
-# excluded too: it guards the duckdb-only snapshot, and on snowflake a
-# thin partition usually means "not loaded yet" (R2 loads latest by
-# default), not "ingest collapsed" — it would alarm on the wrong cause.
+# same dbt project on the snowflake target, change detection included
+# (external-review ruling, DECISIONS.md 2026-08-17 — reverses the
+# phase-4 duckdb-only scoping). Excluded: mart_trial_documents (the
+# RAG embedder reads the duckdb file — phase-7 scoping), seeds
+# (loaded once by the day-0 bootstrap), and snap_trial_status
+# (finding-10 ruling: only the breaker-guarded snapshot-snowflake may
+# write warehouse SCD2 history — unlike make dbt, whose duckdb state
+# is disposable via make reset). mart_trial_status_changes reads the
+# snapshot table, so this build needs a bootstrapped snapshot.
 dbt-snowflake:
 	$(snowflake_preflight)
-	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude stg_trials_current+ resource_type:seed assert_latest_partition_not_collapsed
+	$(SNOWFLAKE_CONN) $(DBT) build $(DBT_SNOWFLAKE_FLAGS) --exclude mart_trial_documents snap_trial_status resource_type:seed
+
+# snowflake mirrors of the change-detection targets (external-review
+# ruling). Same one-time day-0 bootstrap, same corruption rule as
+# snapshot-day0: never a DAG task, never re-run. No fixtures variant —
+# fixture mode is CI-only and CI never touches snowflake.
+snapshot-day0-snowflake:
+	$(snowflake_preflight)
+	$(SNOWFLAKE_CONN) $(DBT) seed --select seed_synthetic_day0 $(DBT_SNOWFLAKE_FLAGS)
+	$(SNOWFLAKE_CONN) $(DBT) snapshot $(DBT_SNOWFLAKE_FLAGS) --vars '{snapshot_source: seed, day0_seed_scope: corpus}'
+
+# R1 guard on the warehouse copy. The DAG runs it (via
+# snapshot-snowflake) AFTER load-snowflake, so a thin latest partition
+# means a collapsed ingest reached the stage — not "not loaded yet",
+# the rationale that kept it off snowflake before the ruling.
+circuit-breaker-snowflake:
+	$(snowflake_preflight)
+	$(SNOWFLAKE_CONN) $(DBT) build --select +assert_latest_partition_not_collapsed $(DBT_SNOWFLAKE_FLAGS)
+
+# breaker-guarded live snapshot on snowflake (mirror of make snapshot).
+# Fail-closed bootstrap guard: refuses when the snapshot table is
+# absent instead of silently baselining from live data — documented
+# ordering alone already failed once on duckdb (DECISIONS.md
+# 2026-08-14 make-snapshot entry). Recovery from a bad baseline:
+# scripts/rebaseline_snowflake_snapshot.sh. The snapshot's schema
+# tests run here because dbt-snowflake excludes the node.
+snapshot-snowflake: circuit-breaker-snowflake
+	$(snowflake_preflight)
+	@# no LIMIT in the probe: dbt show wraps the query in its own limit
+	@# and snowflake rejects the double LIMIT (probe-pair finding).
+	@# Branch on the error (security finding 1): only 002003 gets the
+	@# bootstrap instruction — and 002003 deliberately conflates
+	@# absence with no-authorization, so that branch carries the
+	@# grants warning. Anything else (network blip, timeout, compile
+	@# error) exits distinctly, surfaces the dbt error like every
+	@# other snowflake recipe, and never reaches the snapshot.
+	@out=$$($(SNOWFLAKE_CONN) $(DBT) --quiet show --inline "select count(*) as n from {{ ref('snap_trial_status') }}" $(DBT_SNOWFLAKE_FLAGS) 2>&1) || { \
+		if echo "$$out" | grep -qE "002003|does not exist or not authorized"; then \
+			echo "ERROR: snapshot table absent OR not authorized — if this warehouse was previously bootstrapped, check TRANSFORMER's grants before running the one-time bootstrap (re-running it on a healthy table corrupts the demo transitions): make snapshot-day0-snowflake"; \
+		else \
+			echo "ERROR: bootstrap probe could not be evaluated — not proceeding. Underlying dbt error:"; \
+			echo "$$out"; \
+		fi; \
+		exit 1; \
+	}
+	$(SNOWFLAKE_CONN) $(DBT) run --select +snap_trial_status $(DBT_SNOWFLAKE_FLAGS)
+	$(SNOWFLAKE_CONN) $(DBT) snapshot $(DBT_SNOWFLAKE_FLAGS)
+	$(SNOWFLAKE_CONN) $(DBT) test --select snap_trial_status $(DBT_SNOWFLAKE_FLAGS)
 
 # source freshness (observability): warn when the latest parsed
 # partition is older than the daily cadence allows (2 days), error at
@@ -188,8 +235,9 @@ freshness-snowflake:
 	$(snowflake_preflight)
 	$(SNOWFLAKE_CONN) $(DBT) source freshness $(DBT_SNOWFLAKE_FLAGS)
 
-# cross-target parity: staging row count + completeness mart must be
-# value-identical on duckdb and snowflake; non-zero exit on mismatch.
+# cross-target parity: staging row count, completeness mart, and
+# status-change transition values must be identical on duckdb and
+# snowflake; non-zero exit on mismatch.
 verify-parity:
 	DBT=$(DBT) PY=$(PY) scripts/verify_parity.sh
 

@@ -26,7 +26,7 @@ data/raw JSON ──► parser bridge ──► data/parsed parquet (ingest_date
                                         (external stage; demo target)
         │
         ▼
-dbt: staging ──► snapshots (SCD2 on overall_status; duckdb only) ──► marts
+dbt: staging ──► snapshots (SCD2 on overall_status; both targets) ──► marts
         │
         ▼
 Embeddings (sentence-transformers, per-field docs) ──► Chroma (+ metadata)
@@ -47,8 +47,10 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   `macros/` run-operation macros (the Snowflake COPY INTO load path).
 - `scripts/` — secrets_audit.sh (deterministic pre-push floor),
   load_snowflake.sh (self-contained Snowflake load entry point),
-  verify_parity.sh (cross-target row count + completeness compare), and
-  recreate_raw_trials.sh (RAW.TRIALS schema migration: drop + recreate).
+  verify_parity.sh (cross-target rows + completeness + transitions
+  compare), recreate_raw_trials.sh (RAW.TRIALS schema migration: drop +
+  recreate), and rebaseline_snowflake_snapshot.sh (drop the warehouse
+  snapshot, replay day-0 + live).
 - `rag/` — embedding build, query layer, `eval/` golden questions + scorer.
 - `airflow/` — Astro project (local Docker only, never CI): Dockerfile
   pinned to Astro Runtime 3.3-2 (= Airflow 3.3.0),
@@ -91,11 +93,21 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   delete the partition's rows, COPY its stage files with FORCE — a
   same-partition re-run converges. Latest local partition by default;
   DATE=YYYY-MM-DD picks one, ALL=1 loads every local partition
-- `make dbt-snowflake` — dbt build --target snowflake, excluding
-  stg_trials_current+ (the view, snapshot machinery, and the RAG doc
-  mart are duckdb-only — phase-7 scoping) and seeds. Both snowflake targets
-  preflight-fail on missing creds and pin role/warehouse/db/schema to
-  the terraform-created objects. RAW.TRIALS schema migrations:
+- `make dbt-snowflake` — dbt build --target snowflake, excluding only
+  mart_trial_documents (the RAG doc mart stays duckdb-only — the
+  embedder reads the duckdb file) and seeds. Change detection runs on
+  snowflake too (2026-08-17 external-review ruling):
+  `make snapshot-day0-snowflake` is the one-time day-0 bootstrap (same
+  corruption rule as snapshot-day0 — never re-run, never the DAG) and
+  `make snapshot-snowflake` the breaker-guarded live snapshot: it runs
+  `make circuit-breaker-snowflake` first (the DAG orders it after the
+  load, so a thin partition means a collapsed ingest shipped, not "not
+  loaded yet"), fail-closed refuses if the snapshot table was never
+  bootstrapped, and runs the snapshot's schema tests (excluded from
+  the build with the node). Snapshot re-baseline:
+  scripts/rebaseline_snowflake_snapshot.sh (CONFIRM=1 gate). All snowflake targets preflight-fail
+  on missing creds and pin role/warehouse/db/schema to the
+  terraform-created objects. RAW.TRIALS schema migrations:
   scripts/recreate_raw_trials.sh (drop + recreate + re-load; README
   Cloud section has the sequence).
 - `make rag-build` — embed mart_trial_documents into Chroma
@@ -107,8 +119,10 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
 - `make eval` — score rag/eval/golden_questions.yml: retrieval
   hit-rate ≥ 0.8 and citation correctness ≥ 0.7 or non-zero exit.
   RETRIEVAL_ONLY=1 runs just the free deterministic half.
-- `make verify-parity` — staging row count + completeness mart must be
-  value-identical across duckdb and snowflake; non-zero on mismatch.
+- `make verify-parity` — staging row count, completeness mart, and
+  status-change transitions (values only — the detection timestamps
+  are target-local) must be value-identical across duckdb and
+  snowflake; non-zero on mismatch.
 - `make freshness` / `make freshness-snowflake` — dbt source freshness
   on the parsed source (warn past 2 days, error past 7; thresholds in
   sources.yml). Live/local only — CI's fixture partition is pinned and
@@ -287,18 +301,23 @@ around.
 
 ## Current status
 
-- Public flip in progress (2026-08-16): all 7 phases complete and
-  merged to main. History PII-scrubbed via git-filter-repo blob
-  replacement and force-pushed to origin (old→new hash map in
-  DECISIONS.md); obsolete remote branches deleted; fresh-clone
-  verification clean (all greps 0, old blob absent).
-  docs/public_flip_checklist.md: steps 1–3 done (S3 lifecycle
-  applied, force-push, clone verify); step 4 cache purge WAIVED by
-  owner ruling (DECISIONS.md "Flip step 4 waived"). Remaining human
-  gates: steps 5–8 — repo description/topics, visibility flip,
-  branch protection IMMEDIATELY after (the CI self-governance guards
-  are PR-only until then), CV link. Post-public items live in
-  docs/BACKLOG.md.
+- Public flip in progress: all 7 phases complete and merged. History
+  PII-scrubbed via git-filter-repo blob replacement and force-pushed
+  2026-08-16 (old→new hash map in DECISIONS.md); fresh-clone
+  verification clean; flip checklist steps 1–3 done, step 4 cache
+  purge WAIVED by owner ruling (DECISIONS.md "Flip step 4 waived").
+- Pre-flip external review implemented 2026-08-16/17 in three PRs,
+  all rulings per-finding (DECISIONS.md dispositions entry): #10
+  docs (Snowpipe / orchestration / retrieval-governance / ops
+  answers stated unprompted in README production notes), #11
+  observability slice (dbt source freshness + mart_ingest_history),
+  #12 change detection on Snowflake (day-0 bootstrap + fail-closed
+  guarded snapshot live on the warehouse, scripted re-baseline,
+  three-way parity green incl. transition values, suite 113). After
+  #12 merges, remaining human gates are flip checklist steps 5–8:
+  repo description/topics, visibility flip, branch protection
+  IMMEDIATELY after (the CI self-governance guards are PR-only until
+  then), CV link. Post-public items live in docs/BACKLOG.md.
 - Repo moved ~/Desktop → ~/dev (2026-08-16): iCloud sync was
   corrupting the Desktop venv's site-packages; repair recipe in
   README Setup. Venv is Python 3.11.16; make setup pins

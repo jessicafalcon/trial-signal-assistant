@@ -16,7 +16,8 @@ Why-not-X log. One entry per non-obvious choice.
 - **3 Change detection**: Synthetic day-0 seed · Fixture-mode day-0 ·
   make snapshot pre-builds staging · Snapshot hard-delete policy
   deferred (→ superseded by R1)
-- **4 Cloud**: Snapshot machinery duckdb-only · Snowflake load via dbt
+- **4 Cloud**: Snapshot machinery duckdb-only (→ superseded by
+  change detection on Snowflake, 2026-08-17) · Snowflake load via dbt
   run-operation (→ superseded by R2) · Cross-target SQL portable
   first · Terraform one converging apply · Phase 4 review round
   (F1–F16)
@@ -30,7 +31,8 @@ Why-not-X log. One entry per non-obvious choice.
   container dbt artifacts split
 - **7 Packaging**: Pre-public checklist choices (below) · Flip step-4
   purge waived · External review dispositions · Observability slice
-  (source freshness + ingest-history mart)
+  (source freshness + ingest-history mart) · Change detection on
+  Snowflake
 
 ## 2026-08-14 — Phase list joined to a single string
 
@@ -292,6 +294,10 @@ phase 7 pre-public audit checklist in PLAN.md — scheduled for the public
 flip, not forgotten.
 
 ## 2026-08-15 — Snapshot machinery is duckdb-only in phase 4
+
+(Superseded 2026-08-17: the external-review ruling put change
+detection on snowflake too — see the change-detection entry. Only
+mart_trial_documents and seeds stay excluded there.)
 
 `make dbt-snowflake` excludes `snap_trial_status+` and all seeds: the
 change-detection demo (day-0 seed, snapshot, mart_trial_status_changes,
@@ -614,6 +620,8 @@ rulings applied before the phase-6 commit. Non-obvious outcomes:
   duckdb-only snapshot, and a thin Snowflake partition usually means
   "not loaded yet" (R2 default = latest only), not "ingest collapsed"
   — the alarm would name the wrong cause. Snowflake stays 17/17.
+  (Superseded 2026-08-17: the breaker runs on snowflake now, after
+  the load — see the change-detection entry.)
 - Credential passthrough narrowed (blast-radius ruling): compose
   passes exactly SNOWFLAKE_ACCOUNT/USER/PASSWORD + AWS_PROFILE from
   the astro dev start shell (no env_file — the whole .env, including
@@ -981,9 +989,69 @@ strings on both targets. mart_ingest_history stays fully
 deterministic (pure SQL over staging's partitions): rows per
 partition, delta and ratio vs the prior one (the circuit breaker's
 own quantity, kept visible after the fact), and the gap in days.
+2026-08-17: freshness moved under the table's config: key — the dbt
+1.10+ location; the top-level property is deprecated, and a wrong
+nesting would silently drop the thresholds (make freshness passes
+with nothing to check), so test_source_resolves_per_target pins both
+thresholds in the parsed manifest.
 Builds on both targets — warehouse-side observability was the
 reviewer's point. No distinct-study count: the staging grain test
 already pins it equal to the row count, and the redundant
 count(distinct) crashed duckdb 1.5.5's aggregate planner on
 linux/x64 in CI (INTERNAL Error, NumericValueUnionToValue) while
 passing on macos/arm64 — simplification and workaround in one.
+
+## 2026-08-17 — Change detection on Snowflake (external-review item 1)
+
+Implements the dispositions entry's IMPLEMENT ruling; reverses the
+2026-08-15 "snapshot machinery duckdb-only" scoping. The snapshot SQL
+was already portable — the changes are operational:
+
+- Each warehouse keeps its own SCD2 state; there is no backfilling
+  one from the other. Snowflake bootstraps from the same labeled
+  synthetic day-0 seed (make snapshot-day0-snowflake — one-time, same
+  corruption rule as snapshot-day0, forbidden in the DAG by test).
+- The circuit breaker now runs on snowflake (make snapshot-snowflake
+  guards the live snapshot; the build includes the breaker test). Its
+  old exclusion rationale — "a thin partition means not loaded yet" —
+  dissolved when the DAG ordered the snapshot after load_snowflake:
+  past that point a thin partition means a collapsed ingest shipped.
+- The DAG's dbt_snowflake task mirrors dbt_duckdb (guarded snapshot,
+  then build) instead of adding a task — ids, edges, and trigger
+  rules unchanged.
+- Parity now compares mart_trial_status_changes VALUES (nct_id,
+  prior/new status, prior/new source). changed_detected_at is
+  excluded — it is each warehouse's own snapshot run time — and
+  dbt_scd_id fingerprints can never match cross-target because they
+  hash those timestamps. Known caveat: transition parity assumes the
+  two histories START EQUAL and then snapshot the same days.
+  Start-equal held at bootstrap — verified 2026-08-17: duckdb's mart
+  held exactly the 4 day-0 transitions and zero live ones, so both
+  warehouses began from the same synthetic day-0 state. That check is
+  the precondition anyone re-bootstrapping must repeat; without it a
+  passing first parity is luck, not correctness. Divergence
+  directions and recoveries: extra SNOWFLAKE history (e.g. the DAG
+  baselined from live before the day-0 bootstrap) → re-baseline
+  snowflake (scripts/rebaseline_snowflake_snapshot.sh, CONFIRM=1
+  gated); extra DUCKDB history (a status change on a day the cloud
+  tasks skipped, or live transitions predating a re-bootstrap) →
+  accept-and-record or re-baseline duckdb (make reset + day-0
+  replay). The warehouse cannot reconstruct intermediate states it
+  never observed — its parity failure is a real signal, not noise.
+- Fail-closed bootstrap guard (review finding 2): make
+  snapshot-snowflake refuses, with instructions, when the snapshot
+  table is absent — documented ordering alone was already proven
+  insufficient on duckdb (the 2026-08-14 make-snapshot entry), and
+  the alternative was silent live-baselining plus manual recovery.
+  Same fail-closed pattern as the load macro's snowflake-only
+  refusal. Recovery is scripted, mirroring recreate_raw_trials.sh.
+- Deliberate asymmetry (review finding 10): make dbt-snowflake
+  excludes snap_trial_status, so only the guarded snapshot-snowflake
+  path can write warehouse SCD2 history. make dbt on duckdb keeps its
+  unguarded build-time snapshot: that state is disposable (make
+  reset + day-0 replay) and rescoping it would change CI's definition
+  of green. The snapshot's schema tests run in snapshot-snowflake so
+  coverage survives the exclusion.
+- Still snowflake-excluded: mart_trial_documents (the embedder reads
+  duckdb — phase-7 scoping, unchanged) and seeds in the daily build
+  (loaded once at bootstrap; rebuilding them daily adds nothing).

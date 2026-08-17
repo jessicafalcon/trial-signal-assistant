@@ -86,8 +86,9 @@ models:
       latest ingest partition, for each non-empty text field
       (brief_summary, detailed_description, why_stopped). The embedder's
       sole input surface; content_hash is its incremental change key.
-      duckdb-only — excluded on the snowflake target with the snapshot
-      machinery. Grain uniqueness asserted by
+      duckdb-only — the one model still excluded on the snowflake
+      target (the embedder reads the duckdb file; phase-7 scoping).
+      Grain uniqueness asserted by
       tests/assert_mart_trial_documents_grain.sql.
     columns:
       - name: nct_id

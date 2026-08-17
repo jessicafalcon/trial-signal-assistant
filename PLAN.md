@@ -134,6 +134,10 @@ rounds; clear or consciously re-accept each before the repo goes public:
       stg_trials_current+ (covers the snapshot and doc-mart subtrees it
       carried); node diff verified to drop exactly the view + its 5
       tests. Snowflake build is 12 nodes from here on (17 before).
+      (Superseded 2026-08-17: the external-review ruling reversed the
+      scoping — change detection runs on snowflake; only
+      mart_trial_documents, seeds, and the build-time snapshot stay
+      excluded. DECISIONS.md change-detection entry.)
 - [x] Deferred tests from the phase-4 round (ruling F16): completeness
       mart bounds singular test; dual-target source-resolution parse
       test.
