@@ -114,7 +114,7 @@ Control plane: Airflow DAG (Astro, daily) · GitHub Actions CI · Terraform.
   on missing creds and pin role/warehouse/db/schema to the
   terraform-created objects. RAW.TRIALS schema migrations:
   scripts/recreate_raw_trials.sh (drop + recreate + re-load; README
-  Cloud section has the sequence).
+  "Cloud target" section has the sequence).
 - `make rag-build` — embed mart_trial_documents into Chroma
   (data/chroma/). Incremental by content_hash: no-change re-run embeds
   0 documents; FULL=1 rebuilds. Downloads the pinned embedding model on
@@ -306,23 +306,26 @@ around.
 
 ## Current status
 
-- Public flip in progress: all 7 phases complete and merged. History
-  PII-scrubbed via git-filter-repo blob replacement and force-pushed
-  2026-08-16 (old→new hash map in DECISIONS.md); fresh-clone
-  verification clean; flip checklist steps 1–3 done, step 4 cache
-  purge WAIVED by owner ruling (DECISIONS.md "Flip step 4 waived").
-- Pre-flip external review implemented 2026-08-16/17 in three PRs,
-  all rulings per-finding (DECISIONS.md dispositions entry): #10
-  docs (Snowpipe / orchestration / retrieval-governance / ops
-  answers stated unprompted in README production notes), #11
-  observability slice (dbt source freshness + mart_ingest_history),
-  #12 change detection on Snowflake (day-0 bootstrap + fail-closed
-  guarded snapshot live on the warehouse, scripted re-baseline,
-  three-way parity green incl. transition values, suite 113). After
-  #12 merges, remaining human gates are flip checklist steps 5–8:
-  repo description/topics, visibility flip, branch protection
-  IMMEDIATELY after (the CI self-governance guards are PR-only until
-  then), CV link. Post-public items live in docs/BACKLOG.md.
+- Repo is PUBLIC (flip complete). All 7 phases merged; history
+  PII-scrubbed via git-filter-repo and force-pushed 2026-08-16
+  (old→new hash map in DECISIONS.md); flip step 4 cache purge WAIVED
+  by owner ruling. Branch protection is on main (required PR review +
+  the six CI checks: lint, test, dbt, dag-verify, terraform, secrets),
+  so the CI self-governance guards now cover every change to main.
+- Pre-flip external review shipped in PRs #10 (docs), #11
+  (observability slice), #12 (change detection on Snowflake), #13
+  (day-0 guard symmetry + per-gate confirm tokens); rulings
+  per-finding in DECISIONS.md. Suite is 120 pytest + 63 dbt tests.
+  Post-public work lives in docs/BACKLOG.md.
+- README restructured 2026-09-06 as a narrative for a mixed audience
+  (branch readme-narrative): sections 1–12 problem → data → limits →
+  next steps → glossary, sections 13–16 the engineering content
+  (Setup, Run it, Cloud target, repo map). The former "production
+  notes" are now "Limits, honestly"; corpus figures in "The data"
+  were computed by SQL over the 2026-08-17 partition and go stale
+  as partitions accrue. GitHub About description updated the same
+  day; it leads with findings (172 of 1,738 stopped, 94% with a
+  reason) rather than the stack, per owner ruling.
 - Repo moved ~/Desktop → ~/dev (2026-08-16): iCloud sync was
   corrupting the Desktop venv's site-packages; repair recipe in
   README Setup. Venv is Python 3.11.16; make setup pins
