@@ -324,7 +324,8 @@ around.
   notes" are now "Limits, honestly"; corpus figures in "The data"
   were computed by SQL over the 2026-08-17 partition and go stale
   as partitions accrue. GitHub About description updated the same
-  day.
+  day; it leads with findings (172 of 1,738 stopped, 94% with a
+  reason) rather than the stack, per owner ruling.
 - Repo moved ~/Desktop → ~/dev (2026-08-16): iCloud sync was
   corrupting the Desktop venv's site-packages; repair recipe in
   README Setup. Venv is Python 3.11.16; make setup pins
