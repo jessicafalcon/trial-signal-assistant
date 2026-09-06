@@ -10,12 +10,11 @@ trial's status, and lets anyone ask plain-English questions such as
 *"why was the tezepelumab trial stopped?"* The answer comes back in a
 sentence or two, with the registry's own trial IDs cited as evidence.
 
-It is a small, complete version of a pattern large clinical-development
+It is a scale, complete version of a pattern large clinical-development
 organisations are building right now: one governed data platform plus
 an AI assistant, so trial teams ask a question instead of hunting
-through dashboards. Everything that can be computed is computed. The AI
-only writes prose over facts the pipeline has already retrieved, and it
-never invents one.
+through dashboards. The AI only writes prose over facts the pipeline has already retrieved,
+and it never invents one.
 
 ---
 
